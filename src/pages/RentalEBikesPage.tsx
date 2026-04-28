@@ -1,0 +1,490 @@
+import { FormEvent, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
+import { X, ChevronDown } from 'lucide-react';
+import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
+
+const KROSS_IMAGES = ['/images/wypozyczalnia/e-rowery/kross-1-v3.png', '/images/wypozyczalnia/e-rowery/kross-2-v3.png'];
+const WINORA_IMAGES = ['/images/wypozyczalnia/e-rowery/winora-1-v3.png', '/images/wypozyczalnia/e-rowery/winora-2-v3.png'];
+
+const REGULATIONS_TEXT = `REGULAMIN WYPOŻYCZALNI ROWERÓW ELEKTRYCZNYCH
+§1. Postanowienia ogólne
+Właścicielem wypożyczalni jest A Bo Co... spółka z.o.o z siedzibą w Katowicach przy ul. Niwnej 9.
+Przedmiotem wynajmu są rowery elektryczne marki Kross Influx Hybrid 1.0 oraz WINORA Yucatan X8.
+Wypożyczenie roweru następuje po podpisaniu Umowy Wynajmu oraz zaakceptowaniu niniejszego Regulaminu.
+
+§2. Warunki wypożyczenia
+Wypożyczającym może być osoba pełnoletnia, posiadająca ważny dokument tożsamości ze zdjęciem.
+Osoby niepełnoletnie mogą korzystać z rowerów wyłącznie pod opieką prawnych opiekunów, którzy biorą za nie pełną odpowiedzialność.
+Wypożyczający musi być w stanie trzeźwości. Wypożyczalnia ma prawo odmówić wydania roweru osobie pod wpływem alkoholu lub innych środków odurzających bez zwrotu kosztów rezerwacji.
+
+§3. Opłaty i Kaucja
+Opłata za wypożyczenie pobierana jest z góry zgodnie z aktualnym cennikiem dostępnym na stronie internetowej.
+Przy wypożyczeniu pobierana jest kaucja zwrotna w wysokości 500 PLN za każdy rower.
+Kaucja stanowi zabezpieczenie na wypadek uszkodzeń wynikających z niewłaściwego użytkowania sprzętu lub zagubienia akcesoriów.
+Kaucja jest zwracana w całości w momencie oddania sprawnego i nieuszkodzonego roweru.
+
+§4. Odpowiedzialność i użytkowanie
+Wypożyczający otrzymuje rower czysty i w pełni sprawny technicznie i zobowiązuje się oddać go w takim samym stanie.
+Rowery są przeznaczone do jazdy po drogach utwardzonych oraz wyznaczonych szlakach rowerowych. Zabrania się wykorzystywania rowerów do sportów ekstremalnych (downhill, skoki itp.).
+Wypożyczający ponosi pełną odpowiedzialność za szkody powstałe od momentu wypożyczenia do momentu zwrotu roweru.
+W przypadku kradzieży roweru, Wypożyczający ma obowiązek niezwłocznie powiadomić Policję oraz Właściciela wypożyczalni. Wypożyczający odpowiada finansowo za utratę roweru do pełnej jego wartości rynkowej.
+
+§5. Dowóz i Zwrot
+Dowóz roweru jest bezpłatny do 15 km od aktualnej bazy (Jura/Katowice). Powyżej tej odległości naliczana jest opłata 2,50 PLN / km.
+Rower należy zwrócić w ustalonym terminie. Przekroczenie czasu najmu o ponad 30 minut skutkuje naliczeniem opłaty za kolejną pełną dobę.
+W przypadku zwrotu roweru brudnego (błoto uniemożliwiające ocenę stanu technicznego), wypożyczalnia może naliczyć opłatę serwisową za czyszczenie w wysokości 50 PLN.
+
+§6. Awarie i wypadki
+W przypadku awarii silnika lub osprzętu elektrycznego nie wynikającej z winy klienta, Wypożyczalnia zobowiązuje się do podstawienia roweru zastępczego (w miarę dostępności) lub zwrotu części kosztów najmu.
+Wypożyczalnia nie ponosi odpowiedzialności za wypadki i szkody na zdrowiu powstałe podczas użytkowania rowerów przez Wypożyczającego.
+
+§7. Dane osobowe (RODO)
+Podpisując umowę, Wypożyczający wyraża zgodę na przetwarzanie danych osobowych wyłącznie w celu realizacji umowy najmu, zgodnie z obowiązującymi przepisami o ochronie danych osobowych.
+
+UMOWA WYNAJMU ROWERU ELEKTRYCZNEGO nr ____/202X
+Data i miejsce zawarcia umowy: ________________________________________
+
+1. STRONY UMOWY
+Wynajmujący: A Bo Co... spółka z.o.o, ul. Niwna 9, 40-406 Katowice, NIP: 954 289 00 70
+Najemca:
+Imię i nazwisko: ______________________________________________________
+Nr dokumentu tożsamości (PESEL/Paszport): _____________________________
+Adres zamieszkania: __________________________________________________
+Numer telefonu: ______________________________________________________
+
+2. PRZEDMIOT WYNAJMU
+Wynajmujący oddaje do używania Najemcy rower elektryczny:
+[] KROSS Influx Hybrid 1.0 (Nr ramy: ______________________)
+[] WINORA Yucatan X8 (Nr ramy: ______________________)
+Dodatki: [] Kask [] Zapięcie [] Ładowarka [] Inne: __________________
+
+3. CZAS I KOSZT WYNAJMU
+Data i godzina wydania: _____________________________________________
+Planowana data i godzina zwrotu: ____________________________________
+Opłata za wynajem: _____________ PLN (opłacono: [] Gotówka [] Karta/BLIK)
+Kaucja zwrotna: _____________ PLN (pobrano: [] Gotówka [] Preautoryzacja)
+
+4. OŚWIADCZENIA I ZASADY
+Najemca potwierdza, że otrzymał rower w dobrym stanie technicznym, bez widocznych wad (z wyjątkiem uwag w pkt 5).
+Najemca zobowiązuje się do przestrzegania Regulaminu Wypożyczalni, który stanowi załącznik do niniejszej umowy.
+Najemca ponosi pełną odpowiedzialność za uszkodzenia wynikające z niewłaściwego użytkowania oraz za kradzież roweru.
+W przypadku opóźnienia w zwrocie, Najemca zobowiązuje się do uiszczenia dopłaty zgodnie z cennikiem.
+
+5. STAN TECHNICZNY (UWAGI)
+(Miejsce na opisanie istniejących zarysowań lub uwag technicznych przed wydaniem)
+
+6. PODPISY
+Wynajmujący: _____________________ Najemca: _____________________
+
+Protokół zwrotu (wypełniany przy oddaniu roweru):
+Data zwrotu: ________________ Godzina: ________
+[] Rower zwrócono w stanie niepogorszonym.
+[] Stwierdzono uszkodzenia: ________________________________________________
+[] Kaucję zwrócono w całości / [] Kaucję zatrzymano w kwocie: ____________ PLN
+Podpis Wynajmującego: ____________________ Podpis Najemcy: ____________________`;
+
+export default function RentalEBikesPage() {
+  const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    bikeModel: '',
+    packageType: '',
+    dateFrom: '',
+    dateTo: '',
+    message: '',
+  });
+
+  const updateFormData = (field: keyof typeof formData, value: string) => {
+    setFormData((previous) => ({ ...previous, [field]: value }));
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    localStorage.setItem('eBikeRentalForm', JSON.stringify(formData));
+
+    const body = [
+      'Nowe zapytanie o rezerwacje e-roweru:',
+      '',
+      `Imie i nazwisko: ${formData.fullName}`,
+      `Telefon: ${formData.phone}`,
+      `Email: ${formData.email}`,
+      `Model roweru: ${formData.bikeModel}`,
+      `Pakiet: ${formData.packageType}`,
+      `Data od: ${formData.dateFrom}`,
+      `Data do: ${formData.dateTo}`,
+      '',
+      'Wiadomosc:',
+      formData.message || '-',
+    ].join('\n');
+
+    window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Rezerwacja e-roweru')}&body=${encodeURIComponent(body)}`;
+  };
+
+  useEffect(() => {
+    if (!isRegulationsOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsRegulationsOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isRegulationsOpen]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('eBikeRentalForm');
+    if (!saved) return;
+    try {
+      const parsed = JSON.parse(saved);
+      setFormData((previous) => ({ ...previous, ...parsed }));
+    } catch {
+    }
+  }, []);
+
+  return (
+    <div className="bg-dark min-h-screen">
+      <Navbar />
+
+      <main>
+        <section className="section-padding bg-dark-lighter border-b border-white/5">
+          <div className="max-w-4xl mx-auto px-6">
+            <nav className="text-sm text-white/50 mb-6">
+              <Link to="/" className="hover:text-primary transition-colors">
+                Strona główna
+              </Link>
+              <span className="mx-2">/</span>
+              <span className="text-white/80">Wypożyczalnia</span>
+              <span className="mx-2">/</span>
+              <span className="text-white/80">E-rowery</span>
+            </nav>
+            <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Wypożyczalnia</h1>
+            <motion.h2
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight"
+            >
+              Odkryj Wolność na Dwóch Kołach - A Bo Co... Wypożyczalnia E-Rowerów: Jura i Śląsk
+            </motion.h2>
+          </div>
+        </section>
+
+        <section className="section-padding bg-dark">
+          <div className="max-w-6xl mx-auto px-6 space-y-8">
+            <div className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-5">
+              <p className="text-white/80 leading-relaxed text-lg">
+                Marzysz o przemierzaniu szlaków Jury Krakowsko-Częstochowskiej bez zadyszki? A może chcesz aktywnie spędzić weekend
+                w aglomeracji śląskiej? Nasza wypożyczalnia rowerów elektrycznych to przepustka do przygody, gdzie każde wzniesienie
+                staje się czystą przyjemnością.
+              </p>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                  <h3 className="text-primary font-bold text-lg mb-2">Gdzie nas znajdziesz? - Sezon letni</h3>
+                  <p className="text-white/70 leading-relaxed">
+                    Zapraszamy do serca Jury! Nasza baza mieści się przy Restauracji Złoty Jeleń w Złotym Potoku. To idealny punkt
+                    startowy na wycieczkę - zjedz pyszne śniadanie i ruszaj na podbój zamków.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                  <h3 className="text-primary font-bold text-lg mb-2">Poza sezonem / całorocznie</h3>
+                  <p className="text-white/70 leading-relaxed">Zapraszamy do naszej siedziby w Katowicach, ul. Niwna 9.</p>
+                </div>
+              </div>
+            </div>
+
+            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10">
+              <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Nasza flota: komfort i technologia</h3>
+              <h4 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-6">Kross Influx Hybrid 1.0</h4>
+              <p className="text-white/75 leading-relaxed mb-4">
+                Polski klasyk w wydaniu elektrycznym. Idealny na szutrowe drogi i leśne ścieżki. Intuicyjne wspomaganie sprawia, że
+                nawet po 40 kilometrach trasy będziesz mieć uśmiech na twarzy.
+              </p>
+              <p className="text-white/80 mb-6">
+                <span className="text-primary font-bold">Atuty:</span> Lekkość prowadzenia, solidna konstrukcja, świetny na jurajskie
+                pagórki, mocny silnik.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {KROSS_IMAGES.map((src, index) => (
+                  <motion.div key={src} whileHover={{ y: -6 }} transition={{ duration: 0.25 }} className="group relative overflow-visible pb-2">
+                    <img src={src} alt={`Kross Influx Hybrid 1.0 - zdjęcie ${index + 1}`} className="w-full aspect-[4/3] object-contain bg-transparent" loading="lazy" />
+                    <span className="pointer-events-none absolute left-0 right-0 bottom-0 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10">
+              <h4 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-6">WINORA Yucatan X8</h4>
+              <p className="text-white/75 leading-relaxed mb-4">
+                Niemiecka precyzja i trekkingowy komfort. Wyposażony w mocny silnik, który nie boi się stromych podjazdów. Idealny dla
+                osób ceniących wygodną geometrię ramy i stabilność.
+              </p>
+              <p className="text-white/80 mb-6">
+                <span className="text-primary font-bold">Atuty:</span> Wysoki moment obrotowy, kompletne wyposażenie wyprawowe,
+                elegancja.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {WINORA_IMAGES.map((src, index) => (
+                  <motion.div key={src} whileHover={{ y: -6 }} transition={{ duration: 0.25 }} className="group relative overflow-visible pb-2">
+                    <img src={src} alt={`WINORA Yucatan X8 - zdjęcie ${index + 1}`} className="w-full aspect-[4/3] object-contain bg-transparent" loading="lazy" />
+                    <span className="pointer-events-none absolute left-0 right-0 bottom-0 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-8">
+              <div>
+                <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Cennik i pakiety</h3>
+                <p className="text-white/75 leading-relaxed mb-5">
+                  Inwestujemy w Twój komfort, oferując przejrzyste zasady bez ukrytych kosztów.
+                </p>
+                <div className="space-y-3 md:hidden">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Wypożyczenie (1 doba)</p>
+                    <p className="text-primary font-bold mt-1">150 PLN</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Weekend (Pt-Nd)</p>
+                    <p className="text-primary font-bold mt-1">350 PLN</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Kaucja zwrotna (za rower)</p>
+                    <p className="text-primary font-bold mt-1">500 PLN</p>
+                  </div>
+                </div>
+                <div className="hidden md:block rounded-2xl border border-white/10 overflow-hidden">
+                  <table className="w-full text-left">
+                    <thead className="bg-white/5">
+                      <tr>
+                        <th className="px-4 py-3 text-white/60 uppercase tracking-wider text-xs">Usługa</th>
+                        <th className="px-4 py-3 text-white/60 uppercase tracking-wider text-xs">Cena</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Wypożyczenie (1 doba)</td>
+                        <td className="px-4 py-3 text-primary font-bold">150 PLN</td>
+                      </tr>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Weekend (Pt-Nd)</td>
+                        <td className="px-4 py-3 text-primary font-bold">350 PLN</td>
+                      </tr>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Kaucja zwrotna (za rower)</td>
+                        <td className="px-4 py-3 text-primary font-bold">500 PLN</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                  <h4 className="text-white font-bold mb-2">Pakiet "Duo" (2 rowery)</h4>
+                  <p className="text-primary font-bold">270 PLN / doba</p>
+                  <p className="text-white/65 mt-1">Oszczędzasz 30 PLN.</p>
+                </div>
+                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                  <h4 className="text-white font-bold mb-2">Pakiet "Rodzinny/Ekipa" (4 rowery)</h4>
+                  <p className="text-primary font-bold">500 PLN / doba</p>
+                  <p className="text-white/65 mt-1">Czwarty rower za pół ceny.</p>
+                </div>
+              </div>
+
+              <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                <h4 className="text-primary font-bold mb-2">Dowóz pod Twoje drzwi</h4>
+                <p className="text-white/75">Bezpłatny dowóz: do 15 km od naszych baz (Złoty Jeleń lub Katowice ul. Niwna 9).</p>
+                <p className="text-white/75 mt-2">Powyżej 15 km: dopłata 2,50 PLN / km (liczone w obie strony).</p>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-primary font-bold">Dlaczego warto wybrać właśnie nas?</h4>
+                <ul className="list-disc pl-6 text-white/75 space-y-1.5">
+                  <li>Sprzęt premium: Kross i Winora to gwarancja jakości oraz realnego zasięgu.</li>
+                  <li>Mobilność: dowozimy rower pod hotel, dom lub na start szlaku.</li>
+                  <li>Lokalizacja: ze Złotego Jelenia od razu ruszasz na najpiękniejsze trasy Jury.</li>
+                  <li>Wsparcie: przed każdą jazdą prowadzimy krótki instruktaż obsługi e-bike'a.</li>
+                </ul>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="text-primary font-bold">Płatności - szybko i bezpiecznie</h4>
+                <ul className="list-disc pl-6 text-white/75 space-y-1.5">
+                  <li>Dla klienta rekomendujemy BLIK lub kartę płatniczą (posiadamy terminale mobilne).</li>
+                  <li>Akceptujemy również przelewy natychmiastowe oraz gotówkę.</li>
+                  <li>Kaucja może być zabezpieczona preautoryzacją na karcie i wraca po zwrocie sprzętu.</li>
+                </ul>
+              </div>
+            </section>
+
+            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10" id="formularz-kontaktowy">
+              <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Zarezerwuj swój e-bike już dziś</h3>
+
+              <form className="space-y-5" onSubmit={handleSubmit}>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Imię i nazwisko*</label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.fullName}
+                      onChange={(event) => updateFormData('fullName', event.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Telefon*</label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(event) => updateFormData('phone', event.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Email*</label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.email}
+                      onChange={(event) => updateFormData('email', event.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Model roweru*</label>
+                    <div className="relative min-w-0">
+                      <select
+                        required
+                        value={formData.bikeModel}
+                        onChange={(event) => updateFormData('bikeModel', event.target.value)}
+                        className="w-full max-w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors appearance-none pr-10 truncate"
+                      >
+                        <option value="" className="bg-dark">
+                          Wybierz model
+                        </option>
+                        <option className="bg-dark">Kross Influx Hybrid 1.0</option>
+                        <option className="bg-dark">WINORA Yucatan X8</option>
+                      </select>
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none" size={18} />
+                    </div>
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Pakiet*</label>
+                    <div className="relative min-w-0">
+                      <select
+                        required
+                        value={formData.packageType}
+                        onChange={(event) => updateFormData('packageType', event.target.value)}
+                        className="w-full max-w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors appearance-none pr-10 truncate"
+                      >
+                        <option value="" className="bg-dark">
+                          Wybierz pakiet
+                        </option>
+                        <option className="bg-dark">1 rower</option>
+                        <option className="bg-dark">Pakiet Duo (oszczędność 30zł)</option>
+                        <option className="bg-dark">Pakiet Rodzinny/Ekipa (4 rowery) - czwarty rower -50%</option>
+                      </select>
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none" size={18} />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Termin*</label>
+                    <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                      <div className="flex-1">
+                        <input
+                          type="date"
+                          required
+                          value={formData.dateFrom}
+                          onChange={(event) => updateFormData('dateFrom', event.target.value)}
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                        />
+                      </div>
+                      <span className="text-primary font-bold self-center">-</span>
+                      <div className="flex-1">
+                        <input
+                          type="date"
+                          required
+                          value={formData.dateTo}
+                          onChange={(event) => updateFormData('dateTo', event.target.value)}
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-widest text-white/40">Wiadomość</label>
+                  <textarea
+                    rows={5}
+                    value={formData.message}
+                    onChange={(event) => updateFormData('message', event.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none"
+                  />
+                </div>
+                <p className="text-sm text-white/70 leading-relaxed">
+                  Przed rezerwacją zapoznaj się z{' '}
+                  <button
+                    type="button"
+                    className="text-primary font-semibold hover:underline"
+                    onClick={() => setIsRegulationsOpen(true)}
+                  >
+                    Regulaminem
+                  </button>
+                  , który podpiszesz przed wydaniem sprzętu.
+                </p>
+                <button type="submit" className="w-full btn-primary py-4 text-lg">
+                  Wyślij formularz
+                </button>
+              </form>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      {isRegulationsOpen && (
+        <div
+          className="fixed inset-0 z-[120] bg-dark/90 backdrop-blur-sm p-4 md:p-6 flex items-center justify-center"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Regulamin wypożyczalni rowerów elektrycznych"
+          onClick={() => setIsRegulationsOpen(false)}
+        >
+          <div
+            className="w-full max-w-4xl max-h-[88vh] overflow-y-auto rounded-3xl border border-white/10 bg-dark-lighter p-6 md:p-8"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-4 mb-5">
+              <h3 className="text-primary font-bold uppercase tracking-wider">Regulamin i umowa wynajmu</h3>
+              <button
+                type="button"
+                className="rounded-full border border-white/20 p-2 text-white hover:text-primary hover:border-primary/40 transition-colors"
+                onClick={() => setIsRegulationsOpen(false)}
+                aria-label="Zamknij regulamin"
+              >
+                <X size={18} />
+              </button>
+            </div>
+            <pre className="text-white/75 whitespace-pre-wrap leading-relaxed text-sm md:text-base font-sans">{REGULATIONS_TEXT}</pre>
+          </div>
+        </div>
+      )}
+
+      <Footer />
+    </div>
+  );
+}

@@ -1,0 +1,357 @@
+import { FormEvent, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'motion/react';
+import { ChevronDown, X } from 'lucide-react';
+import { Navbar } from '../components/Navbar';
+import { Footer } from '../components/Footer';
+
+const AUTOLAWETA_IMAGES = ['/images/wypozyczalnia/autolaweta/laweta-1.png', '/images/wypozyczalnia/autolaweta/laweta-2.png'];
+
+const REGULATIONS_TEXT = `REGULAMIN USŁUGI AUTO-LAWETA
+1. Usługa transportu realizowana jest przez A Bo Co... Sp. z o.o.
+2. Każde zlecenie wyceniane jest indywidualnie na podstawie trasy, czasu i rodzaju ładunku.
+3. Zleceniodawca odpowiada za poprawne informacje o ładunku, wymiarach i wadze.
+4. Załadunek i rozładunek realizowane są zgodnie z zasadami bezpieczeństwa.
+5. Szczegółowe warunki określa zlecenie transportowe i umowa.
+
+UMOWA TRANSPORTU AUTO-LAWETA nr ____/202X
+Data i miejsce zawarcia umowy: ________________________________________
+Wynajmujący: A Bo Co... sp. z o.o., ul. Niwna 9, 40-406 Katowice
+Zleceniodawca: ________________________________________________________
+Ładunek: ______________________________________________________________
+Trasa: ________________________________________________________________
+Termin: _______________________________________________________________
+Cena: _________________________________________________________________
+Podpisy stron: ________________________________________________________`;
+
+export default function RentalAutolawetaPage() {
+  const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    packageType: '',
+    cargoType: '',
+    dateFrom: '',
+    dateTo: '',
+    message: '',
+  });
+
+  const updateFormData = (field: keyof typeof formData, value: string) => {
+    setFormData((previous) => ({ ...previous, [field]: value }));
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    localStorage.setItem('autolawetaForm', JSON.stringify(formData));
+
+    const body = [
+      'Nowe zapytanie o Auto-lawete:',
+      '',
+      `Imie i nazwisko: ${formData.fullName}`,
+      `Telefon: ${formData.phone}`,
+      `Email: ${formData.email}`,
+      `Pakiet: ${formData.packageType}`,
+      `Rodzaj ladunku: ${formData.cargoType}`,
+      `Data od: ${formData.dateFrom}`,
+      `Data do: ${formData.dateTo}`,
+      '',
+      'Wiadomosc:',
+      formData.message || '-',
+    ].join('\n');
+
+    window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Zapytanie Auto-laweta')}&body=${encodeURIComponent(body)}`;
+  };
+
+  useEffect(() => {
+    if (!isRegulationsOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsRegulationsOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [isRegulationsOpen]);
+
+  useEffect(() => {
+    if (!lightboxImage) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setLightboxImage(null);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [lightboxImage]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('autolawetaForm');
+    if (!saved) return;
+    try {
+      const parsed = JSON.parse(saved);
+      setFormData((previous) => ({ ...previous, ...parsed }));
+    } catch {
+    }
+  }, []);
+
+  return (
+    <div className="bg-dark min-h-screen">
+      <Navbar />
+      <main>
+        <section className="section-padding bg-dark-lighter border-b border-white/5">
+          <div className="max-w-4xl mx-auto px-6">
+            <nav className="text-sm text-white/50 mb-6">
+              <Link to="/" className="hover:text-primary transition-colors">
+                Strona główna
+              </Link>
+              <span className="mx-2">/</span>
+              <span className="text-white/80">Wypożyczalnia</span>
+              <span className="mx-2">/</span>
+              <span className="text-white/80">Autolaweta</span>
+            </nav>
+            <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Wypożyczalnia</h1>
+            <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight">
+              Autolaweta 7-osobowa + Gabaryt
+            </motion.h2>
+          </div>
+        </section>
+
+        <section className="section-padding bg-dark">
+          <div className="max-w-6xl mx-auto px-6 space-y-8">
+            <div className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-5">
+              <h3 className="text-primary font-bold uppercase tracking-wider">Transport, który mieści więcej - ludzi i gabaryty</h3>
+              <p className="text-white/80 leading-relaxed text-lg">
+                Szukasz transportu, który nie kończy się na samym pojeździe? Nasza specjalistyczna autolaweta z 7-osobową kabiną to idealne
+                rozwiązanie, gdy musisz przewieźć ładunek razem z ekipą lub rodziną.
+              </p>
+              <p className="text-white/75 leading-relaxed">
+                Dysponujemy platformą o wymiarach 220 cm x 470 cm i ładowności do 1,6 tony. Jeśli coś zmieści się na naszej pace, my to przewieziemy.
+              </p>
+            </div>
+
+            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-6">
+              <h3 className="text-primary font-bold uppercase tracking-wider">Co najczęściej transportujemy?</h3>
+              <ul className="list-disc pl-6 text-white/75 space-y-2">
+                <li><span className="text-primary font-semibold">Pojazdy:</span> samochody osobowe, quady, motocykle, minikoparki.</li>
+                <li><span className="text-primary font-semibold">Budownictwo:</span> materiały budowlane, profile, długie elementy, palety.</li>
+                <li><span className="text-primary font-semibold">Ogród i rolnictwo:</span> kosiarki traktorki, mniejsze maszyny rolnicze.</li>
+                <li><span className="text-primary font-semibold">Nietypowe ładunki:</span> konstrukcje stalowe, zbiorniki, meble, łodzie, kajaki, dmuchańce.</li>
+              </ul>
+              <p className="text-white/75 leading-relaxed">
+                Dzięki dużej kabinie (6 pasażerów + kierowca) nie musisz organizować osobnego transportu dla ludzi. Oszczędzasz czas i pieniądze.
+              </p>
+              <div className="grid md:grid-cols-2 gap-4 pt-2">
+                {AUTOLAWETA_IMAGES.map((src, index) => (
+                  <button
+                    key={src}
+                    type="button"
+                    className="group relative overflow-hidden rounded-2xl border border-primary/40 bg-white/5 text-left"
+                    onClick={() => setLightboxImage(src)}
+                    aria-label={`Powiększ zdjęcie autolawety ${index + 1}`}
+                  >
+                    <img src={src} alt={`Autolaweta - zdjęcie ${index + 1}`} className="w-full h-full object-cover aspect-[4/3] transition-transform duration-300 group-hover:scale-[1.02]" loading="lazy" />
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-8">
+              <div>
+                <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Cennik i pakiety usług</h3>
+                <p className="text-white/75 leading-relaxed mb-5">
+                  Ceny mają charakter poglądowy i zależą od specyfiki ładunku. Przy stałej współpracy oferujemy indywidualne rabaty.
+                </p>
+                <div className="space-y-3 md:hidden">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Pakiet Lokalny (Szybki Strzał)</p>
+                    <p className="text-primary font-bold mt-1">do 30 km, od 250-350 zł</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Pakiet Trasa (Polska)</p>
+                    <p className="text-primary font-bold mt-1">powyżej 100 km, 2,50-3,20 zł / km (w obie strony)</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Pakiet Ekipa Remontowa</p>
+                    <p className="text-primary font-bold mt-1">wycena indywidualna</p>
+                  </div>
+                </div>
+                <div className="hidden md:block rounded-2xl border border-white/10 overflow-hidden">
+                  <table className="w-full text-left">
+                    <thead className="bg-white/5">
+                      <tr>
+                        <th className="px-4 py-3 text-white/60 uppercase tracking-wider text-xs">Pakiet</th>
+                        <th className="px-4 py-3 text-white/60 uppercase tracking-wider text-xs md:text-right">Warunki / cena</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Pakiet Lokalny (Szybki Strzał)</td>
+                        <td className="px-4 py-3 text-primary font-bold md:text-right">do 30 km, od 250-350 zł</td>
+                      </tr>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Pakiet Trasa (Polska)</td>
+                        <td className="px-4 py-3 text-primary font-bold md:text-right">powyżej 100 km, 2,50-3,20 zł / km (w obie strony)</td>
+                      </tr>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Pakiet Ekipa Remontowa</td>
+                        <td className="px-4 py-3 text-primary font-bold md:text-right">wycena indywidualna</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-primary font-bold mb-3">Parametry techniczne naszej jednostki</h4>
+                <div className="space-y-3 md:hidden">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Wymiary platformy</p>
+                    <p className="text-primary font-bold mt-1">220 cm x 470 cm</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Ładowność</p>
+                    <p className="text-primary font-bold mt-1">do 1,6 tony</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Liczba miejsc</p>
+                    <p className="text-primary font-bold mt-1">7 (kierowca + 6 pasażerów)</p>
+                  </div>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <p className="text-white/70 text-sm">Wyposażenie</p>
+                    <p className="text-primary font-bold mt-1">wyciągarka elektryczna, pasy transportowe, najazdy</p>
+                  </div>
+                </div>
+                <div className="hidden md:block rounded-2xl border border-white/10 overflow-hidden">
+                  <table className="w-full text-left">
+                    <thead className="bg-white/5">
+                      <tr>
+                        <th className="px-4 py-3 text-white/60 uppercase tracking-wider text-xs">Cecha</th>
+                        <th className="px-4 py-3 text-white/60 uppercase tracking-wider text-xs md:text-right">Specyfikacja</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Wymiary platformy</td>
+                        <td className="px-4 py-3 text-primary font-bold md:text-right">220 cm x 470 cm</td>
+                      </tr>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Ładowność</td>
+                        <td className="px-4 py-3 text-primary font-bold md:text-right">do 1,6 tony</td>
+                      </tr>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Liczba miejsc</td>
+                        <td className="px-4 py-3 text-primary font-bold md:text-right">7 (kierowca + 6 pasażerów)</td>
+                      </tr>
+                      <tr className="border-t border-white/10">
+                        <td className="px-4 py-3 text-white/80">Wyposażenie</td>
+                        <td className="px-4 py-3 text-primary font-bold md:text-right">wyciągarka elektryczna, pasy transportowe, najazdy</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </section>
+
+            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10" id="formularz-kontaktowy">
+              <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Zadzwoń i zapytaj o wolny termin</h3>
+              <p className="text-white/70 mb-6">Działamy na terenie Katowic, aglomeracji śląskiej i całej Polski.</p>
+              <form className="space-y-5" onSubmit={handleSubmit}>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Imię i nazwisko*</label>
+                    <input type="text" required value={formData.fullName} onChange={(event) => updateFormData('fullName', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Telefon*</label>
+                    <input type="tel" required value={formData.phone} onChange={(event) => updateFormData('phone', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Email*</label>
+                    <input type="email" required value={formData.email} onChange={(event) => updateFormData('email', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Pakiet*</label>
+                    <div className="relative min-w-0">
+                      <select required value={formData.packageType} onChange={(event) => updateFormData('packageType', event.target.value)} className="w-full max-w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors appearance-none pr-10 truncate">
+                        <option value="" className="bg-dark">Wybierz pakiet</option>
+                        <option className="bg-dark">Pakiet Lokalny (Szybki Strzał)</option>
+                        <option className="bg-dark">Pakiet Trasa (Polska)</option>
+                        <option className="bg-dark">Pakiet Ekipa Remontowa</option>
+                      </select>
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none" size={18} />
+                    </div>
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-5">
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Rodzaj ładunku*</label>
+                    <input type="text" required value={formData.cargoType} onChange={(event) => updateFormData('cargoType', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Termin*</label>
+                    <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                      <div className="flex-1">
+                        <input type="date" required value={formData.dateFrom} onChange={(event) => updateFormData('dateFrom', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                      </div>
+                      <span className="text-primary font-bold self-center">-</span>
+                      <div className="flex-1">
+                        <input type="date" required value={formData.dateTo} onChange={(event) => updateFormData('dateTo', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-widest text-white/40">Wiadomość</label>
+                  <textarea rows={5} value={formData.message} onChange={(event) => updateFormData('message', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none" />
+                </div>
+                <p className="text-sm text-white/70 leading-relaxed">
+                  Przed wysłaniem zapytania zapoznaj się z{' '}
+                  <button type="button" className="text-primary font-semibold hover:underline" onClick={() => setIsRegulationsOpen(true)}>
+                    Regulaminem
+                  </button>
+                  .
+                </p>
+                <button type="submit" className="w-full btn-primary py-4 text-lg">Wyślij formularz</button>
+              </form>
+            </section>
+          </div>
+        </section>
+      </main>
+
+      {isRegulationsOpen && (
+        <div className="fixed inset-0 z-[120] bg-dark/90 backdrop-blur-sm p-4 md:p-6 flex items-center justify-center" role="dialog" aria-modal="true" aria-label="Regulamin usługi autolaweta" onClick={() => setIsRegulationsOpen(false)}>
+          <div className="w-full max-w-4xl max-h-[88vh] overflow-y-auto rounded-3xl border border-white/10 bg-dark-lighter p-6 md:p-8" onClick={(event) => event.stopPropagation()}>
+            <div className="flex items-start justify-between gap-4 mb-5">
+              <h3 className="text-primary font-bold uppercase tracking-wider">Regulamin i umowa usługi autolaweta</h3>
+              <button type="button" className="rounded-full border border-white/20 p-2 text-white hover:text-primary hover:border-primary/40 transition-colors" onClick={() => setIsRegulationsOpen(false)} aria-label="Zamknij regulamin">
+                <X size={18} />
+              </button>
+            </div>
+            <pre className="text-white/75 whitespace-pre-wrap leading-relaxed text-sm md:text-base font-sans">{REGULATIONS_TEXT}</pre>
+          </div>
+        </div>
+      )}
+
+      {lightboxImage && (
+        <div className="fixed inset-0 z-[130] bg-black/90 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center" role="dialog" aria-modal="true" aria-label="Powiększone zdjęcie autolawety" onClick={() => setLightboxImage(null)}>
+          <button type="button" className="absolute top-4 right-4 rounded-full border border-white/20 p-2 text-white hover:text-primary hover:border-primary/40 transition-colors" onClick={() => setLightboxImage(null)} aria-label="Zamknij podgląd zdjęcia">
+            <X size={18} />
+          </button>
+          <img src={lightboxImage} alt="Autolaweta - powiększenie" className="max-h-[90vh] max-w-full object-contain rounded-xl shadow-2xl" onClick={(event) => event.stopPropagation()} />
+        </div>
+      )}
+
+      <Footer />
+    </div>
+  );
+}
