@@ -167,11 +167,21 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-white/30 text-xs uppercase tracking-widest">
-          <p>Wszystkie prawa zastrzeżone © 2026 Ja-yhymm</p>
-          <div className="flex gap-8">
-            <a href="#" className="hover:text-primary transition-colors">Polityka prywatności</a>
-            <a href="#" className="hover:text-primary transition-colors">Regulamin</a>
+        <div className="pt-12 border-t border-white/5 text-center space-y-3">
+          <p className="text-xs tracking-wide text-white/40">Wszystkie prawa zastrzeżone © 2026 JA YHYMM</p>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-xs tracking-wide">
+            <Link to="/kontakt" className="text-white hover:text-primary transition-colors">
+              Polityka prywatności
+            </Link>
+            <Link to="/kontakt/regulaminy" className="text-white hover:text-primary transition-colors">
+              Regulamin
+            </Link>
+          </div>
+          <div className="text-xs tracking-wide">
+            <span className="text-white/40">Design &amp; Realizacja: </span>
+            <a href="https://patryktomczyk.dev" target="_blank" rel="noreferrer" className="text-white hover:text-primary transition-colors">
+              patryktomczyk.dev
+            </a>
           </div>
         </div>
       </div>
