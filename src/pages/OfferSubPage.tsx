@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { ArrowRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { getOfferBySlug } from '../data/offerPages';
 
 const SCHOOL_TRIP_TOPICS = [
@@ -163,27 +165,111 @@ const EVENTS_GALLERY = [
   { src: '/images/eventy/eventy.png', alt: 'Sprzęt i atrakcje eventowe w plenerze' },
   { src: '/images/eventy/eventy1.png', alt: 'Uczestnicy eventu podczas integracji' },
   { src: '/images/eventy/eventy3.png', alt: 'Wieczorna część integracyjna z animacjami' },
+  { src: '/images/eventy/eventy-firma-1.png', alt: 'Zespół uczestników wydarzenia firmowego pod wiatą' },
+  { src: '/images/eventy/eventy-firma-2.png', alt: 'Wieczorna integracja firmowa przy ognisku' },
+  { src: '/images/eventy/eventy-firma-3.png', alt: 'Aktywności strzeleckie podczas eventu firmowego' },
 ];
 
-const EQUIPMENT_RENTAL_ITEMS = [
-  'Sprzęt paintballowy (markery, maski, mundury, kamizelki)',
-  'Quady różnej wielkości i pojemności',
-  'Samochody terenowe (opcja tylko z kierowcą)',
-  'Ścianka wspinaczkowa (pneumatyczna z 4 drogami wspinaczkowymi)',
-  'Zamek dmuchany',
-  'Kajaki (dwuosobowe z włókna szklanego), wiosła, kamizelki',
-  'Rowery, kaski',
-  'Przyczepa towarowa',
-  'Motyl holowniczy',
-  'Bus 9-cio osobowy (opcja tylko z kierowcą)',
-  'Autolaweta (opcja tylko z kierowcą)',
-];
+const RENTAL_WWW_TILES = [
+  {
+    to: '/wypozyczalnia/e-rowery',
+    title: 'E-rowery',
+    description:
+      'Rower elektryczny na Jurze i Śląsku — komfortowe pokonywanie wzniesień i szlaków bez zadyszki, z opcją dowozu i pełnym wsparciem wypożyczalni.',
+    img: '/images/wypozyczalnia/e-rowery/kross-1-v3.png',
+  },
+  {
+    to: '/wypozyczalnia/kajaki',
+    title: 'Kajaki',
+    description:
+      'KAJAKO-MOBIL — mobilny wynajem kajaków polietylenowych z kompletem osprzętu i możliwością dowozu pod wskazane miejsce.',
+    img: '/images/wypozyczalnia/kajaki/kajaki-hero.png',
+  },
+  {
+    to: '/wypozyczalnia/vip-bus',
+    title: 'VIP Bus',
+    description:
+      '9-osobowy bus klasy VIP — komfortowy transport na eventy, wyjazdy i transfery, z indywidualną wyceną trasy.',
+    img: '/images/wypozyczalnia/vip-bus/bus-1.png',
+  },
+  {
+    to: '/wypozyczalnia/autolaweta',
+    title: 'Autolaweta',
+    description:
+      'Autolaweta 7-osobowa z kabiną — transport pojazdów i ładunków gabarytowych, zlecenia ustalane indywidualnie.',
+    img: '/images/wypozyczalnia/autolaweta/laweta-1.png',
+  },
+  {
+    to: '/wypozyczalnia/dmuchance',
+    title: 'Dmuchańce i eventy',
+    description:
+      'Atrakcje plenerowe z obsługą — m.in. dmuchańce i ścianka wspinaczkowa, rozstaw i logistyka pod Twoją imprezę.',
+    img: '/images/wynajem-sprzetu/scianka.png',
+  },
+] as const;
 
-const EQUIPMENT_RENTAL_GALLERY = [
-  { src: '/images/wynajem-sprzetu/quady.png', alt: 'Quady i samochód terenowy dostępne na wynajem' },
-  { src: '/images/wynajem-sprzetu/scianka.png', alt: 'Pneumatyczna ścianka wspinaczkowa na wydarzeniu plenerowym' },
-  { src: '/images/eventy/eventy.png', alt: 'Sprzęt eventowy możliwy do wynajęcia na imprezy' },
-];
+const EQUIPMENT_RENTAL_CATALOG = [
+  {
+    text: 'Sprzęt paintballowy (markery, maski, mundury, kamizelki)',
+    img: '/images/eventy/eventy.png',
+    alt: 'Sprzęt paintballowy i atrakcje terenowe',
+  },
+  {
+    text: 'Quady różnej wielkości i pojemności',
+    img: '/images/wynajem-sprzetu/quady.png',
+    alt: 'Quady dostępne do wynajęcia',
+  },
+  {
+    text: 'Samochody terenowe (opcja tylko z kierowcą)',
+    img: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-4.png',
+    alt: 'Samochód terenowy 4×4 podczas jazdy off-road',
+  },
+  {
+    text: 'Ścianka wspinaczkowa (pneumatyczna z 4 drogami wspinaczkowymi)',
+    img: '/images/wynajem-sprzetu/scianka.png',
+    alt: 'Pneumatyczna ścianka wspinaczkowa',
+  },
+  {
+    text: 'Zamek dmuchany',
+    img: '/images/wynajem-sprzetu/zamek-dmuchany.png',
+    alt: 'Kolorowy zamek dmuchany na trawie',
+  },
+  {
+    text: 'Kajaki (dwuosobowe z włókna szklanego), wiosła, kamizelki',
+    img: '/images/wypozyczalnia/kajaki/kajak-1.png',
+    alt: 'Kajak z osprzętem',
+  },
+  {
+    text: 'Rowery, kaski',
+    img: '/images/wypozyczalnia/e-rowery/winora-1-v3.png',
+    alt: 'Rower elektryczny z kaskiem',
+  },
+  {
+    text: 'Przyczepa towarowa',
+    img: '/images/wynajem-sprzetu/przyczepa-towarowa.png',
+    alt: 'Dwuośowa przyczepa towarowa z najazdem',
+  },
+  {
+    text: 'Motyl holowniczy',
+    img: '/images/wynajem-sprzetu/motyl-holowniczy.png',
+    alt: 'Motyl holowniczy — wózek transportowy',
+  },
+  {
+    text: 'Bus 9-cio osobowy (opcja tylko z kierowcą)',
+    img: '/images/wypozyczalnia/vip-bus/bus-2.png',
+    alt: 'Bus 9-osobowy',
+  },
+  {
+    text: 'Autolaweta (opcja tylko z kierowcą)',
+    img: '/images/wypozyczalnia/autolaweta/laweta-2.png',
+    alt: 'Autolaweta z ładunkiem',
+  },
+] as const;
+
+const EQUIPMENT_RENTAL_LIGHTBOX_IMAGES: GalleryImageItem[] = EQUIPMENT_RENTAL_CATALOG.map((item) => ({
+  src: item.img,
+  alt: item.alt,
+}));
 
 const TRAININGS_ITEMS = [
   'Kursy/szkolenia wspinaczkowe (różne poziomy zaawansowania)',
@@ -214,17 +300,60 @@ const TRANSPORT_ITEMS = [
 const TRANSPORT_GALLERY = [
   { src: '/images/transport/transport2.png', alt: 'Autolaweta i przyczepa z quadem podczas transportu nocnego' },
   { src: '/images/transport/transport1.png', alt: 'Flota transportowa na stacji paliw' },
-  { src: '/images/transport/transport3.png', alt: 'Bus 9-osobowy wykorzystywany do przewozu' },
+  { src: '/images/wypozyczalnia/vip-bus/bus-1.png', alt: 'VIP Bus z wypożyczalni — transport pasażerski' },
 ];
 
-const ACCOMMODATION_GALLERY = [
-  { src: '/utils/oferta-letnia/jura-military-camp/gallery/lesna-baza-1.png', alt: 'Leśna Baza z lotu ptaka' },
-  { src: '/utils/oferta-letnia/jura-military-camp/gallery/lesna-baza-2.png', alt: 'Domki i infrastruktura noclegowa Leśnej Bazy' },
+const ACCOMMODATION_LESNA_GALLERY = '/utils/oferta-letnia/jura-military-camp/gallery';
+const ACCOMMODATION_ZLOTY_GALLERY = '/utils/oferta-letnia/zloty-jelen';
+const ACCOMMODATION_NAMIOTY_NS64 = '/images/baza-noclegowa/namioty-ns64.png';
+
+const ACCOMMODATION_CARD_HOVER =
+  'transition-all duration-300 hover:border-primary/50 hover:bg-white/[0.05] hover:shadow-[0_0_36px_rgba(247,199,59,0.07)]';
+
+/** Zakwaterowanie jak na Jura Multi Camp — te same opisy i zdjęcia Złotego Jelenia; w Leśnej Bazie drugie zdjęcie to namioty NS 64 z naszej bazy. */
+const ACCOMMODATION_VENUE_BLOCKS = [
+  {
+    blockTitle: 'Leśna Baza (Janów)',
+    paragraphs: [
+      'Turnusy: 27.06 – 06.07 oraz 16.08 – 25.08.',
+      'Noclegi w drewnianych domkach letniskowych w „Leśnej Bazie” w Janowie, na Jurze Krakowsko-Częstochowskiej.',
+      'Domki 6–8-osobowe z łazienkami, możliwe łóżka piętrowe.',
+      'Do dyspozycji uczestników: budynek z jadalnią, świetlica, miejsce na ognisko, teren rekreacyjny.',
+      'Kod imprezy: KPOH.',
+    ],
+    images: [
+      { src: `${ACCOMMODATION_LESNA_GALLERY}/lesna-baza-1.png`, alt: 'Leśna Baza — obóz w lesie, widok z góry' },
+      {
+        src: ACCOMMODATION_NAMIOTY_NS64,
+        alt: 'Namioty wojskowe NS 64 na terenie bazy — uczestnicy przy namiotach',
+      },
+    ],
+  },
+  {
+    blockTitle: '„Złoty Jeleń” (Złoty Potok)',
+    paragraphs: [
+      'Turnusy: 07.07 – 16.07, 17.07 – 26.07, 27.07 – 05.08 oraz 06.08 – 15.08.',
+      'Noclegi w Ośrodku Wypoczynkowym „Złoty Jeleń” w miejscowości Złoty Potok, na terenie rezerwatu przyrody Parkowe.',
+      'Pokoje 3– i 4-osobowe z łazienką, Wi-Fi.',
+      'Do dyspozycji uczestników: jadalnia, sala kominkowa, sala dyskotekowa, duży teren rekreacyjny do gier i zabaw.',
+      'Kod imprezy: KPOJ.',
+    ],
+    images: [
+      { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-1.png`, alt: 'Ośrodek Złoty Jeleń — zabudowa wśród zieleni' },
+      { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-2.png`, alt: 'Złoty Jeleń — teren rekreacyjny ośrodka' },
+      { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-3.png`, alt: 'Złoty Jeleń — wnętrza i infrastruktura' },
+      { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-4.png`, alt: 'Złoty Jeleń — pokój gościnny z łóżkami, widok na las' },
+    ],
+  },
 ];
+
+const ACCOMMODATION_LIGHTBOX_IMAGES = ACCOMMODATION_VENUE_BLOCKS.flatMap((b) => b.images);
 
 const SERVICE_BASE_GALLERY = [
-  { src: '/images/eventy/eventy.png', alt: 'Sprzęt specjalistyczny wykorzystywany w działaniach terenowych' },
-  { src: '/images/serwis/serwis.png', alt: 'Narzędzia wykorzystywane w bazie serwisowej' },
+  { src: '/images/serwis/serwis-1.png', alt: 'Quad podczas prac serwisowych w warsztacie' },
+  { src: '/images/serwis/serwis-2.png', alt: 'Samochód terenowy w trakcie naprawy w bazie serwisowej' },
+  { src: '/images/serwis/serwis-3.png', alt: 'Serwisowanie quadów i motocykli czterokołowych w warsztacie' },
+  { src: '/images/serwis/serwis-4.png', alt: 'Komora silnika samochodu terenowego po obsłudze serwisowej' },
 ];
 
 export default function OfferSubPage() {
@@ -248,8 +377,9 @@ export default function OfferSubPage() {
   const trainingsHeroSrc = '/images/szkolenia/szkolenia2.png';
   const transportHeroSrc = '/images/transport/transport2.png';
   const accommodationHeroSrc = '/utils/oferta-letnia/jura-military-camp/gallery/lesna-baza-1.png';
-  const serviceBaseHeroSrc = '/images/eventy/eventy.png';
+  const serviceBaseHeroSrc = '/images/serwis/serwis-1.png';
   const [activeUniformedModuleId, setActiveUniformedModuleId] = useState(UNIFORMED_MODULES[0].id);
+  const [offerGallery, setOfferGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const activeUniformedModule = useMemo(
     () => UNIFORMED_MODULES.find((module) => module.id === activeUniformedModuleId) ?? UNIFORMED_MODULES[0],
     [activeUniformedModuleId]
@@ -266,13 +396,13 @@ export default function OfferSubPage() {
       <main>
         <section
           className={`section-padding border-b border-white/5 ${
-            isSchoolTripsPage || isUniformedClassesPage || isEventsPage || isEquipmentRentalPage || isTrainingPage
+            isSchoolTripsPage || isUniformedClassesPage || isEventsPage || isBachelorAndBachelorettePage || isEquipmentRentalPage || isTrainingPage
               || isTransportPage || isAccommodationPage || isServiceBasePage
               ? 'relative overflow-hidden'
               : 'bg-dark-lighter'
           }`}
         >
-          {(isSchoolTripsPage || isUniformedClassesPage || isEventsPage || isEquipmentRentalPage || isTrainingPage || isTransportPage || isAccommodationPage || isServiceBasePage) && (
+          {(isSchoolTripsPage || isUniformedClassesPage || isEventsPage || isBachelorAndBachelorettePage || isEquipmentRentalPage || isTrainingPage || isTransportPage || isAccommodationPage || isServiceBasePage) && (
             <>
               <div
                 className="absolute inset-0 bg-cover bg-center"
@@ -284,6 +414,8 @@ export default function OfferSubPage() {
                         ? uniformedHeroSrc
                         : isEventsPage
                           ? eventsHeroSrc
+                          : isBachelorAndBachelorettePage
+                            ? '/images/eventy/eventy3.png'
                           : isEquipmentRentalPage
                             ? equipmentRentalHeroSrc
                             : isTrainingPage
@@ -294,10 +426,14 @@ export default function OfferSubPage() {
                                   ? accommodationHeroSrc
                                   : serviceBaseHeroSrc
                   })`,
+                  backgroundPosition: isEventsPage || isBachelorAndBachelorettePage ? 'center 35%' : 'center',
                 }}
                 aria-hidden
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/65 to-dark/55" aria-hidden />
+              <div
+                className={`absolute inset-0 ${isBachelorAndBachelorettePage ? 'bg-black/20' : 'bg-gradient-to-t from-dark via-dark/65 to-dark/55'}`}
+                aria-hidden
+              />
             </>
           )}
           <div className="max-w-4xl mx-auto px-6">
@@ -335,7 +471,7 @@ export default function OfferSubPage() {
             )}
             {isBachelorAndBachelorettePage && (
               <p className="relative z-10 text-base md:text-lg text-white/85 leading-relaxed max-w-3xl">
-                Organizujemy wieczory kawalerskie i panieńskie od A do Z - od logistyki i miejsca po scenariusz całego wydarzenia.
+                Wieczór kawalerski lub panieński nie musi kojarzyć się tylko i wyłącznie z utratą pamięci oraz striptizem.
               </p>
             )}
             {isEquipmentRentalPage && (
@@ -550,10 +686,16 @@ export default function OfferSubPage() {
                   </div>
 
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {UNIFORMED_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover" loading="lazy" />
-                      </figure>
+                    {UNIFORMED_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setOfferGallery({ images: UNIFORMED_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
 
@@ -611,105 +753,232 @@ export default function OfferSubPage() {
                 </div>
               ) : isEventsPage ? (
                 <div className="space-y-8 text-white/80 leading-relaxed">
-                  <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Imprezy integracyjne</h3>
-                    <p>
-                      Organizacja imprez dla firm jest jednym z ważniejszych elementów naszej działalności. Przygotowujemy imprezy na miejscu jak
-                      pikniki firmowe, turnieje oraz imprezy wyjazdowe - integracyjne, szkoleniowe i motywacyjne. Tworzymy scenariusze letnie i
-                      zimowe oraz szeroką gamę zajęć rekreacyjnych, rekreacyjno-sportowych i integracyjnych (team building).
-                    </p>
-                    <p className="mt-4">
-                      Zawsze staramy się optymalnie dopasować scenariusz imprezy do oczekiwań uczestników, dlatego oprócz gotowych propozycji
-                      przygotowujemy też programy autorskie pod kątem danej firmy. Program budujemy zależnie od profilu grupy, liczby uczestników i
-                      budżetu, dlatego cennik opracowujemy indywidualnie pod każde zamówienie. Stopień trudności jest dopasowany tak, aby wszyscy -
-                      bez względu na płeć i wiek - mogli aktywnie uczestniczyć.
-                    </p>
-                  </div>
+                  <p>
+                    Organizacja imprez firmowych stanowi jeden z kluczowych obszarów działalności firmy JA YHYMM – Integracja, Sport, Turystyka,
+                    Wypoczynek. Specjalizujemy się w kompleksowym przygotowaniu wydarzeń, które łączą w sobie elementy integracji zespołu, aktywności
+                    fizycznej oraz atrakcyjnego wypoczynku.
+                  </p>
+                  <p>
+                    Realizujemy zarówno wydarzenia lokalne, takie jak pikniki firmowe, festyny, gry terenowe czy turnieje sportowe, jak i wyjazdy
+                    integracyjne, szkoleniowe oraz motywacyjne – w kraju i za granicą. Każde wydarzenie tworzymy od podstaw, opracowując spójny i
+                    angażujący scenariusz dopasowany do charakteru grupy oraz celów organizacji.
+                  </p>
+                  <p>
+                    W naszej ofercie znajdują się programy letnie i zimowe, obejmujące szeroki wachlarz aktywności: od rekreacyjnych, przez sportowe,
+                    aż po rozbudowane scenariusze team buildingowe. Proponujemy m.in. gry zespołowe, warsztaty integracyjne, wyzwania terenowe,
+                    zajęcia outdoorowe oraz kreatywne formy współpracy, które wzmacniają relacje i poprawiają komunikację w zespole.
+                  </p>
+                  <p>
+                    Każdy projekt traktujemy indywidualnie. Oprócz gotowych pakietów oferujemy autorskie programy tworzone na miarę – uwzględniające
+                    specyfikę firmy, jej kulturę organizacyjną oraz oczekiwania uczestników. Scenariusz wydarzenia budujemy w oparciu o profil grupy,
+                    liczbę uczestników, poziom zaawansowania oraz założony budżet.
+                  </p>
+                  <p>
+                    Dbamy o to, aby proponowane aktywności były dostępne dla wszystkich – niezależnie od wieku, płci czy kondycji fizycznej. Stopień
+                    trudności oraz dynamika zajęć są odpowiednio wyważone, tak aby każdy uczestnik mógł aktywnie i komfortowo wziąć udział w
+                    wydarzeniu, czerpiąc z niego satysfakcję i pozytywne doświadczenia.
+                  </p>
+                  <p>
+                    Cennik każdorazowo opracowujemy indywidualnie, gwarantując optymalne dopasowanie oferty do potrzeb i możliwości klienta.
+                  </p>
 
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {EVENTS_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover" loading="lazy" />
-                      </figure>
+                    {EVENTS_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setOfferGallery({ images: EVENTS_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
-                  </div>
-
-                  <div className="border-t border-white/10 pt-8">
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Wieczory kawalerskie i panieńskie</h3>
-                    <p>
-                      Fundacja JA YHYMM... Integracja, Sport, Turystyka, Wypoczynek jest właścicielem marki Kawalerskie-Panienskie.pl, która zajmuje
-                      się profesjonalną organizacją najlepszych wieczorów kawalerskich i panieńskich.
-                    </p>
-                    <p className="mt-4">
-                      Wieczór kawalerski i panieński nie musi kojarzyć się tylko i wyłącznie z utratą pamięci oraz striptizem (aczkolwiek obydwu tych
-                      rzeczy nie wykluczamy). Proponujemy Wam coś zupełnie innego. Specjalizujemy się w kompleksowej organizacji „ostatnich dni
-                      wolności” od transportu, poprzez lokal i miejsce imprezy, aż po pełną formułę całego wydarzenia.
-                    </p>
-                    <a
-                      href="http://kawalerskie-panienskie.pl"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex mt-6 px-6 py-3 rounded-full bg-primary text-dark font-bold uppercase tracking-wider text-xs md:text-sm hover:opacity-90 transition-opacity"
-                    >
-                      Przejdź do kawalerskie-panienskie.pl
-                    </a>
                   </div>
                 </div>
               ) : isBachelorAndBachelorettePage ? (
                 <div className="space-y-8 text-white/80 leading-relaxed">
                   <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Wieczory kawalerskie i panieńskie</h3>
                     <p>
-                      Fundacja JA YHYMM... Integracja, Sport, Turystyka, Wypoczynek jest właścicielem marki Kawalerskie-Panienskie.pl, która zajmuje
-                      się profesjonalną organizacją najlepszych wieczorów kawalerskich i panieńskich.
+                      Wieczór kawalerski lub panieński… …nie musi kojarzyć się tylko i wyłącznie z utratą pamięci oraz striptizem (aczkolwiek obydwu
+                      tych rzeczy nie wykluczamy). Proponujemy Wam coś zupełnie innego.
                     </p>
                     <p className="mt-4">
-                      Wieczór kawalerski i panieński nie musi kojarzyć się tylko i wyłącznie z utratą pamięci oraz striptizem (aczkolwiek obydwu tych
-                      rzeczy nie wykluczamy). Proponujemy Wam coś zupełnie innego. Specjalizujemy się w kompleksowej organizacji „ostatnich dni
-                      wolności” od transportu, poprzez lokal i miejsce imprezy, aż po pełną formułę całego wydarzenia.
+                      Specjalizujemy się: w kompleksowej organizacji „OSTATNICH DNI WOLNOŚCI” od transportu, poprzez lokal, miejsce gdzie ma się odbyć
+                      impreza, a przede wszystkim specjalizujemy się w formie w jakiej to wszystko ma się odbyć.
                     </p>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">W Siodle</h3>
+                      <p>
+                        To propozycja dla wszystkich tych, którzy nie wyobrażają sobie życia bez koni lub chcą dopiero spróbować swoich sił w tej
+                        dziedzinie. Ten wieczór spędzamy w siodle, w zależności od stopnia zaawansowania jeździeckiego może to być wyprawa na
+                        malowniczy teren, jazda na padoku czy na hali. Całość może być zakończona imprezą na terenie stadniny gdzie mamy do dyspozycji
+                        piękną, klimatyczną salę kominkową lub równie klimatyczną wiatę grillową.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Pierwsza Pomoc</h3>
+                      <p>
+                        Tego wieczoru musicie koniecznie zachorować, a my będziemy Was leczyć. Oczywiście obsługa medyczna będzie bardzo HOT i przez
+                        cały wieczór będziecie w dobrych rękach. W trakcie imprezy mnóstwo zabaw, konkursów „medycznych” po których już nigdy nie
+                        będziecie chcieli być zdrowi, a medykamenty będą lały się strumieniami.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Militarnie</h3>
+                      <p>
+                        Musztra tego wieczoru to oczywiście podstawa, a karabin to Twój jedyny przyjaciel. Poza tym mnóstwo strzelania (ASG,
+                        Paintball), czołgania, ćwiczeń w małpim gaju, wyzwisk i przekleństw czyli FALA w najlepszym wydaniu. Z pewnością nie będzie
+                        nudno.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Off Road</h3>
+                      <p>
+                        Piach, błoto, woda, przeszkody to będzie charakteryzowało ten wieczór. Wszystkie te przeciwności losu postaramy się pokonać za
+                        pomocą samochodów terenowych i quadów. Poznacie możliwości różnego rodzaju pojazdów terenowych oraz ich niekonwencjonalne
+                        zastosowanie. Ostre pojazdy, oraz strome zjazdy i przechyły z pewnością dostarczą mnóstwa wrażeń i adrenaliny. Możemy również
+                        wybrać się na wyprawę nocną, co dodatkowo potęguje wrażenia. Po spędzeniu kilku godzin w terenie istnieje możliwość
+                        zorganizowania imprezy w motoryzacyjnych klimatach.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Porwanie</h3>
+                      <p>
+                        Każdy na kogo dostaniemy zlecenie zostanie porwany (np. przez bramkarzy na dyskotece, zatrzymany przez „ABW”, przetrzymany i
+                        odpowiednio przesłuchany. Całość oczywiście musi być przygotowana z odpowiednim wyprzedzeniem czasowym oraz w pełnej
+                        konspiracji przed „głównym zainteresowanym”.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Klasycznie</h3>
+                      <p>
+                        W tym przypadku poza naszym profesjonalizmem niczym szczególnym was niezaskoczymy. Zorganizujemy waszą imprezę w klubie, pubie,
+                        mieszkaniu, limuzynie i tam gdzie sobie wymyślicie. Może być to np. impreza karaoke, dyskoteka lat 80/90, impreza techno,
+                        wieczór w klimatach PRL itp. Z pewnością będzie imprezowo.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Na Wodzie</h3>
+                      <p>
+                        Chcesz poczuć się tego wieczoru jak prawdziwy WILK MORSKI? Masz to załatwione! Na tej imprezie z każdego szczura lądowego
+                        zrobimy prawdziwego wilka morskiego. Tego dnia będziemy spędzali czas pod żaglami, popływamy łodzią motorową, jak również
+                        spróbujemy swoich sił w kajaku. Możemy popływać również za motorówką na bananie, kole wodnym, platformie dwuosobowej lub w
+                        stroju sumo – jednym słowem, mnóstwo mokrej zabawy. Oczywiście chrzest morski nikogo nie ominie. Całość możemy zakończyć
+                        imprezą w żeglarskiej tawernie. Tę imprezę śmiało możemy nazwać PRZECHYŁ, ponieważ ta pozycja będzie dominowała cały czas!
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Wspinaczka</h3>
+                      <p>
+                        Tego wieczoru bez liny ani rusz. W zależności od stopnia zaawansowania w tej tematyce uczestników wieczoru będziemy się bawili
+                        na sztucznej ścianie wspinaczkowej, w skałach, jaskiniach, zjedziemy na mega tyrolce oraz poszybujemy na linie pionowo w dół, a
+                        jeżeli zechcecie aby ten wieczór był naprawdę inny niż wszystkie, możecie spędzić go np. w uprzężach zawieszeni pod skałą, a my
+                        zorganizujemy Wam tam imprezę. O tym będziecie jeszcze długo mówili.
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Pod Wodą</h3>
+                      <p>
+                        To propozycja zarówno dla tych, którzy posiadają już patent nurkowy, jak również dla osób, które chcą dopiero po raz pierwszy
+                        spróbować swoich zejść pod wodę w sprzęcie płetwonurka (aqualungu). W zależności od zaawansowania nurkowego proponujemy
+                        nurkowania nocne, nurkowanie na wraku, gry i konkursy pod wodą. GWARANTUJEMY, że zabawa zacznie się już w trakcie ubierania
+                        sprzętu.
+                      </p>
+                      <p className="mt-4">Istnieje możliwość zorganizowania, zaręczyn pod wodą!</p>
+                    </div>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Survival</h3>
+                      <p>
+                        Ten wieczór spędzamy w terenie. W zależności od zapotrzebowania może to być wieczór pełen niespodzianek, który odbędzie się
+                        stacjonarnie w jednym miejscu, lub wieczór wędrowny gdzie będziemy musieli przedostać się z punktu A do punktu B. Po drodze
+                        oczywiście zapewniamy mnóstwo przygód oraz niespodzianek.
+                      </p>
+                    </div>
                   </div>
 
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {EVENTS_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover" loading="lazy" />
-                      </figure>
+                    {EVENTS_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setOfferGallery({ images: EVENTS_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
-                  </div>
-
-                  <div className="border-t border-white/10 pt-8">
-                    <a
-                      href="http://kawalerskie-panienskie.pl"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex px-6 py-3 rounded-full bg-primary text-dark font-bold uppercase tracking-wider text-xs md:text-sm hover:opacity-90 transition-opacity"
-                    >
-                      Przejdź do kawalerskie-panienskie.pl
-                    </a>
                   </div>
                 </div>
               ) : isEquipmentRentalPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
+                <div className="space-y-12 text-white/80 leading-relaxed">
                   <p className="text-lg">Oferujemy Wam możliwość wynajmu sprzętu.</p>
+
                   <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Co można u nas wynająć?</h3>
-                    <ul className="space-y-3">
-                      {EQUIPMENT_RENTAL_ITEMS.map((item) => (
-                        <li key={item} className="pl-5 relative">
-                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                          {item}
-                        </li>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-6">
+                      Oferta wypożyczalni
+                    </h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {RENTAL_WWW_TILES.map((tile, index) => (
+                        <motion.div
+                          key={tile.to}
+                          initial={{ opacity: 0, y: 14 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.05 }}
+                        >
+                          <Link
+                            to={tile.to}
+                            className="group relative block min-h-[220px] overflow-hidden rounded-2xl border-2 border-white/10 p-6 transition-colors duration-300 hover:border-primary"
+                            aria-label={`${tile.title}: ${tile.description}`}
+                          >
+                            <img
+                              src={tile.img}
+                              alt=""
+                              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                              loading="lazy"
+                              aria-hidden
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/85 to-dark/50" aria-hidden />
+                            <div className="relative z-10 flex min-h-[188px] flex-col justify-end">
+                              <h4 className="text-lg md:text-xl font-bold font-display text-white mb-2 group-hover:text-primary transition-colors">
+                                {tile.title}
+                              </h4>
+                              <p className="text-sm text-white/80 leading-relaxed mb-4 line-clamp-4">{tile.description}</p>
+                              <span className="inline-flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest">
+                                Szczegóły
+                                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                              </span>
+                            </div>
+                          </Link>
+                        </motion.div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {EQUIPMENT_RENTAL_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover" loading="lazy" />
-                      </figure>
-                    ))}
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-6">Co można u nas wynająć?</h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                      {EQUIPMENT_RENTAL_CATALOG.map((item, i) => (
+                        <div
+                          key={item.text}
+                          className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition-colors hover:border-primary/40"
+                        >
+                          <button
+                            type="button"
+                            onClick={() => setOfferGallery({ images: EQUIPMENT_RENTAL_LIGHTBOX_IMAGES, index: i })}
+                            className="block w-full aspect-[16/10] overflow-hidden bg-white/5 text-left cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary"
+                            aria-label={`Powiększ: ${item.alt}`}
+                          >
+                            <img src={item.img} alt={item.alt} className="h-full w-full object-cover pointer-events-none" loading="lazy" />
+                          </button>
+                          <p className="p-4 text-sm md:text-base text-white/85 leading-snug">{item.text}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ) : isTrainingPage ? (
@@ -736,10 +1005,16 @@ export default function OfferSubPage() {
                   <p className="font-semibold text-white">MOŻEMY ZORGANIZOWAĆ SZKOLENIE ŁĄCZĄC POSZCZEGÓLNE MODUŁY ZE SOBĄ.</p>
 
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {TRAININGS_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover" loading="lazy" />
-                      </figure>
+                    {TRAININGS_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setOfferGallery({ images: TRAININGS_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
 
@@ -765,10 +1040,16 @@ export default function OfferSubPage() {
                   </div>
 
                   <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {TRANSPORT_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover" loading="lazy" />
-                      </figure>
+                    {TRANSPORT_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setOfferGallery({ images: TRANSPORT_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -790,12 +1071,53 @@ export default function OfferSubPage() {
                     off-road/quad, strzelnica na broń pneumatyczną, strzelnica łucznicza oraz tor przeszkód.
                   </p>
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {ACCOMMODATION_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover" loading="lazy" />
-                      </figure>
-                    ))}
+                  <div className="space-y-14 md:space-y-16 pt-4">
+                    {(() => {
+                      let lightboxCursor = 0;
+                      return ACCOMMODATION_VENUE_BLOCKS.map((block) => (
+                        <div key={block.blockTitle}>
+                          <h3 className="text-center font-display font-semibold text-white text-lg md:text-xl mb-6 md:mb-8">
+                            {block.blockTitle}
+                          </h3>
+                          <div className="mb-8 md:mb-10 max-w-3xl mx-auto space-y-6 text-white/85 leading-relaxed text-center">
+                            {block.paragraphs.map((p) => (
+                              <p key={p}>{p}</p>
+                            ))}
+                          </div>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 min-w-0">
+                            {block.images.map((img, i) => {
+                              const lbIndex = lightboxCursor++;
+                              return (
+                                <motion.figure
+                                  key={`${block.blockTitle}-${img.src}-${i}`}
+                                  initial={{ opacity: 0, y: 12 }}
+                                  whileInView={{ opacity: 1, y: 0 }}
+                                  viewport={{ once: true }}
+                                  transition={{ delay: i * 0.05 }}
+                                  className={`group min-w-0 overflow-hidden rounded-2xl border-2 border-white/10 bg-white/5 ${ACCOMMODATION_CARD_HOVER} cursor-zoom-in`}
+                                >
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      setOfferGallery({ images: ACCOMMODATION_LIGHTBOX_IMAGES, index: lbIndex })
+                                    }
+                                    className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-dark rounded-2xl"
+                                    aria-label={`Powiększ: ${img.alt}`}
+                                  >
+                                    <img
+                                      src={img.src}
+                                      alt={img.alt}
+                                      className="w-full h-auto object-cover aspect-[4/3] transition-transform duration-500 group-hover:scale-[1.02] pointer-events-none"
+                                      loading="lazy"
+                                    />
+                                  </button>
+                                </motion.figure>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      ));
+                    })()}
                   </div>
 
                   <p>W najbliższym czasie planujemy postawienie kilku całorocznych domków, każdy dla 8/10 osób.</p>
@@ -816,10 +1138,16 @@ export default function OfferSubPage() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {SERVICE_BASE_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover" loading="lazy" />
-                      </figure>
+                    {SERVICE_BASE_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setOfferGallery({ images: SERVICE_BASE_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
 
@@ -856,6 +1184,16 @@ export default function OfferSubPage() {
           </div>
         </section>
       </main>
+
+      {offerGallery ? (
+        <GalleryLightbox
+          images={offerGallery.images}
+          index={offerGallery.index}
+          onIndexChange={(i) => setOfferGallery((g) => (g ? { ...g, index: i } : null))}
+          onClose={() => setOfferGallery(null)}
+          zIndexClass="z-[130]"
+        />
+      ) : null}
 
       <Footer />
     </div>

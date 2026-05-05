@@ -77,7 +77,7 @@ export function Navbar() {
         {}
         <div className="hidden lg:flex items-center gap-8 font-display">
           <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-['']">
-            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default">
+            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default transition-colors group-hover:text-primary">
               O nas
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
@@ -97,7 +97,7 @@ export function Navbar() {
           </div>
 
           <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-['']">
-            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default">
+            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default transition-colors group-hover:text-primary">
               Oferta
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
@@ -117,7 +117,7 @@ export function Navbar() {
           </div>
 
           <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-['']">
-            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default">
+            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default transition-colors group-hover:text-primary">
               Tematyka
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
@@ -145,7 +145,7 @@ export function Navbar() {
           </Link>
 
           <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-['']">
-            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default">
+            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default transition-colors group-hover:text-primary">
               Wypożyczalnia
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
@@ -165,7 +165,7 @@ export function Navbar() {
           </div>
 
           <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-['']">
-            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default">
+            <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-white cursor-default transition-colors group-hover:text-primary">
               Kontakt
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
@@ -218,12 +218,15 @@ export function Navbar() {
             <div className="flex flex-col gap-1">
               <button
                 type="button"
-                className="flex items-center justify-between w-full text-lg font-medium text-white py-2 hover:text-primary transition-colors text-left"
+                className="group flex items-center justify-between w-full text-lg font-medium text-white/80 py-2 rounded-lg px-1 -mx-1 hover:text-primary hover:bg-white/5 transition-colors text-left"
                 onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
                 aria-expanded={mobileAboutOpen}
               >
                 O nas
-                <ChevronDown size={22} className={`shrink-0 transition-transform ${mobileAboutOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={22}
+                  className={`shrink-0 transition-transform transition-colors text-white/80 group-hover:text-primary ${mobileAboutOpen ? 'rotate-180' : ''}`}
+                />
               </button>
               {mobileAboutOpen && (
                 <div className="overflow-hidden pl-3 border-l-2 border-primary/40 mb-2">
@@ -244,12 +247,15 @@ export function Navbar() {
 
               <button
                 type="button"
-                className="flex items-center justify-between w-full text-lg font-medium text-white py-2 hover:text-primary transition-colors text-left"
+                className="group flex items-center justify-between w-full text-lg font-medium text-white/80 py-2 rounded-lg px-1 -mx-1 hover:text-primary hover:bg-white/5 transition-colors text-left"
                 onClick={() => setMobileOfferOpen(!mobileOfferOpen)}
                 aria-expanded={mobileOfferOpen}
               >
                 Oferta
-                <ChevronDown size={22} className={`shrink-0 transition-transform ${mobileOfferOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={22}
+                  className={`shrink-0 transition-transform transition-colors text-white/80 group-hover:text-primary ${mobileOfferOpen ? 'rotate-180' : ''}`}
+                />
               </button>
               {mobileOfferOpen && (
                 <div className="overflow-hidden pl-3 border-l-2 border-primary/40 mb-2">
@@ -270,12 +276,15 @@ export function Navbar() {
 
               <button
                 type="button"
-                className="flex items-center justify-between w-full text-lg font-medium text-white py-2 hover:text-primary transition-colors text-left"
+                className="group flex items-center justify-between w-full text-lg font-medium text-white/80 py-2 rounded-lg px-1 -mx-1 hover:text-primary hover:bg-white/5 transition-colors text-left"
                 onClick={() => setMobileTopicsOpen(!mobileTopicsOpen)}
                 aria-expanded={mobileTopicsOpen}
               >
                 Tematyka
-                <ChevronDown size={22} className={`shrink-0 transition-transform ${mobileTopicsOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={22}
+                  className={`shrink-0 transition-transform transition-colors text-white/80 group-hover:text-primary ${mobileTopicsOpen ? 'rotate-180' : ''}`}
+                />
               </button>
               {mobileTopicsOpen && (
                 <div className="overflow-hidden pl-3 border-l-2 border-primary/40 mb-2">
@@ -312,12 +321,15 @@ export function Navbar() {
 
               <button
                 type="button"
-                className="flex items-center justify-between w-full text-lg font-medium text-white py-2 hover:text-primary transition-colors text-left"
+                className="group flex items-center justify-between w-full text-lg font-medium text-white/80 py-2 rounded-lg px-1 -mx-1 hover:text-primary hover:bg-white/5 transition-colors text-left"
                 onClick={() => setMobileRentalOpen(!mobileRentalOpen)}
                 aria-expanded={mobileRentalOpen}
               >
                 Wypożyczalnia
-                <ChevronDown size={22} className={`shrink-0 transition-transform ${mobileRentalOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={22}
+                  className={`shrink-0 transition-transform transition-colors text-white/80 group-hover:text-primary ${mobileRentalOpen ? 'rotate-180' : ''}`}
+                />
               </button>
               {mobileRentalOpen && (
                 <div className="overflow-hidden pl-3 border-l-2 border-primary/40 mb-2">
@@ -338,12 +350,15 @@ export function Navbar() {
 
               <button
                 type="button"
-                className="flex items-center justify-between w-full text-lg font-medium text-white py-2 hover:text-primary transition-colors text-left"
+                className="group flex items-center justify-between w-full text-lg font-medium text-white/80 py-2 rounded-lg px-1 -mx-1 hover:text-primary hover:bg-white/5 transition-colors text-left"
                 onClick={() => setMobileContactOpen(!mobileContactOpen)}
                 aria-expanded={mobileContactOpen}
               >
                 Kontakt
-                <ChevronDown size={22} className={`shrink-0 transition-transform ${mobileContactOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={22}
+                  className={`shrink-0 transition-transform transition-colors text-white/80 group-hover:text-primary ${mobileContactOpen ? 'rotate-180' : ''}`}
+                />
               </button>
               {mobileContactOpen && (
                 <div className="overflow-hidden pl-3 border-l-2 border-primary/40 mb-2">

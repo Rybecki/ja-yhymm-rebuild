@@ -18,9 +18,33 @@ import { Footer } from '../components/Footer';
 import { NEWS_ARTICLES } from '../data/newsArticles';
 
 
+const HERO_SLIDES = [
+  { src: '/utils/quady-popr.png', alt: 'Quady i motocross — JA YHYMM' },
+  {
+    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-1.png',
+    alt: 'Jura Off-Road Camp 4×4 — uczestnicy przy terenowym 4×4 w lesie',
+  },
+  {
+    src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-1.png',
+    alt: 'Jura Multi Camp — spływ kajakowy',
+  },
+  {
+    src: '/utils/oferta-letnia/jura-chill-fun/gallery/chill-3.png',
+    alt: 'Jura Chill & Fun — relaks na obozie',
+  },
+] as const;
+
 const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [slideIndex, setSlideIndex] = useState(0);
   const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setSlideIndex((i) => (i + 1) % HERO_SLIDES.length);
+    }, 6000);
+    return () => window.clearInterval(id);
+  }, []);
 
   const handleMouseMove = (e: MouseEvent) => {
     if (!heroRef.current) return;
@@ -37,21 +61,45 @@ const Hero = () => {
       onMouseMove={handleMouseMove}
       className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-20"
     >
-      {}
       <motion.div 
         animate={{ x: mousePos.x, y: mousePos.y }}
         transition={{ type: 'spring', damping: 30, stiffness: 100 }}
         className="absolute inset-0 z-0"
       >
-        <div 
-          className="absolute inset-0 bg-cover bg-center scale-110"
-          style={{ 
-            backgroundImage: 'url(/utils/quady-popr.png)',
-            filter: 'brightness(0.72)'
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/5 via-transparent to-dark/60" />
+        <AnimatePresence initial={false} mode="sync">
+          <motion.div
+            key={HERO_SLIDES[slideIndex].src}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.9 }}
+            className="absolute inset-0 bg-cover bg-center scale-110"
+            style={{
+              backgroundImage: `url(${HERO_SLIDES[slideIndex].src})`,
+              filter: 'brightness(0.72)',
+            }}
+            aria-hidden
+          />
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/5 via-transparent to-dark/60 pointer-events-none" />
       </motion.div>
+
+      <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center gap-3 pointer-events-none">
+        <div className="pointer-events-auto flex items-center gap-2">
+          {HERO_SLIDES.map((_, i) => (
+            <button
+              key={HERO_SLIDES[i].src}
+              type="button"
+              aria-label={`Slajd ${i + 1}`}
+              aria-current={i === slideIndex}
+              onClick={() => setSlideIndex(i)}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                i === slideIndex ? 'w-8 bg-primary' : 'w-2.5 bg-white/40 hover:bg-white/70'
+              }`}
+            />
+          ))}
+        </div>
+      </div>
 
       <div className="relative z-10 text-center px-6 max-w-5xl">
         <motion.div
@@ -97,8 +145,8 @@ const About = () => {
           <div className="absolute -inset-4 bg-primary/20 rounded-2xl blur-2xl group-hover:bg-primary/30 transition-all" />
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-transparent group-hover:border-primary transition-colors duration-500">
             <img 
-              src="/utils/quady-i-motocross-galeria-ja-yhymm-1-1024x768.jpg" 
-              alt="Quady i Motocross" 
+              src="/images/o-nas/kadra.png" 
+              alt="Zespół JA YHYMM nad wodą" 
               className="relative w-full h-auto block transition-transform duration-700 group-hover:scale-[1.04]"
               referrerPolicy="no-referrer"
             />
@@ -128,12 +176,12 @@ const Offer = () => {
   const offers = [
     { 
       title: 'Obozy i kolonie', 
-      img: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=2070',
+      img: '/utils/obozy-kolonie/obozy-hero.png',
       icon: <Tent className="text-primary" size={32} />
     },
     { 
       title: 'Wycieczki szkolne', 
-      img: '/utils/wycieczki.jpg',
+      img: '/images/wycieczki-szkolne/wycieczki-szkolne-karta.png',
       icon: <GraduationCap className="text-primary" size={32} />
     },
     { 
@@ -143,17 +191,17 @@ const Offer = () => {
     },
     { 
       title: 'Imprezy integracyjne, firmowe', 
-      img: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&q=80&w=2069',
+      img: '/images/eventy/imprezy-firmowe-karta.png',
       icon: <Users className="text-primary" size={32} />
     },
     { 
       title: 'Wieczory kawalerskie i panieńskie', 
-      img: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=2070',
+      img: '/images/wieczory-kawalerskie/wieczory-kawalerskie-karta.png',
       icon: <PartyPopper className="text-primary" size={32} />
     },
     { 
       title: 'Wyjazdy jedno i wielodniowe', 
-      img: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=2070',
+      img: '/images/wyjazdy/wyjazdy-jedno-wielodniowe-karta.png',
       icon: <Bus className="text-primary" size={32} />
     },
   ];
@@ -249,7 +297,7 @@ const News = () => {
 };
 
 const Reviews = () => {
-  const reviews = [
+  const clientReviews = [
     {
       name: 'Marek Wiśniewski',
       role: 'Dyrektor HR',
@@ -270,6 +318,27 @@ const Reviews = () => {
     }
   ];
 
+  const companyReviews = [
+    {
+      name: 'Vivasto',
+      role: 'Rekomendacja',
+      text: 'Rekomenduję P.H.U JA YHYMM... Integracja Sport Turystyka Wypoczynek jako solidną, wiarygodną, oraz rzetelną w pełni profesjonalną firmę.',
+      rating: 5
+    },
+    {
+      name: 'Moraj',
+      role: 'Rekomendacja',
+      text: 'Z pełną odpowiedzialnością polecamy firmę jako organizatora spotkań integracyjnych. JA YHYMM... to firma która w sposób zabawny, bezpieczny, ale przede wszystkim fachowy zapewnia niezapomnianą rozrywkę.',
+      rating: 5
+    },
+    {
+      name: 'Transacta',
+      role: 'Rekomendacja',
+      text: 'Firma P.H.U JA YHYMM...Integracja Sport Turystyka Wypoczynek kompleksowo zorganizowała wyjazd integracyjny dla pracowników szczebla administracyjnego naszej firmy.',
+      rating: 5
+    }
+  ];
+
   return (
     <section className="section-padding bg-dark">
       <div className="max-w-7xl mx-auto">
@@ -279,7 +348,7 @@ const Reviews = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {reviews.map((review, index) => (
+          {clientReviews.map((review, index) => (
             <motion.div
               key={review.name}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -299,6 +368,43 @@ const Reviews = () => {
               <div>
                 <p className="font-bold text-lg">{review.name}</p>
                 <p className="text-primary text-sm uppercase tracking-widest">{review.role}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="text-center mt-20 mb-10">
+          <h4 className="text-2xl md:text-3xl font-extrabold uppercase font-display text-white">Firmy</h4>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {companyReviews.map((review, index) => (
+            <motion.div
+              key={review.name}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="glass-card p-10 rounded-3xl flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex gap-1 mb-6">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <Star key={i} size={16} className="fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-lg italic text-white/80 leading-relaxed mb-8">"{review.text}"</p>
+              </div>
+              <div>
+                <p className="font-bold text-lg">{review.name}</p>
+                <p className="text-primary text-sm uppercase tracking-widest">{review.role}</p>
+                <Link
+                  to="/o-nas#rekomendacje"
+                  className="inline-flex items-center gap-2 mt-4 text-white hover:text-primary transition-colors"
+                >
+                  Czytaj dalej...
+                  <ArrowRight size={16} />
+                </Link>
               </div>
             </motion.div>
           ))}

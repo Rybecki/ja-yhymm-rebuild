@@ -3,12 +3,13 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { getTopicBySlug } from '../data/topicPages';
 
 const QUADS_GALLERY = [
-  { src: '/utils/oferta-letnia/quad-academy-camp.png', alt: 'Uczestnicy wyprawy quadowej podczas postoju' },
-  { src: '/utils/oferta-letnia/quad-camp.png', alt: 'Quady podczas jazdy w wymagającym, piaszczystym terenie' },
-  { src: '/utils/oferta-letnia/jura-quad-academy-camp/gallery/academy-2.png', alt: 'Obóz quadowy i przygotowanie maszyn w terenie' },
+  { src: '/images/tematyka/quady-1.png', alt: 'Quad przejeżdżający przez błotnistą przeszkodę terenową' },
+  { src: '/images/tematyka/quady-2.png', alt: 'Czerwony quad z dwoma uczestnikami w kaskach w lesie' },
+  { src: '/images/tematyka/quady-3.png', alt: 'Grupa uczestników na quadach pozujących na piaszczystym terenie' },
 ];
 
 const OFFROAD_GALLERY = [
@@ -17,13 +18,22 @@ const OFFROAD_GALLERY = [
 ];
 
 const MILITARY_VEHICLES_GALLERY = [
+  { src: '/images/tematyka/kraz-1.png', alt: 'Przejażdżka wojskowym pojazdem KRAZ z uczestnikami na pace' },
+  { src: '/images/tematyka/kraz-2.png', alt: 'Wojskowy pojazd terenowy KRAZ 6x6 na zielonej polanie' },
   { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-4.png', alt: 'Przejażdżka wojskowym pojazdem KRAZ w terenie' },
-  { src: '/images/tematyka/wojskowe-pojazdy.png', alt: 'Wojskowy pojazd terenowy KRAZ 6x6' },
+  { src: '/images/tematyka/wojskowe-pojazdy.png', alt: 'Wojskowy pojazd terenowy KRAZ 6x6 na torze off-road' },
 ];
 
 const CLIMBING_WALL_GALLERY = [
   { src: '/images/tematyka/scianka1.png', alt: 'Dmuchana ścianka wspinaczkowa podczas zajęć linowych' },
   { src: '/images/wynajem-sprzetu/scianka.png', alt: 'Uczestnicy pikniku korzystający ze ścianki wspinaczkowej' },
+];
+
+const CLIMBING_ROCK_GALLERY = [
+  { src: '/images/tematyka/linowe-1.png', alt: 'Instruktor asekurujący uczestnika wspinającego się po skale w lesie' },
+  { src: '/images/tematyka/linowe-2.png', alt: 'Uczestnik podczas zjazdu na linie z drzewa nad zboczem' },
+  { src: '/images/tematyka/linowe-3.png', alt: 'Wspinaczka po skale z asekuracją w słoneczny dzień' },
+  { src: '/images/tematyka/linowe-4.png', alt: 'Uczestnik zajęć linowych wiszący na linie w leśnym wąwozie' },
 ];
 
 const PAINTBALL_GALLERY = [
@@ -128,6 +138,7 @@ export default function TopicSubPage() {
   const isFirstAidPage = topic?.slug === 'pierwsza-pomoc-i-ratownictwo';
   const isOtherPage = topic?.slug === 'inne';
   const [activeWaterModuleId, setActiveWaterModuleId] = useState(WATER_MODULES[0].id);
+  const [topicGallery, setTopicGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const activeWaterModule = useMemo(
     () => WATER_MODULES.find((module) => module.id === activeWaterModuleId) ?? WATER_MODULES[0],
     [activeWaterModuleId]
@@ -161,7 +172,7 @@ export default function TopicSubPage() {
                       : isOffRoadPage
                         ? '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-4.png'
                         : isMilitaryVehiclesPage
-                          ? '/images/tematyka/wojskowe-pojazdy.png'
+                          ? '/images/tematyka/kraz-1.png'
                           : isClimbingPage
                             ? '/images/tematyka/scianka1.png'
                             : isPaintballPage
@@ -294,10 +305,16 @@ export default function TopicSubPage() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {QUADS_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover" loading="lazy" />
-                      </figure>
+                    {QUADS_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: QUADS_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
 
@@ -330,10 +347,16 @@ export default function TopicSubPage() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {OFFROAD_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover" loading="lazy" />
-                      </figure>
+                    {OFFROAD_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: OFFROAD_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
 
@@ -360,34 +383,175 @@ export default function TopicSubPage() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {MILITARY_VEHICLES_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover" loading="lazy" />
-                      </figure>
+                    {MILITARY_VEHICLES_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: MILITARY_VEHICLES_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
 
                   <p className="font-semibold text-white border-t border-white/10 pt-8">PRAWDZIWA JAZDA PRAWDZIWYM POTWOREM!</p>
                 </div>
               ) : isClimbingPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg font-semibold text-white">WYNAJEM ŚCIANKI WSPINACZKOWEJ</p>
-                  <p>
-                    NOWOŚĆ! Jeżeli chciałbyś, aby Twój festyn, piknik, wycieczkę, urodziny, czy też wieczór kawalerski urozmaiciło coś nietypowego i
-                    dającego wiele zabawy oraz szczyptę adrenaliny, dajemy Ci możliwość wypożyczenia atestowanej dmuchanej ścianki wspinaczkowej wraz
-                    z obsługą.
-                  </p>
-                  <p>Ścianka posiada cztery trasy o różnym poziomie trudności.</p>
-                  <p>
-                    Ściankę można ustawić praktycznie na każdym w miarę równym terenie. Zapewniamy transport, montaż oraz obsługę ścianki.
-                  </p>
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div className="space-y-6">
+                    <p className="text-lg font-semibold text-white">WYNAJEM ŚCIANKI WSPINACZKOWEJ</p>
+                    <p>
+                      NOWOŚĆ! Jeżeli chciałbyś, aby Twój festyn, piknik, wycieczkę, urodziny, czy też wieczór kawalerski urozmaiciło coś nietypowego i
+                      dającego wiele zabawy oraz szczyptę adrenaliny, dajemy Ci możliwość wypożyczenia atestowanej dmuchanej ścianki wspinaczkowej wraz
+                      z obsługą.
+                    </p>
+                    <p>Ścianka posiada cztery trasy o różnym poziomie trudności.</p>
+                    <p>
+                      Ściankę można ustawić praktycznie na każdym w miarę równym terenie. Zapewniamy transport, montaż oraz obsługę ścianki.
+                    </p>
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {CLIMBING_WALL_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover" loading="lazy" />
-                      </figure>
-                    ))}
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {CLIMBING_WALL_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: CLIMBING_WALL_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-6 border-t border-white/10 pt-8">
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base">
+                      Zajęcia linowe i wspinaczka w terenie
+                    </h3>
+                    <p>
+                      Tyrolka, „małpi most”, czy wspinanie się na kilkumetrową wieżę ze skrzynek to już klasyka aktywnych zajęć, których celem jest
+                      integracja zespołu. Jesteśmy w stanie zorganizować atrakcyjne, pełne pozytywnych emocji, a jednocześnie w 100% bezpieczne zajęcia
+                      linowe w prawie każdym terenie (od leśnego, przez wodę i góry, aż po tereny zurbanizowane).
+                    </p>
+                    <p>
+                      Zapraszamy do zapoznania się z ofertą programową zajęć integracyjno-motywacyjnych prowadzonych w oparciu o alpinistyczne techniki
+                      przestrzenne. Wszystkie zajęcia są prowadzone przez doskonale wyselekcjonowaną i doświadczoną kadrę wywodzącą się głównie ze
+                      środowiska ratowników i przewodników górskich.
+                    </p>
+                    <p>
+                      Doświadczenie zdobywaliśmy zajmując się zawodowo ratownictwem górskim, alpinizmem, przewodnictwem, ski-alpinizmem oraz podczas
+                      wielu szkoleń, sympozjów, manewrów i zawodów na szczeblu krajowym i międzynarodowym.
+                    </p>
+                    <p>
+                      Podczas naszych zajęć korzystamy wyłącznie z atestowanego, niezawodnego sprzętu, a stosowanie zdublowanych systemów zabezpieczeń,
+                      kamizelek asekuracyjnych i kasków daje naszym klientom komfort i poczucie bezpieczeństwa, co pozwala na bezstresowe oddawanie się
+                      przyjemności wynikającej z realizowanych zadań.
+                    </p>
+
+                    <div className="space-y-4">
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">Tyrolka</h4>
+                        <p className="mb-2">
+                          Przednia zabawa znana też pod nazwą windy desantowej lub kolejki amerykańskiej. Uczestnicy pojedynczo lub parami są
+                          podczepiani do „wózka” windy przy jej górnym stanowisku, a następnie samodzielnie lub z pomocą instruktora wykonują
+                          brawurowy zjazd po napiętej linie w kierunku dolnego stanowiska, gdzie w bezpiecznej, wcześniej ustalonej odległości są
+                          przez obsługę zatrzymywani, a następnie bardzo powoli opuszczani na ziemię.
+                        </p>
+                        <p>
+                          W naszych dotychczasowych imprezach furorę robiły konkursy zjazdów parami w przeróżnych pozycjach, często z lądowaniem w
+                          wodzie (wymaga to oczywiście odpowiednich warunków terenowych).
+                        </p>
+                      </div>
+
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">Wahadło</h4>
+                        <p>
+                          Rodzaj potężnej huśtawki, na której końcu huśta się uczestnik – przeżycia bardzo zbliżone do skoku Bungee. Wymaga
+                          specyficznych warunków terenowych, ale gwarantuje ogromną dawkę adrenaliny i satysfakcji po przełamaniu własnych barier.
+                        </p>
+                      </div>
+
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">Zjazdy pionowe</h4>
+                        <p>
+                          Uczestnicy samodzielnie zjeżdżają na linach alpinistycznych z górnego stanowiska usytuowanego na drzewie, konstrukcji lub
+                          odpowiedniej wyniosłości terenu. To doskonały sposób na oswojenie wysokości pod czujnym okiem instruktorów.
+                        </p>
+                      </div>
+
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">Drabinka</h4>
+                        <p>
+                          Wykorzystanie drabinki sznurowej pozwala na wspinaczkę nawet na 20 metrów. W zależności od predyspozycji uczestników
+                          drabinka może wisieć swobodnie w powietrzu lub przy pniu drzewa. Często traktujemy ją jako wejście na stanowisko tyrolki lub
+                          osobną konkurencję konkursową.
+                        </p>
+                      </div>
+
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">Wyciąganie lidera</h4>
+                        <p>
+                          Przy pomocy sprzętu alpinistycznego i odpowiednio dobranych zadań potrafimy zmotywować grupę do współpracy oraz
+                          zidentyfikować i wzmocnić naturalnych liderów. To ćwiczenie świetnie sprawdza się podczas szkoleń integracyjnych.
+                        </p>
+                      </div>
+
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">Mosty linowe</h4>
+                        <p>
+                          Uczestnicy pokonują odcinek między punktami zaczepienia liny, najczęściej w poziomie. Proponujemy m.in. most pojedynczy
+                          (przeciąganie się po jednej linie z asekuracją) oraz most podwójny – z liną pod nogami i „poręczą” do trzymania się rękoma.
+                        </p>
+                      </div>
+
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">Skrzynki</h4>
+                        <p>
+                          Uczestnicy wspinają się na układane własnoręcznie pod siebie skrzynki, podawane przez instruktora. Idealna konkurencja
+                          konkursowa lub czasowa, która uczy zaufania do zespołu i koordynacji.
+                        </p>
+                      </div>
+
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">Wchodzenie po linie</h4>
+                        <p>
+                          Specjalistyczny sprzęt alpinistyczny pozwala już po krótkim szkoleniu nauczyć uczestników samodzielnego wchodzenia po linie
+                          na dowolną wysokość. Zjazd na dół odbywa się pod pełną kontrolą instruktora. Często organizujemy wejścia parami – obok siebie
+                          – aby wzmocnić element zdrowej rywalizacji lub partnerstwa.
+                        </p>
+                      </div>
+
+                      <div className="bg-dark/60 border border-white/15 rounded-2xl p-5 md:p-6">
+                        <h4 className="font-semibold text-primary mb-2 uppercase tracking-wide">
+                          Przeprawy przez rwącą wodę i tory przeszkód
+                        </h4>
+                        <p className="mb-2">
+                          Z pomocą sprzętu linowego i kompleksowej asekuracji umożliwiamy przejście brodem przez najbardziej wymagające odcinki rzek –
+                          to doskonały poligon doświadczalny do przełamywania własnych barier i budowania pewności siebie.
+                        </p>
+                        <p>
+                          Łączymy opisane elementy w logiczne tory przeszkód, które mogą być samodzielną przygodą lub częścią większego scenariusza
+                          zadaniowego dla grupy lub pojedynczych uczestników.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+                      {CLIMBING_ROCK_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: CLIMBING_ROCK_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ) : isPaintballPage ? (
@@ -401,15 +565,6 @@ export default function TopicSubPage() {
                     sobie, na ile jest odporny na stres, a także jak szybko i trafnie potrafi podejmować w tych trudnych warunkach właściwe decyzje.
                   </p>
                   <p>
-                    Zapraszamy do zapoznania się z ofertą programową zajęć integracyjno-motywacyjnych prowadzonych w oparciu o alpinistyczne techniki
-                    przestrzenne. Wszystkie zajęcia są prowadzone przez doskonale wyselekcjonowaną i doświadczoną kadrę wywodzącą się głównie ze
-                    środowiska ratowników i przewodników górskich.
-                  </p>
-                  <p>
-                    Doświadczenie zdobywaliśmy zajmując się zawodowo ratownictwem górskim, alpinizmem, przewodnictwem, ski-alpinizmem oraz podczas
-                    wielu szkoleń, sympozjów, manewrów i zawodów na szczeblu krajowym i międzynarodowym.
-                  </p>
-                  <p>
                     Podczas naszych zajęć korzystamy wyłącznie z atestowanego, niezawodnego sprzętu, a stosowanie zdublowanych systemów zabezpieczeń,
                     kamizelek asekuracyjnych i kasków daje naszym klientom komfort i poczucie bezpieczeństwa, co pozwala na bezstresowe oddawanie się
                     przyjemności wynikającej z realizowanych zadań.
@@ -418,6 +573,13 @@ export default function TopicSubPage() {
                     Pole tworzymy wykorzystując naturalne przeszkody: drzewa, kępy krzaków, ukształtowanie terenu. Gdy elementów takich zabraknie,
                     posiadamy własne przeszkody - system ścianek, z których łatwo można wykonać tunele, przeszkody niskie, wysokie, szerokie jak i
                     wąskie.
+                  </p>
+                  <p>
+                    Posiadamy również własny poligon paintballowy, dzięki czemu możemy realizować scenariusze gry w sprawdzonej, dobrze przygotowanej
+                    przestrzeni.
+                  </p>
+                  <p>
+                    Po zakończonej grze istnieje możliwość zorganizowania grilla, ogniska lub wieczornej imprezy integracyjnej.
                   </p>
 
                   <div>
@@ -457,10 +619,16 @@ export default function TopicSubPage() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {PAINTBALL_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover" loading="lazy" />
-                      </figure>
+                    {PAINTBALL_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: PAINTBALL_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -519,10 +687,16 @@ export default function TopicSubPage() {
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {MILITARIA_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover" loading="lazy" />
-                      </figure>
+                    {MILITARIA_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: MILITARIA_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -585,10 +759,16 @@ export default function TopicSubPage() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {SURVIVAL_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover" loading="lazy" />
-                      </figure>
+                    {SURVIVAL_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: SURVIVAL_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
 
@@ -597,7 +777,7 @@ export default function TopicSubPage() {
               ) : isWaterPage ? (
                 <div className="space-y-8 text-white/80 leading-relaxed">
                   <p className="text-lg">
-                    O właśnie nad wodą najchętniej wypoczywamy i spędzamy wolny czas - tam najłatwiej integrujemy się ze środowiskiem, jak też z innymi
+                    To właśnie nad wodą najchętniej wypoczywamy i spędzamy wolny czas - tam najłatwiej integrujemy się ze środowiskiem, jak też z innymi
                     ludźmi. Zabawy proponowane przez nas mogą być typową rekreacją, jak również ekstremalnym wyzwaniem.
                   </p>
                   <p>
@@ -664,10 +844,16 @@ export default function TopicSubPage() {
                   </div>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {WATER_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover" loading="lazy" />
-                      </figure>
+                    {WATER_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: WATER_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -687,10 +873,16 @@ export default function TopicSubPage() {
                   </p>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {HORSE_RIDING_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover" loading="lazy" />
-                      </figure>
+                    {HORSE_RIDING_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: HORSE_RIDING_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
 
@@ -773,10 +965,16 @@ export default function TopicSubPage() {
                   </div>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {FIRST_AID_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover" loading="lazy" />
-                      </figure>
+                    {FIRST_AID_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: FIRST_AID_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -812,10 +1010,16 @@ export default function TopicSubPage() {
                   </div>
 
                   <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {OTHER_ATTRACTIONS_GALLERY.map((image) => (
-                      <figure key={image.src} className="rounded-xl overflow-hidden border border-white/10 bg-white/5">
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover" loading="lazy" />
-                      </figure>
+                    {OTHER_ATTRACTIONS_GALLERY.map((image, i) => (
+                      <button
+                        key={image.src}
+                        type="button"
+                        onClick={() => setTopicGallery({ images: OTHER_ATTRACTIONS_GALLERY, index: i })}
+                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        aria-label={`Powiększ: ${image.alt}`}
+                      >
+                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -848,6 +1052,16 @@ export default function TopicSubPage() {
           </div>
         </section>
       </main>
+
+      {topicGallery ? (
+        <GalleryLightbox
+          images={topicGallery.images}
+          index={topicGallery.index}
+          onIndexChange={(i) => setTopicGallery((g) => (g ? { ...g, index: i } : null))}
+          onClose={() => setTopicGallery(null)}
+          zIndexClass="z-[130]"
+        />
+      ) : null}
 
       <Footer />
     </div>

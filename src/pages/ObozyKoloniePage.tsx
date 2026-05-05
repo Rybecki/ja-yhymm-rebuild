@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, Snowflake, Sun } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { getOfferBySlug } from '../data/offerPages';
 
 const HERO_BG = '/utils/obozy-kolonie/obozy-hero.png';
-const LATO_BG = '/utils/obozy-kolonie/lato.png';
-const ZIMA_BG = '/utils/obozy-kolonie/quadzima.png';
+const LATO_BG = '/utils/obozy-kolonie/lato-user.png';
+const ZIMA_BG = '/utils/obozy-kolonie/zima-user.png';
 
 export default function ObozyKoloniePage() {
   const page = getOfferBySlug('obozy-i-kolonie');
@@ -22,9 +22,9 @@ export default function ObozyKoloniePage() {
         <section className="relative min-h-[52vh] md:min-h-[58vh] flex flex-col justify-end overflow-hidden border-b border-white/5">
           <div
             className="absolute inset-0 bg-cover bg-center scale-105"
-            style={{ backgroundImage: `url(${HERO_BG})` }}
+            style={{ backgroundImage: `url(${HERO_BG})`, backgroundPosition: 'center 47%' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/65 to-dark/25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/45 to-dark/10" />
           <div className="relative z-10 max-w-4xl mx-auto px-6 pb-16 md:pb-20 pt-32 w-full">
             <nav className="text-sm text-white/60 mb-6">
               <Link to="/oferta" className="hover:text-primary transition-colors">
@@ -75,7 +75,6 @@ export default function ObozyKoloniePage() {
           <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 text-amber-200/95 mb-4">
-                <Sun className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
                 <span className="text-sm font-bold uppercase tracking-[0.25em]">Sezon letni</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-extrabold font-display text-white drop-shadow-lg mb-4">Lato</h2>
@@ -96,10 +95,8 @@ export default function ObozyKoloniePage() {
         {}
         <div className="relative h-16 md:h-20 bg-dark overflow-hidden flex items-center justify-center border-y border-white/5">
           <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-          <div className="relative flex items-center gap-6 md:gap-10 px-6">
-            <Sun className="w-5 h-5 text-amber-400/80" />
+          <div className="relative flex items-center px-6">
             <span className="text-xs uppercase tracking-[0.3em] text-white/40">sezon</span>
-            <Snowflake className="w-5 h-5 text-sky-300/80" />
           </div>
         </div>
 
@@ -115,7 +112,6 @@ export default function ObozyKoloniePage() {
           <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center justify-between gap-10">
             <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 text-sky-200/95 mb-4">
-                <Snowflake className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
                 <span className="text-sm font-bold uppercase tracking-[0.25em]">Sezon zimowy</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-extrabold font-display text-white drop-shadow-lg mb-4">Zima</h2>

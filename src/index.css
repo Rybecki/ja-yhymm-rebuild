@@ -23,7 +23,11 @@
 }
 
 .glass-card {
-  @apply bg-white/5 backdrop-blur-md border border-white/10;
+  @apply bg-white/5 backdrop-blur-md border border-primary;
+}
+
+main :is(div, section, article, aside, figure, button).border.border-white\/10 {
+  border-color: color-mix(in oklab, var(--color-primary) 55%, transparent) !important;
 }
 
 .btn-primary {
@@ -32,4 +36,11 @@
 
 .section-padding {
   @apply py-24 px-6 md:px-12 lg:px-24;
+}
+
+@media (max-width: 767px) {
+  .section-padding > .px-6 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
 }

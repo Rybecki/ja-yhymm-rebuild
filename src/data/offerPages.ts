@@ -12,14 +12,14 @@ export const OFFER_SUBPAGES: OfferSubpage[] = [
     lead: 'Aktywny wypoczynek dla dzieci i młodzieży — programy dopasowane do wieku i zainteresowań grupy.',
   },
   {
-    slug: 'wycieczki-szkolne',
-    title: 'Wycieczki szkolne',
-    lead: 'Organizacja wyjazdów klasowych z bezpieczeństwem, logistyką i merytoryką na pierwszym miejscu.',
-  },
-  {
     slug: 'obozy-dla-klas-mundurowych',
     title: 'Obozy dla klas mundurowych',
     lead: 'Trening, dyscyplina i przygoda w formule przygotowanej pod klasy o profilu mundurowym.',
+  },
+  {
+    slug: 'wycieczki-szkolne',
+    title: 'Wycieczki szkolne',
+    lead: 'Organizacja wyjazdów klasowych z bezpieczeństwem, logistyką i merytoryką na pierwszym miejscu.',
   },
   {
     slug: 'eventy',
@@ -37,14 +37,14 @@ export const OFFER_SUBPAGES: OfferSubpage[] = [
     lead: 'Sprzęt na event, obóz lub wyjazd — ustalenia indywidualnie pod rodzaj imprezy i termin.',
   },
   {
-    slug: 'szkolenia-i-kursy',
-    title: 'Szkolenia i kursy',
-    lead: 'Warsztaty i szkolenia z doświadczoną kadrową — tematy i poziom dopasowujemy do grupy.',
-  },
-  {
     slug: 'transport',
     title: 'Transport',
     lead: 'Logistyka dojazdowa na wyjazdy i eventy — wygodne rozwiązania dla grup.',
+  },
+  {
+    slug: 'szkolenia-i-kursy',
+    title: 'Szkolenia i kursy',
+    lead: 'Warsztaty i szkolenia z doświadczoną kadrową — tematy i poziom dopasowujemy do grupy.',
   },
   {
     slug: 'baza-noclegowa',

@@ -19,9 +19,17 @@ function ContactInfoAndForm() {
 
         <div className="grid lg:grid-cols-2 gap-8 lg:items-center">
           <div className="glass-card p-8 md:p-10 rounded-[2rem]">
-            <h4 className="text-xl font-bold text-primary mb-6">Fundacja JA YHYMM...</h4>
-            <div className="space-y-4 leading-relaxed">
-              <p className="text-white font-medium">Integracja - Sport - Turystyka - Wypoczynek</p>
+            <h4 className="text-xl font-bold text-primary mb-6">Dane kontaktowe</h4>
+            <div className="space-y-6 leading-relaxed">
+              <div>
+                <p className="text-white font-semibold">Fundacja JA YHYMM...</p>
+                <p className="text-white/75">Integracja - Sport - Turystyka - Wypoczynek</p>
+                <p className="text-white/75">NIP 954 276 19 93</p>
+              </div>
+              <div className="border-t-2 border-primary pt-6">
+                <p className="text-white font-semibold">A Bo Co... Spółka z o.o.</p>
+                <p className="text-white/75">NIP 954 289 0070</p>
+              </div>
               <p className="flex gap-3 text-white/75">
                 <MapPin size={18} className="text-primary shrink-0 mt-1" />
                 <span>ul. Niwna 9, 40-406 Katowice</span>
@@ -38,10 +46,19 @@ function ContactInfoAndForm() {
                   biuro@ja-yhymm.pl
                 </a>
               </p>
-              <p className="flex gap-3 text-white/75">
+              <div className="flex gap-3 text-white/75">
                 <Landmark size={18} className="text-primary shrink-0 mt-1" />
-                <span className="font-mono text-sm">49 1050 1214 1000 0090 3085 1225</span>
-              </p>
+                <div className="space-y-1 text-sm">
+                  <p>
+                    <span className="font-semibold">Fundacja JA YHYMM...</span>{' '}
+                    <span className="font-mono">49 1050 1214 1000 0090 3085 1225</span>
+                  </p>
+                  <p>
+                    <span className="font-semibold">A Bo Co... Spółka z o.o.</span>{' '}
+                    <span className="font-mono">54 1050 1214 1000 0090 8549 4533</span>
+                  </p>
+                </div>
+              </div>
               <p className="flex gap-3 text-white/75">
                 <Facebook size={18} className="text-primary shrink-0 mt-1" />
                 <a href="https://www.facebook.com/jayhymmfp" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">

@@ -4,8 +4,24 @@ import { motion } from 'motion/react';
 import { ChevronDown, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
 
-const INFLATABLES_IMAGES = ['/images/tematyka/scianka1.png', '/images/wynajem-sprzetu/scianka.png'];
+const INFLATABLES_IMAGES = [
+  '/images/tematyka/scianka1.png',
+  '/images/wynajem-sprzetu/scianka.png',
+  '/images/wypozyczalnia/dmuchance/dmuchance-3.png',
+  '/images/wypozyczalnia/dmuchance/dmuchance-4.png',
+  '/images/wypozyczalnia/dmuchance/dmuchance-5.png',
+];
+
+const INFLATABLES_GALLERY: GalleryImageItem[] = [
+  { src: INFLATABLES_IMAGES[0]!, alt: 'Dmuchana ścianka wspinaczkowa' },
+  { src: INFLATABLES_IMAGES[1]!, alt: 'Ścianka wspinaczkowa na evencie' },
+  { src: INFLATABLES_IMAGES[2]!, alt: 'Piana party podczas eventu plenerowego' },
+  { src: INFLATABLES_IMAGES[3]!, alt: 'Dmuchańce i atrakcje dla dzieci na terenie zielonym' },
+  { src: INFLATABLES_IMAGES[4]!, alt: 'Kolorowy zamek dmuchany podczas imprezy' },
+];
 
 const REGULATIONS_TEXT = `REGULAMIN KORZYSTANIA Z URZĄDZEŃ DMUCHANYCH "JA YHYMM..."
 I. Zasady Ogólne
@@ -62,6 +78,7 @@ Najemcą: ......................................................................
 
 export default function RentalInflatablesPage() {
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
+  const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -125,8 +142,14 @@ export default function RentalInflatablesPage() {
     <div className="bg-dark min-h-screen">
       <Navbar />
       <main>
-        <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className="max-w-4xl mx-auto px-6">
+        <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${INFLATABLES_IMAGES[INFLATABLES_IMAGES.length - 2]})`, backgroundPosition: 'center 35%' }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-black/20" aria-hidden />
+          <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
                 Strona główna
@@ -143,8 +166,8 @@ export default function RentalInflatablesPage() {
           </div>
         </section>
         <section className="section-padding bg-dark">
-          <div className="max-w-6xl mx-auto px-6 space-y-8">
-            <div className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-5">
+          <div className={`${RENTAL_CONTENT_WIDE} space-y-8`}>
+            <div className={`glass-card ${RENTAL_GLASS_INNER} space-y-5`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Wynajem Dmuchańców z Obsługą - Rozkręć Imprezę z JA YHYMM...</h3>
               <p className="text-white/80 leading-relaxed text-lg">
                 Szukasz sposobu na niezapomniane wydarzenie? Nasze dmuchańce to centra radości, adrenaliny i bezpiecznej zabawy.
@@ -152,7 +175,7 @@ export default function RentalInflatablesPage() {
               </p>
             </div>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-6">
+            <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-6`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Nasze atrakcje (wynajem na 6h z obsługą)</h3>
               <div className="space-y-3 md:hidden">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
@@ -220,16 +243,24 @@ export default function RentalInflatablesPage() {
                 </table>
               </div>
               <div className="grid md:grid-cols-2 gap-4 pt-2">
-                {INFLATABLES_IMAGES.map((src, index) => (
-                  <motion.div key={src} whileHover={{ y: -6 }} transition={{ duration: 0.25 }} className="group relative overflow-visible pb-2">
-                    <img src={src} alt={`Dmuchańce - zdjęcie ${index + 1}`} className="w-full aspect-[4/3] object-cover rounded-2xl border border-primary/40" loading="lazy" />
+                {INFLATABLES_GALLERY.map((item, index) => (
+                  <motion.button
+                    key={item.src}
+                    type="button"
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.25 }}
+                    onClick={() => setPhotoGallery({ images: INFLATABLES_GALLERY, index })}
+                    className="group relative overflow-visible pb-2 text-left cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl"
+                    aria-label={`Powiększ: ${item.alt}`}
+                  >
+                    <img src={item.src} alt={item.alt} className="w-full aspect-[4/3] object-cover rounded-2xl border border-primary/40 pointer-events-none" loading="lazy" />
                     <span className="pointer-events-none absolute left-0 right-0 bottom-0 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
-                  </motion.div>
+                  </motion.button>
                 ))}
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-8">
+            <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-8`}>
               <div>
                 <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Pakiety korzyści</h3>
                 <ul className="list-disc pl-6 text-white/75 space-y-3">
@@ -251,7 +282,7 @@ export default function RentalInflatablesPage() {
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10" id="formularz-kontaktowy">
+            <section className={`glass-card ${RENTAL_GLASS_INNER}`} id="formularz-kontaktowy">
               <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Chcesz zarezerwować termin?</h3>
               <p className="text-white/70 mb-6">Zadzwoń do nas lub napisz - sprawimy, że Twoi goście powiedzą: "JA YHYMM... to była impreza!"</p>
               <form className="space-y-5" onSubmit={handleSubmit}>
@@ -343,6 +374,17 @@ export default function RentalInflatablesPage() {
           </div>
         </div>
       )}
+
+      {photoGallery ? (
+        <GalleryLightbox
+          images={photoGallery.images}
+          index={photoGallery.index}
+          onIndexChange={(i) => setPhotoGallery((g) => (g ? { ...g, index: i } : null))}
+          onClose={() => setPhotoGallery(null)}
+          zIndexClass="z-[135]"
+        />
+      ) : null}
+
       <Footer />
     </div>
   );

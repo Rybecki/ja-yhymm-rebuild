@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { ChevronDown, Download } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { RENTAL_CONTENT_WIDE } from '../constants/rentalPageLayout';
 
 type FaqItem = {
   question: string;
@@ -162,7 +163,7 @@ export default function ParentZonePage() {
       <Navbar />
       <main>
         <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className="max-w-4xl mx-auto px-6">
+          <div className={RENTAL_CONTENT_WIDE}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
                 Strona główna
@@ -180,7 +181,7 @@ export default function ParentZonePage() {
         </section>
 
         <section className="section-padding bg-dark">
-          <div className="max-w-6xl mx-auto px-6 space-y-8">
+          <div className={`${RENTAL_CONTENT_WIDE} space-y-8`}>
             <div className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10">
               <p className="text-white/75 leading-relaxed text-lg">
                 Zależy nam, aby wysyłając z nami dziecko na obóz obdarzyli Państwo zaufaniem naszą kadrę. Jesteśmy doświadczonym organizatorem

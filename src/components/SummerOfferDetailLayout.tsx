@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react';
-import { useEffect, useMemo, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ExternalLink, X } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 import type { SummerOfferDetail, SummerOfferGalleryImage } from '../data/summerOfferDetails';
 import { parseOptionalFacultyLine } from '../utils/parseOptionalFacultyLine';
+import { GalleryLightbox } from './GalleryLightbox';
 
 
 const WIDE = 'max-w-4xl xl:max-w-6xl 2xl:max-w-[72rem] mx-auto px-6 sm:px-8 lg:px-10';
@@ -76,52 +76,17 @@ export function SummerOfferDetailLayout({
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (lightboxIndex === null) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setLightboxIndex(null);
-    };
-    window.addEventListener('keydown', onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [lightboxIndex]);
-
-  const lightbox =
-    lightboxIndex !== null && lightboxImages[lightboxIndex]
-      ? createPortal(
-          <div
-            className="fixed inset-0 z-[240] flex items-center justify-center bg-black/92 p-4 sm:p-8"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Powiększone zdjęcie"
-            onClick={() => setLightboxIndex(null)}
-          >
-            <button
-              type="button"
-              onClick={() => setLightboxIndex(null)}
-              className="absolute right-3 top-3 z-10 rounded-full border border-white/20 bg-dark/80 p-2 text-white hover:bg-white/10 hover:border-primary/50 transition-colors"
-              aria-label="Zamknij podgląd"
-            >
-              <X size={22} />
-            </button>
-            <img
-              src={lightboxImages[lightboxIndex]!.src}
-              alt={lightboxImages[lightboxIndex]!.alt}
-              className="max-h-[min(90vh,900px)] max-w-full object-contain rounded-lg shadow-2xl cursor-default"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </div>,
-          document.body
-        )
-      : null;
-
   return (
     <>
-      {lightbox}
+      {lightboxIndex !== null && lightboxImages[lightboxIndex] ? (
+        <GalleryLightbox
+          images={lightboxImages}
+          index={lightboxIndex}
+          onIndexChange={setLightboxIndex}
+          onClose={() => setLightboxIndex(null)}
+          zIndexClass="z-[240]"
+        />
+      ) : null}
       <section id="galeria" className={`${SECTION_PAD} bg-dark`}>
         <div className={`${WIDE} w-full`}>
           <SectionTitle>Galeria</SectionTitle>

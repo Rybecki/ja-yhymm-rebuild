@@ -4,8 +4,15 @@ import { motion } from 'motion/react';
 import { ChevronDown, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
 
 const AUTOLAWETA_IMAGES = ['/images/wypozyczalnia/autolaweta/laweta-1.png', '/images/wypozyczalnia/autolaweta/laweta-2.png'];
+
+const AUTOLAWETA_GALLERY: GalleryImageItem[] = AUTOLAWETA_IMAGES.map((src, i) => ({
+  src,
+  alt: `Autolaweta — zdjęcie ${i + 1}`,
+}));
 
 const REGULATIONS_TEXT = `REGULAMIN USŁUGI AUTO-LAWETA
 1. Usługa transportu realizowana jest przez A Bo Co... Sp. z o.o.
@@ -26,7 +33,7 @@ Podpisy stron: ________________________________________________________`;
 
 export default function RentalAutolawetaPage() {
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -79,20 +86,6 @@ export default function RentalAutolawetaPage() {
   }, [isRegulationsOpen]);
 
   useEffect(() => {
-    if (!lightboxImage) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setLightboxImage(null);
-    };
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [lightboxImage]);
-
-  useEffect(() => {
     const saved = localStorage.getItem('autolawetaForm');
     if (!saved) return;
     try {
@@ -106,8 +99,14 @@ export default function RentalAutolawetaPage() {
     <div className="bg-dark min-h-screen">
       <Navbar />
       <main>
-        <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className="max-w-4xl mx-auto px-6">
+        <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${AUTOLAWETA_IMAGES[0]})`, backgroundPosition: 'center 35%' }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-black/20" aria-hidden />
+          <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
                 Strona główna
@@ -125,8 +124,8 @@ export default function RentalAutolawetaPage() {
         </section>
 
         <section className="section-padding bg-dark">
-          <div className="max-w-6xl mx-auto px-6 space-y-8">
-            <div className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-5">
+          <div className={`${RENTAL_CONTENT_WIDE} space-y-8`}>
+            <div className={`glass-card ${RENTAL_GLASS_INNER} space-y-5`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Transport, który mieści więcej - ludzi i gabaryty</h3>
               <p className="text-white/80 leading-relaxed text-lg">
                 Szukasz transportu, który nie kończy się na samym pojeździe? Nasza specjalistyczna autolaweta z 7-osobową kabiną to idealne
@@ -137,7 +136,7 @@ export default function RentalAutolawetaPage() {
               </p>
             </div>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-6">
+            <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-6`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Co najczęściej transportujemy?</h3>
               <ul className="list-disc pl-6 text-white/75 space-y-2">
                 <li><span className="text-primary font-semibold">Pojazdy:</span> samochody osobowe, quady, motocykle, minikoparki.</li>
@@ -149,21 +148,21 @@ export default function RentalAutolawetaPage() {
                 Dzięki dużej kabinie (6 pasażerów + kierowca) nie musisz organizować osobnego transportu dla ludzi. Oszczędzasz czas i pieniądze.
               </p>
               <div className="grid md:grid-cols-2 gap-4 pt-2">
-                {AUTOLAWETA_IMAGES.map((src, index) => (
+                {AUTOLAWETA_GALLERY.map((item, index) => (
                   <button
-                    key={src}
+                    key={item.src}
                     type="button"
-                    className="group relative overflow-hidden rounded-2xl border border-primary/40 bg-white/5 text-left"
-                    onClick={() => setLightboxImage(src)}
-                    aria-label={`Powiększ zdjęcie autolawety ${index + 1}`}
+                    className="group relative overflow-hidden rounded-2xl border border-primary/40 bg-white/5 text-left cursor-zoom-in"
+                    onClick={() => setPhotoGallery({ images: AUTOLAWETA_GALLERY, index })}
+                    aria-label={`Powiększ: ${item.alt}`}
                   >
-                    <img src={src} alt={`Autolaweta - zdjęcie ${index + 1}`} className="w-full h-full object-cover aspect-[4/3] transition-transform duration-300 group-hover:scale-[1.02]" loading="lazy" />
+                    <img src={item.src} alt={item.alt} className="w-full h-full object-cover aspect-[4/3] transition-transform duration-300 group-hover:scale-[1.02] pointer-events-none" loading="lazy" />
                   </button>
                 ))}
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-8">
+            <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-8`}>
               <div>
                 <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Cennik i pakiety usług</h3>
                 <p className="text-white/75 leading-relaxed mb-5">
@@ -260,7 +259,7 @@ export default function RentalAutolawetaPage() {
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10" id="formularz-kontaktowy">
+            <section className={`glass-card ${RENTAL_GLASS_INNER}`} id="formularz-kontaktowy">
               <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Zadzwoń i zapytaj o wolny termin</h3>
               <p className="text-white/70 mb-6">Działamy na terenie Katowic, aglomeracji śląskiej i całej Polski.</p>
               <form className="space-y-5" onSubmit={handleSubmit}>
@@ -342,14 +341,15 @@ export default function RentalAutolawetaPage() {
         </div>
       )}
 
-      {lightboxImage && (
-        <div className="fixed inset-0 z-[130] bg-black/90 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center" role="dialog" aria-modal="true" aria-label="Powiększone zdjęcie autolawety" onClick={() => setLightboxImage(null)}>
-          <button type="button" className="absolute top-4 right-4 rounded-full border border-white/20 p-2 text-white hover:text-primary hover:border-primary/40 transition-colors" onClick={() => setLightboxImage(null)} aria-label="Zamknij podgląd zdjęcia">
-            <X size={18} />
-          </button>
-          <img src={lightboxImage} alt="Autolaweta - powiększenie" className="max-h-[90vh] max-w-full object-contain rounded-xl shadow-2xl" onClick={(event) => event.stopPropagation()} />
-        </div>
-      )}
+      {photoGallery ? (
+        <GalleryLightbox
+          images={photoGallery.images}
+          index={photoGallery.index}
+          onIndexChange={(i) => setPhotoGallery((g) => (g ? { ...g, index: i } : null))}
+          onClose={() => setPhotoGallery(null)}
+          zIndexClass="z-[135]"
+        />
+      ) : null}
 
       <Footer />
     </div>

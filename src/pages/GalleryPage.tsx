@@ -1,16 +1,22 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { GALLERY_CATEGORIES, GALLERY_IMAGES, type GalleryCategory } from '../data/galleryImages';
 
 export default function GalleryPage() {
   const [activeCategory, setActiveCategory] = useState<GalleryCategory>('Wszystkie');
+  const [galleryOpen, setGalleryOpen] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
 
   const filteredImages = useMemo(() => {
     if (activeCategory === 'Wszystkie') return GALLERY_IMAGES;
     return GALLERY_IMAGES.filter((image) => image.category === activeCategory);
+  }, [activeCategory]);
+
+  useEffect(() => {
+    setGalleryOpen(null);
   }, [activeCategory]);
 
   return (
@@ -58,20 +64,33 @@ export default function GalleryPage() {
         <section className="section-padding bg-dark">
           <div className="max-w-7xl mx-auto px-6">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-              {filteredImages.map((image) => (
-                <motion.figure
+              {filteredImages.map((image, i) => (
+                <motion.button
                   key={`${image.category}-${image.src}`}
+                  type="button"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="rounded-2xl overflow-hidden border border-white/10 bg-white/5"
+                  onClick={() => setGalleryOpen({ images: filteredImages, index: i })}
+                  className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  aria-label={`Powiększ: ${image.alt}`}
                 >
-                  <img src={image.src} alt={image.alt} className="w-full h-56 object-cover" loading="lazy" />
-                </motion.figure>
+                  <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                </motion.button>
               ))}
             </div>
           </div>
         </section>
       </main>
+
+      {galleryOpen ? (
+        <GalleryLightbox
+          images={galleryOpen.images}
+          index={galleryOpen.index}
+          onIndexChange={(idx) => setGalleryOpen((g) => (g ? { ...g, index: idx } : null))}
+          onClose={() => setGalleryOpen(null)}
+          zIndexClass="z-[130]"
+        />
+      ) : null}
 
       <Footer />
     </div>

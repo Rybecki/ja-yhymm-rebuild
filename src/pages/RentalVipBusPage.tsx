@@ -4,6 +4,8 @@ import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
 
 const VIP_BUS_IMAGES = [
   '/images/wypozyczalnia/vip-bus/bus-1.png',
@@ -11,6 +13,11 @@ const VIP_BUS_IMAGES = [
   '/images/wypozyczalnia/vip-bus/bus-3.png',
   '/images/wypozyczalnia/vip-bus/bus-4.png',
 ];
+
+const VIP_BUS_GALLERY: GalleryImageItem[] = VIP_BUS_IMAGES.map((src, i) => ({
+  src,
+  alt: `VIP Bus — zdjęcie ${i + 1}`,
+}));
 
 const REGULATIONS_TEXT = `REGULAMIN USŁUGI VIP BUS A BO CO...
 1. Usługa przewozu realizowana jest przez A Bo Co... Sp. z o.o.
@@ -48,7 +55,7 @@ Podpis Wynajmującego: ____________________  Podpis Zamawiającego: ____________
 
 export default function RentalVipBusPage() {
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -101,20 +108,6 @@ export default function RentalVipBusPage() {
   }, [isRegulationsOpen]);
 
   useEffect(() => {
-    if (!lightboxImage) return;
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setLightboxImage(null);
-    };
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  }, [lightboxImage]);
-
-  useEffect(() => {
     const saved = localStorage.getItem('vipBusForm');
     if (!saved) return;
     try {
@@ -128,8 +121,14 @@ export default function RentalVipBusPage() {
     <div className="bg-dark min-h-screen">
       <Navbar />
       <main>
-        <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className="max-w-4xl mx-auto px-6">
+        <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${VIP_BUS_IMAGES[0]})`, backgroundPosition: 'center 35%' }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-black/20" aria-hidden />
+          <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
                 Strona główna
@@ -147,8 +146,8 @@ export default function RentalVipBusPage() {
         </section>
 
         <section className="section-padding bg-dark">
-          <div className="max-w-6xl mx-auto px-6 space-y-8">
-            <div className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-5">
+          <div className={`${RENTAL_CONTENT_WIDE} space-y-8`}>
+            <div className={`glass-card ${RENTAL_GLASS_INNER} space-y-5`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">VIP BUS A Bo Co...</h3>
               <p className="text-white/80 leading-relaxed text-lg">
                 Szukasz transportu, który połączy bezpieczeństwo, prestiż i najwyższą wygodę? Nasz nowy, 9-osobowy bus klasy VIP to mobilny salon,
@@ -157,7 +156,7 @@ export default function RentalVipBusPage() {
               <p className="text-white/75 leading-relaxed">To wnętrze wykonane na specjalne zamówienie, z myślą o najbardziej wymagających pasażerach.</p>
             </div>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-6">
+            <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-6`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Co znajdziesz na pokładzie?</h3>
               <ul className="list-disc pl-6 text-white/75 space-y-2">
                 <li><span className="text-primary font-semibold">Ergonomiczne fotele:</span> osobno regulowane siedziska z podłokietnikami dla każdego pasażera.</li>
@@ -168,21 +167,21 @@ export default function RentalVipBusPage() {
                 <li><span className="text-primary font-semibold">Ogromna przestrzeń bagażowa:</span> dwupoziomowa zabudowa bagażnika dla całej grupy.</li>
               </ul>
               <div className="grid md:grid-cols-2 gap-4 pt-2">
-                {VIP_BUS_IMAGES.map((src, index) => (
+                {VIP_BUS_GALLERY.map((item, index) => (
                   <button
-                    key={src}
+                    key={item.src}
                     type="button"
                     className="rounded-2xl overflow-hidden border border-primary/40 bg-white/5 text-left cursor-zoom-in"
-                    onClick={() => setLightboxImage(src)}
-                    aria-label={`Powiększ zdjęcie VIP Bus ${index + 1}`}
+                    onClick={() => setPhotoGallery({ images: VIP_BUS_GALLERY, index })}
+                    aria-label={`Powiększ: ${item.alt}`}
                   >
-                    <img src={src} alt={`VIP Bus - zdjęcie ${index + 1}`} className="w-full h-full object-cover aspect-[4/3]" loading="lazy" />
+                    <img src={item.src} alt={item.alt} className="w-full h-full object-cover aspect-[4/3] pointer-events-none" loading="lazy" />
                   </button>
                 ))}
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-8">
+            <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-8`}>
               <div>
                 <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Nasze pakiety i cennik</h3>
                 <p className="text-white/75 leading-relaxed mb-5">
@@ -244,7 +243,7 @@ export default function RentalVipBusPage() {
               </p>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10" id="formularz-kontaktowy">
+            <section className={`glass-card ${RENTAL_GLASS_INNER}`} id="formularz-kontaktowy">
               <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Zapytaj o darmową wycenę</h3>
               <form className="space-y-5" onSubmit={handleSubmit}>
                 <div className="grid md:grid-cols-2 gap-5">
@@ -325,30 +324,15 @@ export default function RentalVipBusPage() {
         </div>
       )}
 
-      {lightboxImage && (
-        <div
-          className="fixed inset-0 z-[130] bg-black/90 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Powiększone zdjęcie VIP Bus"
-          onClick={() => setLightboxImage(null)}
-        >
-          <button
-            type="button"
-            className="absolute top-4 right-4 rounded-full border border-white/20 p-2 text-white hover:text-primary hover:border-primary/40 transition-colors"
-            onClick={() => setLightboxImage(null)}
-            aria-label="Zamknij podgląd zdjęcia"
-          >
-            <X size={18} />
-          </button>
-          <img
-            src={lightboxImage}
-            alt="VIP Bus - powiększenie"
-            className="max-h-[90vh] max-w-full object-contain rounded-xl shadow-2xl"
-            onClick={(event) => event.stopPropagation()}
-          />
-        </div>
-      )}
+      {photoGallery ? (
+        <GalleryLightbox
+          images={photoGallery.images}
+          index={photoGallery.index}
+          onIndexChange={(i) => setPhotoGallery((g) => (g ? { ...g, index: i } : null))}
+          onClose={() => setPhotoGallery(null)}
+          zIndexClass="z-[135]"
+        />
+      ) : null}
 
       <Footer />
     </div>

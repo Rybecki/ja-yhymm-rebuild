@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
-import { X } from 'lucide-react';
+import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox } from '../components/GalleryLightbox';
 import { teamMembers } from '../data/team';
 
 const RECOMMENDATIONS = Array.from({ length: 13 }, (_, i) => ({
@@ -26,33 +26,23 @@ export default function AboutPage() {
     return () => clearTimeout(t);
   }, [hash]);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setLightbox(null);
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
-  useEffect(() => {
-    if (lightbox !== null) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [lightbox]);
-
   return (
     <div className="bg-dark min-h-screen">
       <Navbar />
 
       <main>
-        <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className="max-w-4xl mx-auto text-center px-6">
+        <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[58vh] md:min-h-[72vh] flex items-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/images/o-nas/kadra.png)' }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark/55 via-dark/35 to-dark/20" aria-hidden />
+          <div className="max-w-4xl mx-auto text-center px-6 relative z-10">
             <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">O nas</h1>
+            <p className="text-base md:text-lg text-white/75 font-medium leading-snug max-w-3xl mx-auto mb-6">
+              JA YHYMM... Integracja Sport Turystyka Wypoczynek
+            </p>
             <p className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight">
               Pasja, ludzie, doświadczenie
             </p>
@@ -90,7 +80,7 @@ export default function AboutPage() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-14 md:mb-16">
               <h2 className="text-primary font-bold uppercase tracking-widest mb-4">Nasz zespół</h2>
-              <h3 className="text-3xl md:text-4xl font-extrabold font-display text-white">Ludzie JA YHYMM</h3>
+              <h3 className="text-3xl md:text-4xl font-extrabold font-display text-white">Ludzie JA YHYMM... Integracja Sport Turystyka Wypoczynek</h3>
             </div>
 
             <div className="flex flex-col divide-y divide-primary/25">
@@ -166,44 +156,15 @@ export default function AboutPage() {
 
       <Footer />
 
-      <AnimatePresence>
-        {lightbox !== null && (
-          <motion.div
-            key="lightbox"
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-dark/95 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setLightbox(null)}
-          >
-            <motion.button
-              type="button"
-              className="absolute top-6 right-6 z-[101] p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightbox(null);
-              }}
-              aria-label="Zamknij"
-            >
-              <X size={28} />
-            </motion.button>
-            <motion.div
-              initial={{ scale: 0.96, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.96, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="relative max-h-[90vh] max-w-5xl w-full overflow-auto rounded-2xl border-2 border-primary shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img
-                src={RECOMMENDATIONS[lightbox].src}
-                alt={RECOMMENDATIONS[lightbox].alt}
-                className="w-full h-auto object-contain bg-white"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {lightbox !== null ? (
+        <GalleryLightbox
+          images={RECOMMENDATIONS}
+          index={lightbox}
+          onIndexChange={setLightbox}
+          onClose={() => setLightbox(null)}
+          zIndexClass="z-[130]"
+        />
+      ) : null}
     </div>
   );
 }

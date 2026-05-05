@@ -4,8 +4,15 @@ import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
 
 const KAYAK_IMAGES = ['/images/wypozyczalnia/kajaki/kajak-1.png', '/images/wypozyczalnia/kajaki/kajak-2.png'];
+
+const KAYAK_GALLERY: GalleryImageItem[] = KAYAK_IMAGES.map((src, i) => ({
+  src,
+  alt: `Kajak — zdjęcie ${i + 1}`,
+}));
 
 const REGULATIONS_TEXT = `REGULAMIN WYPOŻYCZALNI KAJAKO-MOBIL
 (Właścicielem marki jest A Bo Co... Sp. z o.o. z siedzibą w Katowicach)
@@ -78,11 +85,13 @@ Podpis Wynajmującego Podpis Najemcy`;
 
 export default function RentalKayaksPage() {
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
+  const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
     email: '',
     kayakType: '',
+    kayakCount: '',
     packageType: '',
     dateFrom: '',
     dateTo: '',
@@ -105,6 +114,7 @@ export default function RentalKayaksPage() {
       `Telefon: ${formData.phone}`,
       `Email: ${formData.email}`,
       `Rodzaj zestawu: ${formData.kayakType}`,
+      `Liczba kajakow: ${formData.kayakCount}`,
       `Pakiet: ${formData.packageType}`,
       `Data od: ${formData.dateFrom}`,
       `Data do: ${formData.dateTo}`,
@@ -146,11 +156,14 @@ export default function RentalKayaksPage() {
       <Navbar />
 
       <main>
-        <section
-          className="section-padding border-b border-white/5 bg-cover bg-center relative"
-          style={{ backgroundImage: "linear-gradient(rgba(8,12,18,0.68), rgba(8,12,18,0.8)), url('/images/wypozyczalnia/kajaki/kajaki-hero.png')" }}
-        >
-          <div className="max-w-4xl mx-auto px-6">
+        <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/wypozyczalnia/kajaki/kajaki-hero.png')", backgroundPosition: 'center 35%' }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-black/20" aria-hidden />
+          <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
                 Strona główna
@@ -172,8 +185,8 @@ export default function RentalKayaksPage() {
         </section>
 
         <section className="section-padding bg-dark">
-          <div className="max-w-6xl mx-auto px-6 space-y-8">
-            <div className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-5">
+          <div className={`${RENTAL_CONTENT_WIDE} space-y-8`}>
+            <div className={`glass-card !border-primary ${RENTAL_GLASS_INNER} space-y-5`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Wolność płynie z Tobą</h3>
               <p className="text-white/80 leading-relaxed text-lg">
                 Wypożyczalnia KAJAKO-MOBIL to projekt stworzony przez pasjonatów ze spółki A Bo Co... oraz Fundacji JA YHYMM...
@@ -186,7 +199,7 @@ export default function RentalKayaksPage() {
               </p>
             </div>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-6">
+            <section className={`glass-card !border-primary ${RENTAL_GLASS_INNER} space-y-6`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Dlaczego warto wybrać KAJAKO-MOBIL?</h3>
               <ul className="list-disc pl-6 text-white/75 space-y-2">
                 <li>Pancerny sprzęt: nowoczesne kajaki polietylenowe, wytrzymałe, stabilne i bezpieczne.</li>
@@ -195,41 +208,77 @@ export default function RentalKayaksPage() {
                 <li>Wsparcie misji: korzystając z usług, wspierasz działania statutowe Fundacji JA YHYMM...</li>
               </ul>
               <div className="grid md:grid-cols-2 gap-4 pt-2">
-                {KAYAK_IMAGES.map((src, index) => (
-                  <motion.div key={src} whileHover={{ y: -6 }} transition={{ duration: 0.25 }} className="group relative overflow-visible pb-2">
-                    <img src={src} alt={`Kajak - zdjęcie ${index + 1}`} className="w-full aspect-[4/3] object-contain bg-transparent" loading="lazy" />
+                {KAYAK_GALLERY.map((item, index) => (
+                  <motion.button
+                    key={item.src}
+                    type="button"
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.25 }}
+                    onClick={() => setPhotoGallery({ images: KAYAK_GALLERY, index })}
+                    className="group relative overflow-visible pb-2 text-left cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
+                    aria-label={`Powiększ: ${item.alt}`}
+                  >
+                    <img src={item.src} alt={item.alt} className="w-full aspect-[4/3] object-contain bg-transparent pointer-events-none" loading="lazy" />
                     <span className="pointer-events-none absolute left-0 right-0 bottom-0 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
-                  </motion.div>
+                  </motion.button>
                 ))}
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
-                  <h4 className="text-primary font-bold mb-2">Gdzie nas znajdziesz? - Sezon letni</h4>
-                  <p className="text-white/70">Jesteśmy w samym sercu Jury Krakowsko-Częstochowskiej, gotowi na Twoje zapytania.</p>
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="rounded-2xl bg-white/5 border border-primary/40 p-5">
+                  <h4 className="text-primary font-bold mb-3">Kajak jednoosobowy - parametry</h4>
+                  <ul className="space-y-1.5 text-white/75">
+                    <li>Długość: 2,95 m</li>
+                    <li>Szerokość: 0,69 m</li>
+                    <li>Wysokość: 0,32 m</li>
+                    <li>Kokpit: 1,07 x 0,52 m</li>
+                    <li>Waga: 22 kg</li>
+                    <li>Wyporność: 140 kg</li>
+                    <li>Materiał: polietylen superlinealny</li>
+                  </ul>
                 </div>
-                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                <div className="rounded-2xl bg-white/5 border border-primary/40 p-5">
+                  <h4 className="text-primary font-bold mb-3">Kajak dwuosobowy - parametry</h4>
+                  <ul className="space-y-1.5 text-white/75">
+                    <li>Długość: 4,5 m</li>
+                    <li>Szerokość: 0,82 m</li>
+                    <li>Waga: 43 kg</li>
+                    <li>Kokpit (długość/szerokość): 2,32 x 0,58 m</li>
+                    <li>Wyporność: 300 kg</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="rounded-2xl bg-white/5 border border-primary/40 p-5">
+                  <h4 className="text-primary font-bold mb-2">Gdzie nas znajdziesz? - Sezon letni</h4>
+                  <p className="text-white/70">
+                    Jesteśmy w samym sercu Jury Krakowsko-Częstochowskiej, gotowi na Twoje zapytania. Dowozimy sprzęt pod drzwi lub
+                    bezpośrednio nad wskazany brzeg.
+                  </p>
+                </div>
+                <div className="rounded-2xl bg-white/5 border border-primary/40 p-5">
                   <h4 className="text-primary font-bold mb-2">Poza sezonem</h4>
                   <p className="text-white/70">Nasza baza mieści się w Katowicach, ul. Niwna 9.</p>
                 </div>
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-8">
+            <section className={`glass-card !border-primary ${RENTAL_GLASS_INNER} space-y-8`}>
               <div>
                 <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Dostawa i odbiór</h3>
                 <p className="text-white/75 leading-relaxed mb-5">Nie masz bagażnika dachowego? Żaden problem. Przywieziemy kajaki tam, gdzie ich potrzebujesz.</p>
                 <div className="space-y-3 md:hidden">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="rounded-2xl border border-primary/40 bg-white/5 p-4">
                     <p className="text-white/70 text-sm">do 15 km</p>
                     <p className="text-primary font-bold mt-1">BEZPŁATNIE (przy min. 2 kajakach)</p>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="rounded-2xl border border-primary/40 bg-white/5 p-4">
                     <p className="text-white/70 text-sm">powyżej 15 km</p>
                     <p className="text-primary font-bold mt-1">2,50 zł / km (w obie strony)</p>
                   </div>
                 </div>
-                <div className="hidden md:block rounded-2xl border border-white/10 overflow-hidden">
+                <div className="hidden md:block rounded-2xl border border-primary/40 overflow-hidden">
                   <table className="w-full text-left">
                     <thead className="bg-white/5">
                       <tr>
@@ -238,11 +287,11 @@ export default function RentalKayaksPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-primary/30">
                         <td className="px-4 py-3 text-white/80">do 15 km</td>
                         <td className="px-4 py-3 text-primary font-bold">BEZPŁATNIE (przy min. 2 kajakach)</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-primary/30">
                         <td className="px-4 py-3 text-white/80">powyżej 15 km</td>
                         <td className="px-4 py-3 text-primary font-bold">2,50 zł / km (w obie strony)</td>
                       </tr>
@@ -256,20 +305,20 @@ export default function RentalKayaksPage() {
                 <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Cennik i pakiety</h3>
                 <p className="text-white/75 leading-relaxed mb-5">Cena obejmuje kajak, 2 wiosła i 2-3 kamizelki.</p>
                 <div className="space-y-3 md:hidden">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="rounded-2xl border border-primary/40 bg-white/5 p-4">
                     <p className="text-white/70 text-sm">Doba (1-2 dni)</p>
                     <p className="text-primary font-bold mt-1">90 zł / doba</p>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="rounded-2xl border border-primary/40 bg-white/5 p-4">
                     <p className="text-white/70 text-sm">Weekend (pt-nd)</p>
                     <p className="text-primary font-bold mt-1">220 zł (oszczędzasz 50 zł)</p>
                   </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div className="rounded-2xl border border-primary/40 bg-white/5 p-4">
                     <p className="text-white/70 text-sm">Kaucja zwrotna</p>
                     <p className="text-primary font-bold mt-1">200 zł / kajak</p>
                   </div>
                 </div>
-                <div className="hidden md:block rounded-2xl border border-white/10 overflow-hidden">
+                <div className="hidden md:block rounded-2xl border border-primary/40 overflow-hidden">
                   <table className="w-full text-left">
                     <thead className="bg-white/5">
                       <tr>
@@ -278,15 +327,15 @@ export default function RentalKayaksPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-primary/30">
                         <td className="px-4 py-3 text-white/80">Doba (1-2 dni)</td>
                         <td className="px-4 py-3 text-primary font-bold">90 zł / doba</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-primary/30">
                         <td className="px-4 py-3 text-white/80">Weekend (pt-nd)</td>
                         <td className="px-4 py-3 text-primary font-bold">220 zł (oszczędzasz 50 zł)</td>
                       </tr>
-                      <tr className="border-t border-white/10">
+                      <tr className="border-t border-primary/30">
                         <td className="px-4 py-3 text-white/80">Kaucja zwrotna</td>
                         <td className="px-4 py-3 text-primary font-bold">200 zł / kajak</td>
                       </tr>
@@ -296,11 +345,11 @@ export default function RentalKayaksPage() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-5">
-                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                <div className="rounded-2xl bg-white/5 border border-primary/40 p-5">
                   <h4 className="text-white font-bold mb-2">Pakiet "Mała Flota" (3-4 kajaki)</h4>
                   <p className="text-primary font-bold">-10% od ceny całkowitej</p>
                 </div>
-                <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
+                <div className="rounded-2xl bg-white/5 border border-primary/40 p-5">
                   <h4 className="text-white font-bold mb-2">Pakiet "Wyprawa" (5+ kajaków)</h4>
                   <p className="text-primary font-bold">-15% + transport do 30 km w cenie</p>
                 </div>
@@ -322,7 +371,7 @@ export default function RentalKayaksPage() {
               </p>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10" id="formularz-kontaktowy">
+            <section className={`glass-card !border-primary ${RENTAL_GLASS_INNER}`} id="formularz-kontaktowy">
               <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Zarezerwuj swój termin już dziś</h3>
               <p className="text-white/70 mb-6">A Bo Co... sp. z o.o. Wspierane przez Fundację JA YHYMM...</p>
 
@@ -349,7 +398,7 @@ export default function RentalKayaksPage() {
                     />
                   </div>
                 </div>
-                <div className="grid md:grid-cols-2 gap-5">
+                <div className="grid md:grid-cols-3 gap-5">
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Email*</label>
                     <input
@@ -374,6 +423,30 @@ export default function RentalKayaksPage() {
                         </option>
                         <option className="bg-dark">Kajak 2-osobowy + osprzęt</option>
                         <option className="bg-dark">Kajak 2-osobowy + osprzęt + siedzisko dziecka</option>
+                      </select>
+                      <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none" size={18} />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs uppercase tracking-widest text-white/40">Liczba*</label>
+                    <div className="relative min-w-0">
+                      <select
+                        required
+                        value={formData.kayakCount}
+                        onChange={(event) => updateFormData('kayakCount', event.target.value)}
+                        className="w-full max-w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors appearance-none pr-10 truncate"
+                      >
+                        <option value="" className="bg-dark">
+                          Wybierz liczbę
+                        </option>
+                        {[...Array(12)].map((_, i) => {
+                          const value = String(i + 1);
+                          return (
+                            <option key={value} value={value} className="bg-dark">
+                              {value}
+                            </option>
+                          );
+                        })}
                       </select>
                       <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-primary pointer-events-none" size={18} />
                     </div>
@@ -477,6 +550,16 @@ export default function RentalKayaksPage() {
           </div>
         </div>
       )}
+
+      {photoGallery ? (
+        <GalleryLightbox
+          images={photoGallery.images}
+          index={photoGallery.index}
+          onIndexChange={(i) => setPhotoGallery((g) => (g ? { ...g, index: i } : null))}
+          onClose={() => setPhotoGallery(null)}
+          zIndexClass="z-[135]"
+        />
+      ) : null}
 
       <Footer />
     </div>

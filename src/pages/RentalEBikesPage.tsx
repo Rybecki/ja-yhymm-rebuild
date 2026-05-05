@@ -4,9 +4,20 @@ import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
 
 const KROSS_IMAGES = ['/images/wypozyczalnia/e-rowery/kross-1-v3.png', '/images/wypozyczalnia/e-rowery/kross-2-v3.png'];
 const WINORA_IMAGES = ['/images/wypozyczalnia/e-rowery/winora-1-v3.png', '/images/wypozyczalnia/e-rowery/winora-2-v3.png'];
+
+const KROSS_GALLERY: GalleryImageItem[] = KROSS_IMAGES.map((src, i) => ({
+  src,
+  alt: `Kross Influx Hybrid 1.0 — zdjęcie ${i + 1}`,
+}));
+const WINORA_GALLERY: GalleryImageItem[] = WINORA_IMAGES.map((src, i) => ({
+  src,
+  alt: `WINORA Yucatan X8 — zdjęcie ${i + 1}`,
+}));
 
 const REGULATIONS_TEXT = `REGULAMIN WYPOŻYCZALNI ROWERÓW ELEKTRYCZNYCH
 §1. Postanowienia ogólne
@@ -87,6 +98,7 @@ Podpis Wynajmującego: ____________________ Podpis Najemcy: ____________________
 
 export default function RentalEBikesPage() {
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
+  const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -155,8 +167,13 @@ export default function RentalEBikesPage() {
       <Navbar />
 
       <main>
-        <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className="max-w-4xl mx-auto px-6">
+        <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: 'url(/images/wypozyczalnia/e-rowery/hero-ebikes.png)', backgroundPosition: 'center 25%' }}
+            aria-hidden
+          />
+          <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
                 Strona główna
@@ -178,8 +195,11 @@ export default function RentalEBikesPage() {
         </section>
 
         <section className="section-padding bg-dark">
-          <div className="max-w-6xl mx-auto px-6 space-y-8">
-            <div className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-5">
+          <div className={`${RENTAL_CONTENT_WIDE} space-y-8`}>
+            <div className={`glass-card ${RENTAL_GLASS_INNER} space-y-5`}>
+              <h3 className="text-2xl md:text-3xl font-display font-extrabold text-white leading-tight">
+                A Bo Co… Wypożyczalnia E- Rowerów: Jura & Śląsk
+              </h3>
               <p className="text-white/80 leading-relaxed text-lg">
                 Marzysz o przemierzaniu szlaków Jury Krakowsko-Częstochowskiej bez zadyszki? A może chcesz aktywnie spędzić weekend
                 w aglomeracji śląskiej? Nasza wypożyczalnia rowerów elektrycznych to przepustka do przygody, gdzie każde wzniesienie
@@ -190,7 +210,8 @@ export default function RentalEBikesPage() {
                   <h3 className="text-primary font-bold text-lg mb-2">Gdzie nas znajdziesz? - Sezon letni</h3>
                   <p className="text-white/70 leading-relaxed">
                     Zapraszamy do serca Jury! Nasza baza mieści się przy Restauracji Złoty Jeleń w Złotym Potoku. To idealny punkt
-                    startowy na wycieczkę - zjedz pyszne śniadanie i ruszaj na podbój zamków.
+                    startowy na wycieczkę - zjedz pyszne śniadanie i ruszaj na podbój zamków. Dowozimy sprzęt pod drzwi, abyś mógł
+                    rozpocząć trasę dokładnie tam, gdzie Ci najwygodniej.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
@@ -200,7 +221,7 @@ export default function RentalEBikesPage() {
               </div>
             </div>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10">
+            <section className={`glass-card ${RENTAL_GLASS_INNER}`}>
               <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Nasza flota: komfort i technologia</h3>
               <h4 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-6">Kross Influx Hybrid 1.0</h4>
               <p className="text-white/75 leading-relaxed mb-4">
@@ -211,17 +232,39 @@ export default function RentalEBikesPage() {
                 <span className="text-primary font-bold">Atuty:</span> Lekkość prowadzenia, solidna konstrukcja, świetny na jurajskie
                 pagórki, mocny silnik.
               </p>
+              <div className="rounded-2xl bg-white/5 border border-white/10 p-5 mb-6">
+                <h5 className="text-primary font-bold mb-3 uppercase tracking-wider text-sm">Parametry techniczne</h5>
+                <ul className="space-y-2 text-white/75">
+                  <li><span className="text-white font-semibold">Silnik:</span> centralny Bafang M410 (moment obrotowy 80-90 Nm).</li>
+                  <li><span className="text-white font-semibold">Bateria:</span> zintegrowana BMZ V10 720 Wh lub 820 Wh (wersja SUV).</li>
+                  <li><span className="text-white font-semibold">Rama:</span> aluminium (rozmiary 16"-19").</li>
+                  <li><span className="text-white font-semibold">Widelec:</span> SR Suntour XCM32 Boost (skok 100 mm lub 120 mm).</li>
+                  <li><span className="text-white font-semibold">Napęd:</span> 1x9 Shimano Cues U4000.</li>
+                  <li><span className="text-white font-semibold">Kaseta:</span> Shimano Cues LG300 (11-46T).</li>
+                  <li><span className="text-white font-semibold">Hamulce:</span> hydrauliczne tarczowe Shimano MT200 (tarcze 180 mm).</li>
+                  <li><span className="text-white font-semibold">Opony:</span> Obor Mike Bear 29" x 2.35".</li>
+                  <li><span className="text-white font-semibold">Wyświetlacz:</span> Bafang DP C245 (z portem USB-C).</li>
+                </ul>
+              </div>
               <div className="grid sm:grid-cols-2 gap-4">
-                {KROSS_IMAGES.map((src, index) => (
-                  <motion.div key={src} whileHover={{ y: -6 }} transition={{ duration: 0.25 }} className="group relative overflow-visible pb-2">
-                    <img src={src} alt={`Kross Influx Hybrid 1.0 - zdjęcie ${index + 1}`} className="w-full aspect-[4/3] object-contain bg-transparent" loading="lazy" />
+                {KROSS_GALLERY.map((item, index) => (
+                  <motion.button
+                    key={item.src}
+                    type="button"
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.25 }}
+                    onClick={() => setPhotoGallery({ images: KROSS_GALLERY, index })}
+                    className="group relative overflow-visible pb-2 text-left cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
+                    aria-label={`Powiększ: ${item.alt}`}
+                  >
+                    <img src={item.src} alt={item.alt} className="w-full aspect-[4/3] object-contain bg-transparent pointer-events-none" loading="lazy" />
                     <span className="pointer-events-none absolute left-0 right-0 bottom-0 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
-                  </motion.div>
+                  </motion.button>
                 ))}
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10">
+            <section className={`glass-card ${RENTAL_GLASS_INNER}`}>
               <h4 className="text-2xl md:text-3xl font-display font-extrabold text-white mb-6">WINORA Yucatan X8</h4>
               <p className="text-white/75 leading-relaxed mb-4">
                 Niemiecka precyzja i trekkingowy komfort. Wyposażony w mocny silnik, który nie boi się stromych podjazdów. Idealny dla
@@ -231,17 +274,38 @@ export default function RentalEBikesPage() {
                 <span className="text-primary font-bold">Atuty:</span> Wysoki moment obrotowy, kompletne wyposażenie wyprawowe,
                 elegancja.
               </p>
+              <div className="rounded-2xl bg-white/5 border border-white/10 p-5 mb-6">
+                <h5 className="text-primary font-bold mb-3 uppercase tracking-wider text-sm">Parametry techniczne</h5>
+                <ul className="space-y-2 text-white/75">
+                  <li><span className="text-white font-semibold">Silnik:</span> Yamaha PW-S2 250W, 75 Nm - dynamiczne wspomaganie na długich trasach i podjazdach.</li>
+                  <li><span className="text-white font-semibold">Bateria:</span> Yamaha InTube 720Wh - długi zasięg i niezawodność na trasie.</li>
+                  <li><span className="text-white font-semibold">Napęd:</span> Shimano Acera 8-biegowy - precyzyjna, płynna zmiana przełożeń.</li>
+                  <li><span className="text-white font-semibold">Hamulce:</span> Shimano BR-MT200, dwutłoczkowe zaciski i tarcze 180 mm.</li>
+                  <li><span className="text-white font-semibold">Amortyzacja:</span> SR Suntour XCM32 ATB DS LO 100 mm.</li>
+                  <li><span className="text-white font-semibold">Geometria:</span> szeroka kierownica JD MTB502A, ergonomiczne chwyty Velo i siodło Selle Royal.</li>
+                  <li><span className="text-white font-semibold">Wyposażenie:</span> bagażnik Easylife System, błotniki Curana Apollo, oświetlenie Herrmans CL3 i AXA Juno.</li>
+                  <li><span className="text-white font-semibold">Zabezpieczenie:</span> możliwość montażu zapięcia Abus Plus System.</li>
+                </ul>
+              </div>
               <div className="grid sm:grid-cols-2 gap-4">
-                {WINORA_IMAGES.map((src, index) => (
-                  <motion.div key={src} whileHover={{ y: -6 }} transition={{ duration: 0.25 }} className="group relative overflow-visible pb-2">
-                    <img src={src} alt={`WINORA Yucatan X8 - zdjęcie ${index + 1}`} className="w-full aspect-[4/3] object-contain bg-transparent" loading="lazy" />
+                {WINORA_GALLERY.map((item, index) => (
+                  <motion.button
+                    key={item.src}
+                    type="button"
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.25 }}
+                    onClick={() => setPhotoGallery({ images: WINORA_GALLERY, index })}
+                    className="group relative overflow-visible pb-2 text-left cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
+                    aria-label={`Powiększ: ${item.alt}`}
+                  >
+                    <img src={item.src} alt={item.alt} className="w-full aspect-[4/3] object-contain bg-transparent pointer-events-none" loading="lazy" />
                     <span className="pointer-events-none absolute left-0 right-0 bottom-0 h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100" />
-                  </motion.div>
+                  </motion.button>
                 ))}
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10 space-y-8">
+            <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-8`}>
               <div>
                 <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Cennik i pakiety</h3>
                 <p className="text-white/75 leading-relaxed mb-5">
@@ -326,7 +390,7 @@ export default function RentalEBikesPage() {
               </div>
             </section>
 
-            <section className="glass-card p-8 md:p-10 rounded-[2rem] border border-white/10" id="formularz-kontaktowy">
+            <section className={`glass-card ${RENTAL_GLASS_INNER}`} id="formularz-kontaktowy">
               <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Zarezerwuj swój e-bike już dziś</h3>
 
               <form className="space-y-5" onSubmit={handleSubmit}>
@@ -483,6 +547,16 @@ export default function RentalEBikesPage() {
           </div>
         </div>
       )}
+
+      {photoGallery ? (
+        <GalleryLightbox
+          images={photoGallery.images}
+          index={photoGallery.index}
+          onIndexChange={(i) => setPhotoGallery((g) => (g ? { ...g, index: i } : null))}
+          onClose={() => setPhotoGallery(null)}
+          zIndexClass="z-[135]"
+        />
+      ) : null}
 
       <Footer />
     </div>
