@@ -37,7 +37,7 @@ export default function AboutPage() {
             style={{ backgroundImage: 'url(/images/o-nas/kadra.png)' }}
             aria-hidden
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/55 via-dark/35 to-dark/20" aria-hidden />
+          <div className="app-photo-scrim" aria-hidden />
           <div className="max-w-4xl mx-auto text-center px-6 relative z-10">
             <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">O nas</h1>
             <p className="text-base md:text-lg text-white/75 font-medium leading-snug max-w-3xl mx-auto mb-6">

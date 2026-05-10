@@ -25,8 +25,8 @@ export default function OfferObozySeasonPage() {
       <main>
         <section className="relative min-h-[45vh] md:min-h-[50vh] flex flex-col justify-end overflow-hidden border-b border-white/5">
           <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${ZIMA.bg})` }} />
-          <div className="absolute inset-0 bg-gradient-to-t from-sky-900/45 via-slate-900/35 to-dark/90" />
-          <div className="absolute inset-0 bg-gradient-to-b from-dark/40 to-dark/70" />
+          <div className="absolute inset-0 bg-gradient-to-br from-sky-800/18 via-slate-800/10 to-transparent" aria-hidden />
+          <div className="app-photo-scrim" aria-hidden />
 
           <div className="relative z-10 max-w-4xl mx-auto px-6 pb-14 pt-28 w-full">
             <nav className="text-sm text-white/60 mb-6">
@@ -96,8 +96,8 @@ export default function OfferObozySeasonPage() {
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent opacity-95" />
-                    <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-6">
+                    <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                    <div className="absolute inset-0 z-10 flex flex-col justify-end p-5 md:p-6">
                       <span className="text-lg md:text-xl font-bold font-display text-white leading-snug drop-shadow-md group-hover:text-primary transition-colors">
                         {offer.title}
                       </span>

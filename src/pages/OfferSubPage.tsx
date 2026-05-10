@@ -162,12 +162,29 @@ const UNIFORMED_GALLERY = [
 ];
 
 const EVENTS_GALLERY = [
-  { src: '/images/eventy/eventy.png', alt: 'Sprzęt i atrakcje eventowe w plenerze' },
-  { src: '/images/eventy/eventy1.png', alt: 'Uczestnicy eventu podczas integracji' },
-  { src: '/images/eventy/eventy3.png', alt: 'Wieczorna część integracyjna z animacjami' },
+  { src: '/images/wypozyczalnia/dmuchance/dmuchance-4.png', alt: 'Dmuchańce i atrakcje plenerowe na evencie' },
+  { src: '/images/transport/transport2.png', alt: 'Autolaweta i przyczepa z quadem podczas transportu nocnego' },
+  { src: '/images/szkolenia/szkolenia1.png', alt: 'Ratownicy podczas manewrów na łodzi — szkolenia' },
   { src: '/images/eventy/eventy-firma-1.png', alt: 'Zespół uczestników wydarzenia firmowego pod wiatą' },
   { src: '/images/eventy/eventy-firma-2.png', alt: 'Wieczorna integracja firmowa przy ognisku' },
   { src: '/images/eventy/eventy-firma-3.png', alt: 'Aktywności strzeleckie podczas eventu firmowego' },
+];
+
+/** Galeria strony wieczorów kawalerskich / panieńskich — bez pierwszych trzech zdjęć z EVENTS_GALLERY (inne konteksty). */
+const BACHELOR_BACHELORETTE_GALLERY = [
+  ...EVENTS_GALLERY.slice(3),
+  {
+    src: '/images/wieczory-kawalerskie/galeria-1.png',
+    alt: 'Wieczór panieński — grupa w sukienkach z balonami i girlandą w jasnym wnętrzu',
+  },
+  {
+    src: '/images/wieczory-kawalerskie/galeria-2.png',
+    alt: 'Grill na trawie z przyjaciółmi — lato, piwo i wspólne jedzenie na świeżym powietrzu',
+  },
+  {
+    src: '/images/eventy/eventy3.png',
+    alt: 'Plenerowa impreza okolicznościowa — wspólna zabawa i integracja grupy',
+  },
 ];
 
 const RENTAL_WWW_TILES = [
@@ -235,6 +252,16 @@ const EQUIPMENT_RENTAL_CATALOG = [
     alt: 'Kolorowy zamek dmuchany na trawie',
   },
   {
+    text: 'Dmuchaniec żółw (suchy basen)',
+    img: '/images/wypozyczalnia/dmuchance/dmuchance-4.png',
+    alt: 'Dmuchaniec Żółw z suchym basenem na evencie plenerowym',
+  },
+  {
+    text: 'Dmuchaniec Mario (zjeżdżalnia)',
+    img: '/images/wypozyczalnia/dmuchance/dmuchance-mario.png',
+    alt: 'Wielki dmuchaniec i zjeżdżalnia w motywie Super Mario',
+  },
+  {
     text: 'Kajaki (dwuosobowe z włókna szklanego), wiosła, kamizelki',
     img: '/images/wypozyczalnia/kajaki/kajak-1.png',
     alt: 'Kajak z osprzętem',
@@ -288,6 +315,18 @@ const TRAININGS_GALLERY = [
   { src: '/images/szkolenia/szkolenia1.png', alt: 'Ratownicy podczas manewrów na łodzi' },
   { src: '/images/szkolenia/szkolenia2.png', alt: 'Szkolenie wysokościowe i działania linowe nad wodą' },
   { src: '/images/szkolenia/szkolenia3.png', alt: 'Szkolenie pierwszej pomocy i resuscytacji' },
+  {
+    src: '/images/szkolenia/szkolenie-linowe-stretcher.png',
+    alt: 'Szkolenie ratownictwa technicznego — praca na linach i żółtym stretcherze przy budynku szkoleniowym',
+  },
+  {
+    src: '/images/szkolenia/szkolenie-ratownictwo-wodne-argo.png',
+    alt: 'Ratownictwo wodne — ćwiczenia z amfibii Argo, wyciąganie poszkodowanego w kombinezonie z wody',
+  },
+  {
+    src: '/images/szkolenia/szkolenie-manewry-lodz-rhib.png',
+    alt: 'Manewry na łodzi typu RIB z silnikiem zaburtowym — szkolenie na wodzie (widok z góry)',
+  },
 ];
 
 const TRANSPORT_ITEMS = [
@@ -373,8 +412,9 @@ export default function OfferSubPage() {
   const uniformedHeroSrc = '/images/klasy-mundurowe/militaria-4.png';
   const uniformedDescriptionImageSrc = '/images/klasy-mundurowe/militaria-5.png';
   const eventsHeroSrc = '/images/eventy/eventy1.png';
-  const equipmentRentalHeroSrc = '/images/wynajem-sprzetu/quady.png';
-  const trainingsHeroSrc = '/images/szkolenia/szkolenia2.png';
+  /** Jak kafelek „Wynajem sprzętu” na /oferta (OfferIndexPage OFFER_CARD_MEDIA) */
+  const equipmentRentalHeroSrc = '/utils/quady-popr.png';
+  const trainingsHeroSrc = '/images/szkolenia/szkolenie-linowe-stretcher.png';
   const transportHeroSrc = '/images/transport/transport2.png';
   const accommodationHeroSrc = '/utils/oferta-letnia/jura-military-camp/gallery/lesna-baza-1.png';
   const serviceBaseHeroSrc = '/images/serwis/serwis-1.png';
@@ -405,7 +445,7 @@ export default function OfferSubPage() {
           {(isSchoolTripsPage || isUniformedClassesPage || isEventsPage || isBachelorAndBachelorettePage || isEquipmentRentalPage || isTrainingPage || isTransportPage || isAccommodationPage || isServiceBasePage) && (
             <>
               <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="absolute inset-0 bg-no-repeat"
                 style={{
                   backgroundImage: `url(${
                     isSchoolTripsPage
@@ -426,12 +466,13 @@ export default function OfferSubPage() {
                                   ? accommodationHeroSrc
                                   : serviceBaseHeroSrc
                   })`,
-                  backgroundPosition: isEventsPage || isBachelorAndBachelorettePage ? 'center 35%' : 'center',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center center',
                 }}
                 aria-hidden
               />
               <div
-                className={`absolute inset-0 ${isBachelorAndBachelorettePage ? 'bg-black/20' : 'bg-gradient-to-t from-dark via-dark/65 to-dark/55'}`}
+                className="app-photo-scrim"
                 aria-hidden
               />
             </>
@@ -600,7 +641,25 @@ export default function OfferSubPage() {
                   </p>
                 </div>
               ) : isUniformedClassesPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                      {UNIFORMED_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setOfferGallery({ images: UNIFORMED_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
                   <p className="text-lg">
                     Oferta przeznaczona dla szkół oraz klas o profilach mundurowych (policja, wojsko, straż pożarna, ratownictwo itp.).
                   </p>
@@ -685,20 +744,6 @@ export default function OfferSubPage() {
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {UNIFORMED_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setOfferGallery({ images: UNIFORMED_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
-                  </div>
-
                   <p>
                     Wszystkie wyżej wymienione tematyki składają się na programy obozów, które tworzymy tak, aby dopasować się do Państwa potrzeb.
                   </p>
@@ -750,9 +795,28 @@ export default function OfferSubPage() {
                       794 997 714
                     </a>
                   </p>
+                  </div>
                 </div>
               ) : isEventsPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                      {EVENTS_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setOfferGallery({ images: EVENTS_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
                   <p>
                     Organizacja imprez firmowych stanowi jeden z kluczowych obszarów działalności firmy JA YHYMM – Integracja, Sport, Turystyka,
                     Wypoczynek. Specjalizujemy się w kompleksowym przygotowaniu wydarzeń, które łączą w sobie elementy integracji zespołu, aktywności
@@ -781,23 +845,28 @@ export default function OfferSubPage() {
                   <p>
                     Cennik każdorazowo opracowujemy indywidualnie, gwarantując optymalne dopasowanie oferty do potrzeb i możliwości klienta.
                   </p>
-
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {EVENTS_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setOfferGallery({ images: EVENTS_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
                   </div>
                 </div>
               ) : isBachelorAndBachelorettePage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                      {BACHELOR_BACHELORETTE_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setOfferGallery({ images: BACHELOR_BACHELORETTE_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
                   <div>
                     <p>
                       Wieczór kawalerski lub panieński… …nie musi kojarzyć się tylko i wyłącznie z utratą pamięci oraz striptizem (aczkolwiek obydwu
@@ -899,19 +968,6 @@ export default function OfferSubPage() {
                       </p>
                     </div>
                   </div>
-
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {EVENTS_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setOfferGallery({ images: EVENTS_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
                   </div>
                 </div>
               ) : isEquipmentRentalPage ? (
@@ -942,12 +998,13 @@ export default function OfferSubPage() {
                               loading="lazy"
                               aria-hidden
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/85 to-dark/50" aria-hidden />
+                            <div className="absolute inset-0 z-[1] bg-black/15 pointer-events-none" aria-hidden />
+                            <div className="app-photo-scrim-card z-[2]" aria-hidden />
                             <div className="relative z-10 flex min-h-[188px] flex-col justify-end">
                               <h4 className="text-lg md:text-xl font-bold font-display text-white mb-2 group-hover:text-primary transition-colors">
                                 {tile.title}
                               </h4>
-                              <p className="text-sm text-white/80 leading-relaxed mb-4 line-clamp-4">{tile.description}</p>
+                              <p className="text-sm text-white leading-relaxed mb-4 line-clamp-4 drop-shadow-sm">{tile.description}</p>
                               <span className="inline-flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest">
                                 Szczegóły
                                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
@@ -982,7 +1039,25 @@ export default function OfferSubPage() {
                   </div>
                 </div>
               ) : isTrainingPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                      {TRAININGS_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setOfferGallery({ images: TRAININGS_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
                   <p className="text-lg">
                     Organizujemy profesjonalne szkolenia i kursy zarówno dla grup cywilnych jak też dla służb mundurowych takich jak: WOJSKO,
                     POLICJA, STRAŻ POŻARNA, STRAŻ GRANICZNA, WOPR, GOPR, OBRONA CYWILNA.
@@ -1004,28 +1079,33 @@ export default function OfferSubPage() {
 
                   <p className="font-semibold text-white">MOŻEMY ZORGANIZOWAĆ SZKOLENIE ŁĄCZĄC POSZCZEGÓLNE MODUŁY ZE SOBĄ.</p>
 
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {TRAININGS_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setOfferGallery({ images: TRAININGS_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
-                  </div>
-
                   <p>
                     Jesteśmy w stanie przeszkolić grupę osób, jak i każdą indywidualną osobę z każdego z ww. zagadnień. Przede wszystkim stawiamy na
                     rzetelność, bezpieczeństwo i profilaktykę, dlatego nasze zajęcia prowadzone są przez wykwalifikowaną kadrę, na którą składają się
                     doświadczeni instruktorzy poszczególnych form aktywności.
                   </p>
+                  </div>
                 </div>
               ) : isTransportPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                      {TRANSPORT_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setOfferGallery({ images: TRANSPORT_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
                   <p className="text-lg">Zapraszamy do skorzystania z naszej oferty transportowej.</p>
                   <div>
                     <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Oferujemy</h3>
@@ -1038,19 +1118,6 @@ export default function OfferSubPage() {
                       ))}
                     </ul>
                   </div>
-
-                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {TRANSPORT_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setOfferGallery({ images: TRANSPORT_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
                   </div>
                 </div>
               ) : isAccommodationPage ? (
@@ -1126,7 +1193,25 @@ export default function OfferSubPage() {
                   </p>
                 </div>
               ) : isServiceBasePage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {SERVICE_BASE_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setOfferGallery({ images: SERVICE_BASE_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
                   <p className="text-lg">Dysponujemy bazą serwisową, w której naprawiamy nasz cały sprzęt.</p>
                   <p>
                     Sprzęt, którym się zajmujemy to przede wszystkim sprzęt paintballowy marek Tippmann, BT, Spyder. Na bieżąco staramy się
@@ -1137,23 +1222,10 @@ export default function OfferSubPage() {
                     przyjemne. W wolnych chwilach (choć nie ma ich wiele) serwisujemy również ww. sprzęt naszym indywidualnym klientom.
                   </p>
 
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {SERVICE_BASE_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setOfferGallery({ images: SERVICE_BASE_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
-                  </div>
-
                   <p className="border-t border-white/10 pt-8">
                     Jeżeli masz jakiś problem ze sprzętem paintballowym lub motoryzacyjnym, skontaktuj się z nami - postaramy się pomóc!
                   </p>
+                  </div>
                 </div>
               ) : (
                 <>

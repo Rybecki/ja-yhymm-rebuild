@@ -21,6 +21,10 @@ import { NEWS_ARTICLES } from '../data/newsArticles';
 const HERO_SLIDES = [
   { src: '/utils/quady-popr.png', alt: 'Quady i motocross — JA YHYMM' },
   {
+    src: '/images/eventy/imprezy-firmowe-karta.png',
+    alt: 'Imprezy integracyjne i firmowe — JA YHYMM',
+  },
+  {
     src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-1.png',
     alt: 'Jura Off-Road Camp 4×4 — uczestnicy przy terenowym 4×4 w lesie',
   },
@@ -33,6 +37,11 @@ const HERO_SLIDES = [
     alt: 'Jura Chill & Fun — relaks na obozie',
   },
 ] as const;
+
+/** Kadrowanie tła per slajd (np. lekko w górę). */
+const HERO_SLIDE_BACKGROUND_POSITION: Partial<Record<(typeof HERO_SLIDES)[number]['src'], string>> = {
+  '/images/eventy/imprezy-firmowe-karta.png': 'center 38%',
+};
 
 const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -73,15 +82,15 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.9 }}
-            className="absolute inset-0 bg-cover bg-center scale-110"
+            className="absolute inset-0 bg-cover scale-110"
             style={{
               backgroundImage: `url(${HERO_SLIDES[slideIndex].src})`,
-              filter: 'brightness(0.72)',
+              backgroundPosition: HERO_SLIDE_BACKGROUND_POSITION[HERO_SLIDES[slideIndex].src] ?? 'center center',
             }}
             aria-hidden
           />
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/5 via-transparent to-dark/60 pointer-events-none" />
+        <div className="app-photo-scrim" aria-hidden />
       </motion.div>
 
       <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center gap-3 pointer-events-none">
@@ -174,35 +183,41 @@ const About = () => {
 
 const Offer = () => {
   const offers = [
-    { 
-      title: 'Obozy i kolonie', 
+    {
+      title: 'Obozy i kolonie',
+      to: '/oferta/obozy-i-kolonie',
       img: '/utils/obozy-kolonie/obozy-hero.png',
-      icon: <Tent className="text-primary" size={32} />
+      icon: <Tent className="text-primary" size={32} />,
     },
-    { 
-      title: 'Wycieczki szkolne', 
+    {
+      title: 'Wycieczki szkolne',
+      to: '/oferta/wycieczki-szkolne',
       img: '/images/wycieczki-szkolne/wycieczki-szkolne-karta.png',
-      icon: <GraduationCap className="text-primary" size={32} />
+      icon: <GraduationCap className="text-primary" size={32} />,
     },
-    { 
-      title: 'Obozy dla klas mundurowych', 
+    {
+      title: 'Obozy dla klas mundurowych',
+      to: '/oferta/obozy-dla-klas-mundurowych',
       img: '/utils/mili.jpg',
-      icon: <Shield className="text-primary" size={32} />
+      icon: <Shield className="text-primary" size={32} />,
     },
-    { 
-      title: 'Imprezy integracyjne, firmowe', 
+    {
+      title: 'Imprezy integracyjne, firmowe',
+      to: '/oferta/eventy',
       img: '/images/eventy/imprezy-firmowe-karta.png',
-      icon: <Users className="text-primary" size={32} />
+      icon: <Users className="text-primary" size={32} />,
     },
-    { 
-      title: 'Wieczory kawalerskie i panieńskie', 
+    {
+      title: 'Wieczory kawalerskie i panieńskie',
+      to: '/oferta/wieczory-kawalerskie-i-panienskie',
       img: '/images/wieczory-kawalerskie/wieczory-kawalerskie-karta.png',
-      icon: <PartyPopper className="text-primary" size={32} />
+      icon: <PartyPopper className="text-primary" size={32} />,
     },
-    { 
-      title: 'Wyjazdy jedno i wielodniowe', 
+    {
+      title: 'Wyjazdy jedno i wielodniowe',
+      to: '/oferta/transport',
       img: '/images/wyjazdy/wyjazdy-jedno-wielodniowe-karta.png',
-      icon: <Bus className="text-primary" size={32} />
+      icon: <Bus className="text-primary" size={32} />,
     },
   ];
 
@@ -222,31 +237,45 @@ const Offer = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group relative overflow-hidden rounded-3xl bg-dark-lighter border-2 border-white/10 transition-colors duration-300 group-hover:border-primary"
             >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img 
-                  src={item.img} 
-                  alt={item.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
+              <Link
+                to={item.to}
+                className="group relative block overflow-hidden rounded-3xl bg-dark-lighter border-2 border-white/10 transition-colors duration-300 hover:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-dark"
+              >
+                <div className="aspect-[4/5] overflow-hidden">
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                <div
+                  className="absolute inset-x-0 bottom-0 h-44 md:h-52 pointer-events-none z-[1]"
+                  style={{
+                    background:
+                      'linear-gradient(to top, color-mix(in oklab, var(--color-dark) 82%, transparent) 0%, color-mix(in oklab, var(--color-dark) 38%, transparent) 42%, transparent 100%)',
+                  }}
+                  aria-hidden
                 />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/20 to-transparent opacity-90" />
-              <div className="absolute bottom-0 left-0 w-full p-8">
-                <div className="mb-4">{item.icon}</div>
-                <h4 className="text-2xl font-bold mb-6 leading-tight">{item.title}</h4>
-                <button className="flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest group/btn">
-                  Sprawdź szczegóły
-                  <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-2" />
-                </button>
-              </div>
+                <div className="absolute bottom-0 left-0 z-10 w-full p-8">
+                  <div className="mb-4">{item.icon}</div>
+                  <h4 className="text-2xl font-bold mb-6 leading-tight text-white">{item.title}</h4>
+                  <span className="inline-flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest">
+                    Sprawdź szczegóły
+                    <ArrowRight size={16} className="transition-transform group-hover:translate-x-2" />
+                  </span>
+                </div>
+              </Link>
             </motion.div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <button className="btn-primary">Sprawdź pełną ofertę</button>
+          <Link to="/oferta" className="btn-primary inline-block">
+            Sprawdź pełną ofertę
+          </Link>
         </div>
       </div>
     </section>
@@ -270,24 +299,28 @@ const News = () => {
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
           {NEWS_ARTICLES.map((post, index) => (
             <motion.article
-              key={post.title}
+              key={post.slug}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group cursor-pointer"
             >
-              <div className="aspect-video overflow-hidden rounded-2xl mb-6 border-2 border-transparent transition-colors duration-300 group-hover:border-primary">
-                <img 
-                  src={post.imageSrc} 
-                  alt={post.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-              <span className="text-primary text-xs font-bold uppercase tracking-widest mb-3 block">{post.date}</span>
-              <h4 className="text-xl font-bold mb-4 group-hover:text-primary transition-colors">{post.title}</h4>
-              <p className="text-white/60 text-sm leading-relaxed">{post.excerpt}</p>
+              <Link
+                to={`/aktualnosci#${post.slug}`}
+                className="group block cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-dark-lighter rounded-2xl"
+              >
+                <div className="aspect-video overflow-hidden rounded-2xl mb-6 border-2 border-transparent transition-colors duration-300 group-hover:border-primary">
+                  <img
+                    src={post.imageSrc}
+                    alt={post.imageAlt}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+                <span className="text-primary text-xs font-bold uppercase tracking-widest mb-3 block">{post.date}</span>
+                <h4 className="text-xl font-bold mb-4 text-white group-hover:text-primary transition-colors">{post.title}</h4>
+                <p className="text-white/60 text-sm leading-relaxed">{post.excerpt}</p>
+              </Link>
             </motion.article>
           ))}
         </div>

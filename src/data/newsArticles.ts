@@ -10,6 +10,21 @@ export type NewsArticle = {
 
 export const NEWS_ARTICLES: NewsArticle[] = [
   {
+    slug: 'jak-zaczac-przygode-z-quadami',
+    title: 'Jak zacząć przygodę z quadami?',
+    excerpt:
+      'Quady to aktywny wypoczynek, adrenalina i miejsca niedostępne zwykłym autem — od pierwszych metrów pod okiem instruktora, bez wcześniejszego doświadczenia.',
+    date: '10.05.2026',
+    imageSrc: '/images/tematyka/quady-1.png',
+    imageAlt: 'Quady na trasie terenowej — nagłówek artykułu',
+    paragraphs: [
+      'Quady to świetny sposób na aktywny wypoczynek, sporą dawkę adrenaliny i odkrywanie miejsc, do których zwykłym autem trudno dotrzeć. Coraz więcej osób wybiera jazdę terenową jako formę weekendowej przygody, integracji ze znajomymi lub pomysł na wyjątkowy event.',
+      'Na początek warto postawić na spokojną jazdę pod okiem instruktora i dobrze poznać możliwości pojazdu. Quad daje dużo frajdy zarówno na leśnych trasach, błotnistych odcinkach, jak i podczas bardziej technicznych przejazdów terenowych. Najważniejsze są bezpieczeństwo, odpowiedni sprzęt i dobra zabawa.',
+      'Nie trzeba mieć wcześniejszego doświadczenia — większość osób już po kilku minutach czuje się pewnie za kierownicą. Wystarczy odrobina odwagi i chęć przeżycia czegoś innego niż standardowy spacer czy wyjazd do miasta.',
+      'Jeśli szukasz emocji, kontaktu z naturą i niezapomnianych wspomnień, przygoda z quadami może być dokładnie tym, czego potrzebujesz.',
+    ],
+  },
+  {
     slug: 'paintball-co-warto-wiedziec',
     title: 'Paintball - co warto wiedzieć?',
     excerpt:

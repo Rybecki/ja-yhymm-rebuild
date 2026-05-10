@@ -47,7 +47,7 @@ const FAQ_ITEMS: FaqItem[] = [
   {
     question: 'Jak dokonać rezerwacji?',
     numbered: [
-      'Przejdź do sekcji Kontakt → Formularze zgłoszeniowe → Obozy młodzieżowe i wyślij formularz.',
+      'Przejdź do strony Dla Ciebie → Formularze → Obozy młodzieżowe i wyślij formularz.',
       'W ciągu 24h skontaktuje się z Tobą nasz pracownik i pomoże dopełnić formalności (sprawdzaj również spam).',
       'Po formalnościach pozostaje odliczać do pierwszego dnia obozu.',
     ],
@@ -169,11 +169,13 @@ export default function ParentZonePage() {
                 Strona główna
               </Link>
               <span className="mx-2">/</span>
-              <span className="text-white/80">Kontakt</span>
+              <Link to="/dla-ciebie/formularze" className="hover:text-primary transition-colors text-white/80">
+                Dla Ciebie
+              </Link>
               <span className="mx-2">/</span>
               <span className="text-white/80">Strefa rodzica</span>
             </nav>
-            <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Kontakt</h1>
+            <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Dla Ciebie</h1>
             <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight">
               Strefa rodzica
             </motion.h2>

@@ -169,8 +169,19 @@ export default function RentalEBikesPage() {
       <main>
         <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: 'url(/images/wypozyczalnia/e-rowery/hero-ebikes.png)', backgroundPosition: 'center 25%' }}
+            className="absolute inset-0 bg-no-repeat"
+            style={{
+              backgroundImage: 'url(/images/wypozyczalnia/e-rowery/hero-ebikes.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 18%',
+            }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 z-0 bg-black/25 pointer-events-none" aria-hidden />
+          <div className="app-photo-scrim" aria-hidden />
+          <div
+            className="absolute inset-x-0 bottom-0 h-32 md:h-44 pointer-events-none z-[1]"
+            style={{ background: 'linear-gradient(to top, var(--color-dark) 0%, color-mix(in oklab, var(--color-dark) 55%, transparent) 45%, transparent 100%)' }}
             aria-hidden
           />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
@@ -216,7 +227,10 @@ export default function RentalEBikesPage() {
                 </div>
                 <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
                   <h3 className="text-primary font-bold text-lg mb-2">Poza sezonem / całorocznie</h3>
-                  <p className="text-white/70 leading-relaxed">Zapraszamy do naszej siedziby w Katowicach, ul. Niwna 9.</p>
+                  <p className="text-white/70 leading-relaxed">
+                    Zapraszamy do naszej siedziby w Katowicach, ul. Niwna 9. Dowozimy sprzęt pod drzwi — rower możesz odebrać w biurze albo
+                    umówić dostawę pod wskazany adres (bezpłatnie do 15 km od bazy w Katowicach, powyżej wg stawki 2,50 PLN / km).
+                  </p>
                 </div>
               </div>
             </div>
@@ -374,7 +388,7 @@ export default function RentalEBikesPage() {
                 <h4 className="text-primary font-bold">Dlaczego warto wybrać właśnie nas?</h4>
                 <ul className="list-disc pl-6 text-white/75 space-y-1.5">
                   <li>Sprzęt premium: Kross i Winora to gwarancja jakości oraz realnego zasięgu.</li>
-                  <li>Mobilność: dowozimy rower pod hotel, dom lub na start szlaku.</li>
+                  <li>Mobilność: dowozimy rower pod hotelem, dom lub na start szlaku.</li>
                   <li>Lokalizacja: ze Złotego Jelenia od razu ruszasz na najpiękniejsze trasy Jury.</li>
                   <li>Wsparcie: przed każdą jazdą prowadzimy krótki instruktaż obsługi e-bike'a.</li>
                 </ul>

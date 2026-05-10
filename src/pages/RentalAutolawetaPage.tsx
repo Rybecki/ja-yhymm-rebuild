@@ -7,12 +7,16 @@ import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
 
-const AUTOLAWETA_IMAGES = ['/images/wypozyczalnia/autolaweta/laweta-1.png', '/images/wypozyczalnia/autolaweta/laweta-2.png'];
+const AUTOLAWETA_HERO_SRC = '/images/wypozyczalnia/autolaweta/laweta-1.png';
 
-const AUTOLAWETA_GALLERY: GalleryImageItem[] = AUTOLAWETA_IMAGES.map((src, i) => ({
-  src,
-  alt: `Autolaweta — zdjęcie ${i + 1}`,
-}));
+const AUTOLAWETA_GALLERY: readonly GalleryImageItem[] = [
+  { src: '/images/wypozyczalnia/autolaweta/laweta-1.png', alt: 'Autolaweta z samochodem na platformie' },
+  { src: '/images/wypozyczalnia/autolaweta/laweta-2.png', alt: 'Autolaweta z zabezpieczonym pojazdem na pace' },
+  { src: '/images/wypozyczalnia/autolaweta/laweta-3.png', alt: 'Autolaweta — widok z boku z ładunkiem' },
+  { src: '/images/wypozyczalnia/autolaweta/laweta-4.png', alt: 'Autolaweta z przyczepą kempingową na platformie' },
+  { src: '/images/wypozyczalnia/autolaweta/laweta-5.png', alt: 'Autolaweta z drewnem na lawecie' },
+  { src: '/images/wypozyczalnia/autolaweta/laweta-6.png', alt: 'Autolaweta — zestaw na placu' },
+];
 
 const REGULATIONS_TEXT = `REGULAMIN USŁUGI AUTO-LAWETA
 1. Usługa transportu realizowana jest przez A Bo Co... Sp. z o.o.
@@ -101,11 +105,20 @@ export default function RentalAutolawetaPage() {
       <main>
         <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${AUTOLAWETA_IMAGES[0]})`, backgroundPosition: 'center 35%' }}
+            className="absolute inset-0 bg-no-repeat"
+            style={{
+              backgroundImage: `url(${AUTOLAWETA_HERO_SRC})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 35%',
+            }}
             aria-hidden
           />
-          <div className="absolute inset-0 bg-black/20" aria-hidden />
+          <div className="app-photo-scrim" aria-hidden />
+          <div
+            className="absolute inset-x-0 bottom-0 h-32 md:h-44 pointer-events-none z-[1]"
+            style={{ background: 'linear-gradient(to top, var(--color-dark) 0%, color-mix(in oklab, var(--color-dark) 55%, transparent) 45%, transparent 100%)' }}
+            aria-hidden
+          />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -125,15 +138,26 @@ export default function RentalAutolawetaPage() {
 
         <section className="section-padding bg-dark">
           <div className={`${RENTAL_CONTENT_WIDE} space-y-8`}>
-            <div className={`glass-card ${RENTAL_GLASS_INNER} space-y-5`}>
-              <h3 className="text-primary font-bold uppercase tracking-wider">Transport, który mieści więcej - ludzi i gabaryty</h3>
-              <p className="text-white/80 leading-relaxed text-lg">
-                Szukasz transportu, który nie kończy się na samym pojeździe? Nasza specjalistyczna autolaweta z 7-osobową kabiną to idealne
-                rozwiązanie, gdy musisz przewieźć ładunek razem z ekipą lub rodziną.
-              </p>
-              <p className="text-white/75 leading-relaxed">
-                Dysponujemy platformą o wymiarach 220 cm x 470 cm i ładowności do 1,6 tony. Jeśli coś zmieści się na naszej pace, my to przewieziemy.
-              </p>
+            <div className={`glass-card ${RENTAL_GLASS_INNER} space-y-6`}>
+              <h3 className="text-primary font-bold uppercase tracking-wider">Transport, który mieści więcej — ludzi i gabaryty</h3>
+              <div className="space-y-4 border-l-2 border-primary/45 pl-5">
+                <p className="text-white/80 leading-relaxed text-lg">
+                  Szukasz transportu, który nie kończy się na samym pojeździe? Nasza specjalistyczna autolaweta z 7-osobową kabiną to idealne
+                  rozwiązanie, gdy trzeba przewieźć ładunek razem z ekipą lub rodziną.
+                </p>
+                <p className="text-white/75 leading-relaxed">
+                  Platforma nośna o wymiarach 220 cm × 470 cm i ładowności do 1,6 tony. Jeśli coś zmieści się na naszej lawecie — my to
+                  przewieziemy.
+                </p>
+                <p className="text-white/75 leading-relaxed">
+                  Duża kabina (6 pasażerów + kierowca): nie musisz dokładać drugiego auta tylko dla ludzi. Jedna jednostka, jedna trasa —
+                  oszczędzasz czas i pieniądze.
+                </p>
+                <p className="text-white/70 leading-relaxed text-sm md:text-base">
+                  Ceny mają charakter poglądowy i wynikają ze specyfikacji ładunku oraz trasy. Przy stałej współpracy oferujemy indywidualne
+                  rabaty.
+                </p>
+              </div>
             </div>
 
             <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-6`}>
@@ -144,10 +168,7 @@ export default function RentalAutolawetaPage() {
                 <li><span className="text-primary font-semibold">Ogród i rolnictwo:</span> kosiarki traktorki, mniejsze maszyny rolnicze.</li>
                 <li><span className="text-primary font-semibold">Nietypowe ładunki:</span> konstrukcje stalowe, zbiorniki, meble, łodzie, kajaki, dmuchańce.</li>
               </ul>
-              <p className="text-white/75 leading-relaxed">
-                Dzięki dużej kabinie (6 pasażerów + kierowca) nie musisz organizować osobnego transportu dla ludzi. Oszczędzasz czas i pieniądze.
-              </p>
-              <div className="grid md:grid-cols-2 gap-4 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
                 {AUTOLAWETA_GALLERY.map((item, index) => (
                   <button
                     key={item.src}
@@ -166,7 +187,7 @@ export default function RentalAutolawetaPage() {
               <div>
                 <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Cennik i pakiety usług</h3>
                 <p className="text-white/75 leading-relaxed mb-5">
-                  Ceny mają charakter poglądowy i zależą od specyfiki ładunku. Przy stałej współpracy oferujemy indywidualne rabaty.
+                  Poniżej orientacyjne pakiety — ostateczna wycena zależy od trasy i ładunku (jak wyżej).
                 </p>
                 <div className="space-y-3 md:hidden">
                   <div className="rounded-2xl border border-white/10 bg-white/5 p-4">

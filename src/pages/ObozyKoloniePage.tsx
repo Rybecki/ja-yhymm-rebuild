@@ -24,7 +24,7 @@ export default function ObozyKoloniePage() {
             className="absolute inset-0 bg-cover bg-center scale-105"
             style={{ backgroundImage: `url(${HERO_BG})`, backgroundPosition: 'center 47%' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/45 to-dark/10" />
+          <div className="app-photo-scrim" aria-hidden />
           <div className="relative z-10 max-w-4xl mx-auto px-6 pb-16 md:pb-20 pt-32 w-full">
             <nav className="text-sm text-white/60 mb-6">
               <Link to="/oferta" className="hover:text-primary transition-colors">
@@ -49,83 +49,79 @@ export default function ObozyKoloniePage() {
 
         {}
         <section className="section-padding bg-dark border-b border-white/5">
-          <div className="max-w-2xl mx-auto px-6 text-center">
-            <h2 className="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-4">
-              Wybierz sezon
-            </h2>
-            <p className="text-xl md:text-2xl font-display font-semibold text-white leading-snug mb-5">
-              Każda pora roku to u nas inna przygoda
-            </p>
-            <p className="text-white/60 leading-relaxed text-base md:text-lg max-w-xl mx-auto">
-              Poniżej przejdziesz do szczegółowej oferty letniej albo zimowej — wybierz to, co pasuje Tobie lub Twojej grupie.
-            </p>
-            <div className="mt-10 h-px w-24 mx-auto bg-gradient-to-r from-transparent via-primary/50 to-transparent" aria-hidden />
-          </div>
-        </section>
-
-        {}
-        <section className="relative min-h-[420px] md:min-h-[480px] flex items-stretch overflow-hidden group">
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-            style={{ backgroundImage: `url(${LATO_BG})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/35 via-orange-500/15 to-dark/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-transparent to-amber-900/20" />
-
-          <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 text-amber-200/95 mb-4">
-                <span className="text-sm font-bold uppercase tracking-[0.25em]">Sezon letni</span>
+          <div className="max-w-3xl mx-auto px-6">
+            <div className="bg-white/5 backdrop-blur-md border-2 border-primary rounded-[2rem] p-6 md:p-8 lg:p-10">
+              <div className="text-center max-w-2xl mx-auto">
+                <h2 className="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-3">
+                  Wybierz sezon
+                </h2>
+                <p className="text-xl md:text-2xl font-display font-semibold text-white leading-snug mb-4">
+                  Każda pora roku to u nas inna przygoda
+                </p>
+                <p className="text-white/60 leading-relaxed text-base md:text-lg">
+                  Poniżej przejdziesz do szczegółowej oferty letniej albo zimowej — wybierz to, co pasuje Tobie lub Twojej grupie.
+                </p>
               </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold font-display text-white drop-shadow-lg mb-4">Lato</h2>
-              <p className="text-white/90 text-lg leading-relaxed drop-shadow-md">
-                Słońce, woda, plaża i energia do granic — obozy i kolonie, które zapamiętasz na lata.
-              </p>
-            </div>
-            <Link
-              to="/oferta/obozy-i-kolonie/lato"
-              className="shrink-0 inline-flex items-center gap-3 bg-primary text-dark font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full shadow-[0_0_30px_rgba(247,199,59,0.35)] hover:scale-105 transition-transform"
-            >
-              Oferta letnia
-              <ArrowRight size={20} />
-            </Link>
-          </div>
-        </section>
+              <div className="mt-6 md:mt-7 grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
+              <Link
+                to="/oferta/obozy-i-kolonie/lato"
+                className="group relative flex min-h-[340px] sm:min-h-0 sm:aspect-[4/5] overflow-hidden rounded-3xl border-2 border-white/10 bg-dark/50 transition-colors duration-300 hover:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <div
+                  className="absolute inset-0 bg-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  style={{
+                    backgroundImage: `url(${LATO_BG})`,
+                    backgroundPosition: 'center 38%',
+                  }}
+                  aria-hidden
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/22 via-orange-400/10 to-transparent" aria-hidden />
+                <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                <div className="relative z-10 mt-auto flex w-full flex-col gap-4 p-6 md:p-7">
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-[0.25em] text-amber-200/95">Sezon letni</span>
+                    <h2 className="mt-2 text-3xl md:text-4xl font-extrabold font-display text-white drop-shadow-lg">Lato</h2>
+                  </div>
+                  <p className="text-sm md:text-base text-white/90 leading-relaxed drop-shadow-md">
+                    Słońce, woda, plaża i energia do granic — obozy i kolonie, które zapamiętasz na lata.
+                  </p>
+                  <span className="inline-flex w-fit items-center gap-2 bg-primary text-dark font-bold uppercase tracking-wider text-xs px-5 py-3 rounded-full shadow-[0_0_24px_rgba(247,199,59,0.35)] group-hover:scale-[1.03] transition-transform">
+                    Oferta letnia
+                    <ArrowRight size={18} />
+                  </span>
+                </div>
+              </Link>
 
-        {}
-        <div className="relative h-16 md:h-20 bg-dark overflow-hidden flex items-center justify-center border-y border-white/5">
-          <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-          <div className="relative flex items-center px-6">
-            <span className="text-xs uppercase tracking-[0.3em] text-white/40">sezon</span>
-          </div>
-        </div>
-
-        {}
-        <section className="relative min-h-[420px] md:min-h-[480px] flex items-stretch overflow-hidden group border-b border-white/5">
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-            style={{ backgroundImage: `url(${ZIMA_BG})` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-sky-900/50 via-slate-900/40 to-dark/85" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark/95 via-sky-950/30 to-transparent" />
-
-          <div className="relative z-10 w-full max-w-6xl mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center justify-between gap-10">
-            <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 text-sky-200/95 mb-4">
-                <span className="text-sm font-bold uppercase tracking-[0.25em]">Sezon zimowy</span>
+              <Link
+                to="/oferta/obozy-i-kolonie/zima"
+                className="group relative flex min-h-[340px] sm:min-h-0 sm:aspect-[4/5] overflow-hidden rounded-3xl border-2 border-white/10 bg-dark/50 transition-colors duration-300 hover:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <div
+                  className="absolute inset-0 bg-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  style={{
+                    backgroundImage: `url(${ZIMA_BG})`,
+                    backgroundPosition: 'center 32%',
+                  }}
+                  aria-hidden
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-sky-800/26 via-slate-800/14 to-transparent" aria-hidden />
+                <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                <div className="relative z-10 mt-auto flex w-full flex-col gap-4 p-6 md:p-7">
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-[0.25em] text-sky-200/95">Sezon zimowy</span>
+                    <h2 className="mt-2 text-3xl md:text-4xl font-extrabold font-display text-white drop-shadow-lg">Zima</h2>
+                  </div>
+                  <p className="text-sm md:text-base text-white/90 leading-relaxed drop-shadow-md">
+                    Śnieg, quady i zimowa adrenalina — wyjazdy, które rozgrzeją nawet mróz.
+                  </p>
+                  <span className="inline-flex w-fit items-center gap-2 bg-primary text-dark font-bold uppercase tracking-wider text-xs px-5 py-3 rounded-full shadow-[0_0_24px_rgba(247,199,59,0.25)] group-hover:scale-[1.03] transition-transform">
+                    Oferta zimowa
+                    <ArrowRight size={18} />
+                  </span>
+                </div>
+              </Link>
               </div>
-              <h2 className="text-4xl md:text-5xl font-extrabold font-display text-white drop-shadow-lg mb-4">Zima</h2>
-              <p className="text-white/90 text-lg leading-relaxed drop-shadow-md">
-                Śnieg, quady i zimowa adrenalina — wyjazdy, które rozgrzeją nawet mróz.
-              </p>
             </div>
-            <Link
-              to="/oferta/obozy-i-kolonie/zima"
-              className="shrink-0 inline-flex items-center gap-3 bg-primary text-dark font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-full shadow-[0_0_30px_rgba(247,199,59,0.25)] hover:scale-105 transition-transform"
-            >
-              Oferta zimowa
-              <ArrowRight size={20} />
-            </Link>
           </div>
         </section>
 

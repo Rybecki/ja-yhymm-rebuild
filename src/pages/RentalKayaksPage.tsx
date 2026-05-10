@@ -158,11 +158,20 @@ export default function RentalKayaksPage() {
       <main>
         <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/images/wypozyczalnia/kajaki/kajaki-hero.png')", backgroundPosition: 'center 35%' }}
+            className="absolute inset-0 bg-no-repeat"
+            style={{
+              backgroundImage: "url('/images/wypozyczalnia/kajaki/kajaki-hero.png')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 8%',
+            }}
             aria-hidden
           />
-          <div className="absolute inset-0 bg-black/20" aria-hidden />
+          <div className="app-photo-scrim" aria-hidden />
+          <div
+            className="absolute inset-x-0 bottom-0 h-32 md:h-44 pointer-events-none z-[1]"
+            style={{ background: 'linear-gradient(to top, var(--color-dark) 0%, color-mix(in oklab, var(--color-dark) 55%, transparent) 45%, transparent 100%)' }}
+            aria-hidden
+          />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -192,20 +201,32 @@ export default function RentalKayaksPage() {
                 Wypożyczalnia KAJAKO-MOBIL to projekt stworzony przez pasjonatów ze spółki A Bo Co... oraz Fundacji JA YHYMM...
                 Integracja Sport Turystyka Wypoczynek.
               </p>
-              <p className="text-white/75 leading-relaxed">
-                Nasza filozofia jest prosta: nie ograniczamy Cię do jednej rzeki. Nie jesteśmy typową przystanią. U nas to Ty decydujesz,
-                gdzie zwodujesz kajak. Chcesz sprawdzić ukryte jezioro? A może marzy Ci się spływ rzeką, na której nie ma komercyjnych
-                tłumów? My dajemy Ci sprzęt i logistykę, Ty zabierasz mapę i wyobraźnię.
-              </p>
             </div>
 
             <section className={`glass-card !border-primary ${RENTAL_GLASS_INNER} space-y-6`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Dlaczego warto wybrać KAJAKO-MOBIL?</h3>
-              <ul className="list-disc pl-6 text-white/75 space-y-2">
+              <ul className="list-disc pl-6 text-white/75 space-y-3">
+                <li>
+                  Nasza filozofia jest prosta: nie ograniczamy Cię do jednej rzeki. Nie jesteśmy typową przystanią. U nas to Ty decydujesz,
+                  gdzie zwodujesz kajak. Ukryte jezioro? A może marzysz o spływie rzeką, której nie ma komercyjnych tłumów? My dajemy Ci
+                  sprzęt i logistykę, Ty zabierasz mapę i wyobraźnię.
+                </li>
                 <li>Pancerny sprzęt: nowoczesne kajaki polietylenowe, wytrzymałe, stabilne i bezpieczne.</li>
+                <li>Mobilność: dowozimy kajak pod hotelem, dom lub na start szlaku.</li>
+                <li>
+                  Jesteśmy w samym sercu Jury Krakowsko-Częstochowskiej, gotowi na Twoje zapytania. Dowozimy sprzęt pod drzwi lub
+                  bezpośrednio nad brzeg wody.
+                </li>
+                <li>Nie masz bagażnika dachowego? Żaden problem. Przywieziemy kajaki tam, gdzie ich potrzebujesz.</li>
+                <li>
+                  Kajaki polietylenowe są lżejsze niż myślisz. Dwuosobowy model waży około 35–40 kg. Jeśli Twoje auto ma relingi, transport
+                  na dachu jest prosty — dostarczamy pasy i podkładki.
+                </li>
+                <li>
+                  Dowóz: bezpłatnie do 15 km od bazy (przy min. 2 kajakach); powyżej 15 km — 2,50 zł / km w obie strony (szczegóły w
+                  sekcji „Dostawa i odbiór”).
+                </li>
                 <li>Pełny zestaw: 2 wiosła, kamizelki asekuracyjne i opcjonalne trzecie siedzisko dla dziecka (gratis).</li>
-                <li>Mobilność 100%: odbiór osobisty lub dostawa pod drzwi / nad brzeg wody.</li>
-                <li>Wsparcie misji: korzystając z usług, wspierasz działania statutowe Fundacji JA YHYMM...</li>
               </ul>
               <div className="grid md:grid-cols-2 gap-4 pt-2">
                 {KAYAK_GALLERY.map((item, index) => (
@@ -258,8 +279,12 @@ export default function RentalKayaksPage() {
                   </p>
                 </div>
                 <div className="rounded-2xl bg-white/5 border border-primary/40 p-5">
-                  <h4 className="text-primary font-bold mb-2">Poza sezonem</h4>
-                  <p className="text-white/70">Nasza baza mieści się w Katowicach, ul. Niwna 9.</p>
+                  <h4 className="text-primary font-bold mb-2">Poza sezonem / całorocznie</h4>
+                  <p className="text-white/70 leading-relaxed">
+                    Nasza baza mieści się w Katowicach, ul. Niwna 9. Dowozimy sprzęt pod drzwi lub nad wskazany brzeg — możesz odebrać
+                    kajaki w biurze albo umówić dostawę (bezpłatnie do 15 km przy min. 2 kajakach, powyżej wg stawki 2,50 zł / km w obie
+                    strony).
+                  </p>
                 </div>
               </div>
             </section>
@@ -267,7 +292,6 @@ export default function RentalKayaksPage() {
             <section className={`glass-card !border-primary ${RENTAL_GLASS_INNER} space-y-8`}>
               <div>
                 <h3 className="text-primary font-bold uppercase tracking-wider mb-3">Dostawa i odbiór</h3>
-                <p className="text-white/75 leading-relaxed mb-5">Nie masz bagażnika dachowego? Żaden problem. Przywieziemy kajaki tam, gdzie ich potrzebujesz.</p>
                 <div className="space-y-3 md:hidden">
                   <div className="rounded-2xl border border-primary/40 bg-white/5 p-4">
                     <p className="text-white/70 text-sm">do 15 km</p>
@@ -365,10 +389,6 @@ export default function RentalKayaksPage() {
                 </ul>
               </div>
 
-              <p className="text-white/75 leading-relaxed">
-                Kajaki polietylenowe są lżejsze niż myślisz. Dwuosobowy model waży około 35-40 kg. Jeśli Twoje auto ma relingi, transport
-                na dachu jest prosty - dostarczymy pasy i podkładki.
-              </p>
             </section>
 
             <section className={`glass-card !border-primary ${RENTAL_GLASS_INNER}`} id="formularz-kontaktowy">

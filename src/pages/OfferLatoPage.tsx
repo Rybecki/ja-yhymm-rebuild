@@ -19,8 +19,8 @@ export default function OfferLatoPage() {
             className="absolute inset-0 bg-cover bg-center scale-105"
             style={{ backgroundImage: `url(${LATO_BG})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/35 via-orange-500/15 to-dark/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/55 to-dark/25" />
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 via-orange-400/8 to-transparent" aria-hidden />
+          <div className="app-photo-scrim" aria-hidden />
 
           <div className="relative z-10 max-w-4xl mx-auto px-6 pb-16 md:pb-20 pt-32 w-full">
             <nav className="text-sm text-white/65 mb-6">
@@ -96,8 +96,8 @@ export default function OfferLatoPage() {
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/20 to-transparent opacity-95" />
-                      <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-6">
+                      <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                      <div className="absolute inset-0 z-10 flex flex-col justify-end p-5 md:p-6">
                         <span className="text-lg md:text-xl font-bold font-display text-white leading-snug drop-shadow-md group-hover:text-primary transition-colors">
                           {offer.title}
                         </span>

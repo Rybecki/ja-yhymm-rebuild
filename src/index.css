@@ -16,6 +16,38 @@
   body {
     @apply bg-dark text-white font-sans antialiased;
   }
+
+  /* Brighten photos app-wide (hero slider uses full-strength imagery, no extra dimming on <img>) */
+  body img:not([data-no-photo-filter]):not(nav img):not([alt*='Logo']):not([alt*='logo']) {
+    filter: brightness(1.07) saturate(1.04) contrast(1.02);
+  }
+
+  img[data-no-photo-filter],
+  nav img,
+  img[alt*='Logo'],
+  img[alt*='logo'],
+  img[src*='logo_ja-yhymm'] {
+    filter: none !important;
+  }
+}
+
+/* Same veil as HomePage hero slider: from-black/15 via-black/10 to-black/35 */
+.app-photo-scrim {
+  position: absolute;
+  inset: 0;
+  /* Below hero/card copy (z-10); only tints the photo layer */
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.35));
+}
+
+/* Card thumbnails: lighter bottom read zone, still bright overall */
+.app-photo-scrim-card {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.1), transparent);
 }
 
 .parallax-bg {

@@ -10,11 +10,36 @@ const QUADS_GALLERY = [
   { src: '/images/tematyka/quady-1.png', alt: 'Quad przejeżdżający przez błotnistą przeszkodę terenową' },
   { src: '/images/tematyka/quady-2.png', alt: 'Czerwony quad z dwoma uczestnikami w kaskach w lesie' },
   { src: '/images/tematyka/quady-3.png', alt: 'Grupa uczestników na quadach pozujących na piaszczystym terenie' },
+  { src: '/images/tematyka/quady-4.png', alt: 'Zjazd zielonym quadem po piaszczystej wydmie — kask i jazda terenowa' },
+  { src: '/images/tematyka/quady-5.png', alt: 'Grupa na quadach zimą na śniegu w lesie — Arctic Cat i zimowy wyjazd' },
+  { src: '/images/tematyka/quady-6.png', alt: 'Zielony quad sportowy na wydmie — jazda z unoszoną chmurą piasku' },
 ];
 
 const OFFROAD_GALLERY = [
-  { src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-4.png', alt: 'Samochód terenowy pokonujący błotną przeszkodę' },
-  { src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-3.png', alt: 'Zajęcia off-road z elementami technik terenowych' },
+  {
+    src: '/images/tematyka/off-road-1.png',
+    alt: 'Terenówka w kamuflażu na szlaku przy leśnym strumieniu — jazda off-road',
+  },
+  {
+    src: '/images/tematyka/off-road-2.png',
+    alt: 'Biały Jeep w dynamicznej jeździe przez głębokie błoto z rozbryzgiem',
+  },
+  {
+    src: '/images/tematyka/off-road-3.png',
+    alt: 'Dwa pojazdy 4×4 na błotnistym leśnym torze — lina wyciągarki między autami',
+  },
+  {
+    src: '/images/tematyka/off-road-4.png',
+    alt: 'Terenówka nocą z reflektorami — zajęcia terenowe w ofercie JA YHYMM',
+  },
+  {
+    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-4.png',
+    alt: 'Samochód terenowy pokonujący błotną przeszkodę',
+  },
+  {
+    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-3.png',
+    alt: 'Zajęcia off-road z elementami technik terenowych',
+  },
 ];
 
 const MILITARY_VEHICLES_GALLERY = [
@@ -22,6 +47,14 @@ const MILITARY_VEHICLES_GALLERY = [
   { src: '/images/tematyka/kraz-2.png', alt: 'Wojskowy pojazd terenowy KRAZ 6x6 na zielonej polanie' },
   { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-4.png', alt: 'Przejażdżka wojskowym pojazdem KRAZ w terenie' },
   { src: '/images/tematyka/wojskowe-pojazdy.png', alt: 'Wojskowy pojazd terenowy KRAZ 6x6 na torze off-road' },
+  {
+    src: '/images/tematyka/wojskowe-gmc-cckw.png',
+    alt: 'Historyczny wojskowy samochód ciężarowy GMC CCKW 6×6 przy skraju lasu',
+  },
+  {
+    src: '/images/tematyka/wojskowe-transporter-plaskobedowy.png',
+    alt: 'Wojskowy transporter skrzyniowy z drewnianymi zabudowami burt — profil pojazdu na polanie',
+  },
 ];
 
 const CLIMBING_WALL_GALLERY = [
@@ -36,28 +69,91 @@ const CLIMBING_ROCK_GALLERY = [
   { src: '/images/tematyka/linowe-4.png', alt: 'Uczestnik zajęć linowych wiszący na linie w leśnym wąwozie' },
 ];
 
+/** Cała galeria tematu: ścianka + skałki + canyoning i tyrolka — pierwsza na stronie, potem opisy (układ jak w ofercie klas mundurowych). */
+const CLIMBING_PAGE_GALLERY: GalleryImageItem[] = [
+  ...CLIMBING_WALL_GALLERY,
+  ...CLIMBING_ROCK_GALLERY,
+  {
+    src: '/images/tematyka/linowe-canyoning-wodospad.png',
+    alt: 'Zjazd kanioningowy w skafandrze i kasku przez wodospad na linach',
+  },
+  {
+    src: '/images/tematyka/linowe-tyrolka-las.png',
+    alt: 'Tyrolka nad lasem i skałą — zjazd na linie w kasku i uprzęży',
+  },
+];
+
 const PAINTBALL_GALLERY = [
   { src: '/images/tematyka/paintball-1.png', alt: 'Paintballowe działania w lesie' },
   { src: '/images/tematyka/paintball-2.png', alt: 'Zespół uczestników w pełnym wyposażeniu paintballowym' },
   { src: '/images/tematyka/paintball-3.png', alt: 'Gracz paintballowy podczas realizacji zadania terenowego' },
   { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-3.png', alt: 'Drużyna paintballowa podczas zajęć integracyjnych' },
+  {
+    src: '/images/tematyka/paintball-4.png',
+    alt: 'Gra paintballowa w lesie — gracze za zasłoną z gałęzi, różowy dym w tle',
+  },
+  {
+    src: '/images/tematyka/paintball-5.png',
+    alt: 'Duża grupa uczestników paintballu w kamuflażu przed busem JA YHYMM w lesie',
+  },
 ];
 
 const MILITARIA_GALLERY = [
   { src: '/utils/oferta-letnia/jura-military-camp/gallery/militaria-3.png', alt: 'Uczestnicy zajęć militarnych podczas zadań terenowych' },
   { src: '/utils/oferta-letnia/jura-military-camp/gallery/militaria-2.png', alt: 'Ćwiczenia zespołowe i ewakuacja w warunkach polowych' },
+  {
+    src: '/images/tematyka/militaria-4.png',
+    alt: 'Manewry taktyczne w lesie — uczestnicy w kamuflażu z replikami przy terenówce',
+  },
+  {
+    src: '/images/tematyka/militaria-5.png',
+    alt: 'Przeprawa przez błotnisty rów — grupa czołga się w lesie podczas zajęć survivalowych',
+  },
+  {
+    src: '/images/tematyka/militaria-6.png',
+    alt: 'Strzelec w ghillie z repliką — pozycja leżąca w lesie',
+  },
+  {
+    src: '/images/tematyka/militaria-7.png',
+    alt: 'Briefing w lesie — młodzież w mundurach i kamizelkach z markerami paintballowymi',
+  },
 ];
 
 const SURVIVAL_GALLERY = [
   { src: '/images/tematyka/survival-1.png', alt: 'Uczestnicy zajęć survivalowych przy nocnym obozowisku' },
   { src: '/images/tematyka/survival-2.png', alt: 'Przeprawa przez tereny podmokłe podczas zadań survivalowych' },
   { src: '/utils/oferta-letnia/jura-survival-camp/gallery/survival-1.png', alt: 'Przygotowanie ogniska i posiłku w warunkach terenowych' },
+  {
+    src: '/images/tematyka/survival-4.png',
+    alt: 'Budowa prymitywnego schronienia z gałęzi w sosnowym lesie — zajęcia survivalowe',
+  },
+  {
+    src: '/images/tematyka/survival-5.png',
+    alt: 'Ognisko w wykopie typu Dakota — grupa przy ogniu na piasku',
+  },
+  {
+    src: '/images/tematyka/survival-6.png',
+    alt: 'Układanie ognia — konstrukcja z patyków podczas zajęć w lesie',
+  },
 ];
 
-const WATER_GALLERY = [
+/** Galeria strony wodnej — na górze karty, pod nią opis i moduły programów. */
+const WATER_PAGE_GALLERY: GalleryImageItem[] = [
   { src: '/images/tematyka/wodne-1.png', alt: 'Skoki i manewry na łodzi motorowej podczas zajęć wodnych' },
   { src: '/images/tematyka/wodne-2.png', alt: 'Przejażdżka na bananie wodnym' },
   { src: '/utils/obozy-kolonie/lato.png', alt: 'Atrakcje wodne i rekreacja na kole wodnym' },
+  {
+    src: '/images/tematyka/wodne-4.png',
+    alt: 'Skok z motorówki do jeziora — uczestnik w czerwonej kamizelce ratunkowej',
+  },
+  {
+    src: '/images/tematyka/wodne-5.png',
+    alt: 'Grupa na zielonym dmuchanym bananie wodnym holowanym za łodzią',
+  },
+  {
+    src: '/images/tematyka/wodne-6.png',
+    alt: 'Nurkowanie podlodowe — płetwonurek w otworze w lodzie z gestem OK',
+  },
 ];
 
 const WATER_MODULES = [
@@ -107,6 +203,22 @@ const WATER_MODULES = [
 const HORSE_RIDING_GALLERY = [
   { src: '/images/tematyka/konie-1.png', alt: 'Jazda konna na padoku w terenie zielonym' },
   { src: '/images/tematyka/konie-2.png', alt: 'Uczestniczka zajęć podczas jazdy konnej' },
+  {
+    src: '/images/tematyka/konie-3.png',
+    alt: 'Dwoje dzieci w kaskach podczas nauki jazdy konnej na piaszczystym padoku w słoneczny dzień',
+  },
+  {
+    src: '/images/tematyka/konie-4.png',
+    alt: 'Vaulting — dziewczyna w kasku na grzbiecie białego konia w hali, instruktor przy lonży',
+  },
+  {
+    src: '/images/tematyka/konie-5.png',
+    alt: 'Portret konia z przymrużeniem — zdjęcie z szerokokątnej optyki na padoku',
+  },
+  {
+    src: '/images/tematyka/konie-6.png',
+    alt: 'Młoda amazonka w kasku tuląca szyję kasztanowego konia w siodle',
+  },
 ];
 
 const FIRST_AID_GALLERY = [
@@ -114,6 +226,14 @@ const FIRST_AID_GALLERY = [
   { src: '/images/szkolenia/szkolenia2.png', alt: 'Szkolenie ratownicze z technikami linowymi nad wodą' },
   { src: '/images/szkolenia/szkolenia3.png', alt: 'Ćwiczenia resuscytacji i pierwszej pomocy na fantomie' },
   { src: '/images/tematyka/ratownictwo-1.png', alt: 'Zespół uczestników szkolenia i pokazu ratownictwa' },
+  {
+    src: '/images/tematyka/ratownictwo-2.png',
+    alt: 'Ratownicy w kamizelkach i kaskach na łodzi typu RIB — widok z góry, ćwiczenia na wodzie',
+  },
+  {
+    src: '/images/tematyka/ratownictwo-3.png',
+    alt: 'Ratownicy w kombinezonach przy wyciąganiu poszkodowanego z wody na amfibii Argo 8×8',
+  },
 ];
 
 const OTHER_ATTRACTIONS_GALLERY = [
@@ -121,6 +241,14 @@ const OTHER_ATTRACTIONS_GALLERY = [
   { src: '/images/tematyka/inne-2.png', alt: 'Urodzinowa atrakcja dla najmłodszych uczestników' },
   { src: '/images/tematyka/inne-3.png', alt: 'Organizacja pikniku i zaplecze eventowe' },
   { src: '/images/tematyka/inne-4.png', alt: 'Wyjazd i transport uczestników wydarzenia' },
+  {
+    src: '/images/wypozyczalnia/dmuchance/dmuchance-mario.png',
+    alt: 'Dmuchany tor przeszkód w stylu Mario — zabawa dla dzieci i młodzieży na evencie',
+  },
+  {
+    src: '/images/tematyka/scianka1.png',
+    alt: 'Atestowana dmuchana ścianka wspinaczkowa z kolorowymi chwytami',
+  },
 ];
 
 export default function TopicSubPage() {
@@ -164,17 +292,17 @@ export default function TopicSubPage() {
           {(isQuadsPage || isOffRoadPage || isMilitaryVehiclesPage || isClimbingPage || isPaintballPage || isMilitariaPage || isSurvivalPage || isWaterPage || isHorsePage || isFirstAidPage || isOtherPage) && (
             <>
               <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="absolute inset-0 bg-no-repeat"
                 style={{
                   backgroundImage: `url(${
                     isQuadsPage
                       ? '/utils/oferta-letnia/quad-academy-camp.png'
                       : isOffRoadPage
-                        ? '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-4.png'
+                        ? '/images/tematyka/off-road-1.png'
                         : isMilitaryVehiclesPage
                           ? '/images/tematyka/kraz-1.png'
                           : isClimbingPage
-                            ? '/images/tematyka/scianka1.png'
+                            ? '/images/tematyka/linowe-tyrolka-las.png'
                             : isPaintballPage
                               ? '/images/tematyka/paintball-1.png'
                               : isMilitariaPage
@@ -182,17 +310,20 @@ export default function TopicSubPage() {
                                 : isSurvivalPage
                                   ? '/images/tematyka/survival-2.png'
                                   : isWaterPage
-                                    ? '/utils/obozy-kolonie/lato.png'
+                                    ? '/images/tematyka/wodne-4.png'
                                     : isHorsePage
                                       ? '/images/tematyka/konie-1.png'
                                       : isFirstAidPage
                                         ? '/images/szkolenia/szkolenia1.png'
                                         : '/images/tematyka/inne-1.png'
                   })`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: isMilitariaPage ? 'center 19%' : 'center center',
                 }}
                 aria-hidden
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-dark/55" aria-hidden />
+              <div className="absolute inset-0 z-0 bg-black/25 pointer-events-none" aria-hidden />
+              <div className="app-photo-scrim" aria-hidden />
             </>
           )}
           <div className="max-w-4xl mx-auto px-6">
@@ -289,118 +420,145 @@ export default function TopicSubPage() {
               className="bg-white/5 backdrop-blur-md border-2 border-primary rounded-[2rem] p-8 md:p-12"
             >
               {isQuadsPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">Piach, błoto, woda, przeszkody... czyli to, co quady lubią najbardziej.</p>
-                  <p>
-                    Wszystkie te przeciwności losu postaramy się pokonać za pomocą naszych quadów. Poznacie możliwości tych wspaniałych maszyn i ich
-                    niekonwencjonalne zastosowania. Ostre pojazdy oraz strome zjazdy i przechyły z pewnością dostarczą mnóstwa wrażeń i adrenaliny.
-                  </p>
-                  <p>
-                    Możemy również wybrać się na wyprawę nocną, co dodatkowo potęguje wrażenia. Po spędzeniu kilku godzin w terenie istnieje
-                    możliwość zorganizowania imprezy w motoryzacyjnych klimatach.
-                  </p>
-                  <p>
-                    Quady to doskonała zabawa, którą zapewnimy Ci podczas Twojego eventu, urodzin, wieczoru kawalerskiego lub panieńskiego.
-                    Organizujemy również obozy quadowe oraz wypady na quadach jedno i wielodniowe.
-                  </p>
-
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {QUADS_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: QUADS_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {QUADS_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: QUADS_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
-                  <p className="font-semibold text-white border-t border-white/10 pt-8">QUADOWA JAZDA INNA NIŻ WSZYSTKIE!</p>
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">Piach, błoto, woda, przeszkody... czyli to, co quady lubią najbardziej.</p>
+                    <p>
+                      Wszystkie te przeciwności losu postaramy się pokonać za pomocą naszych quadów. Poznacie możliwości tych wspaniałych maszyn i ich
+                      niekonwencjonalne zastosowania. Ostre pojazdy oraz strome zjazdy i przechyły z pewnością dostarczą mnóstwa wrażeń i adrenaliny.
+                    </p>
+                    <p>
+                      Możemy również wybrać się na wyprawę nocną, co dodatkowo potęguje wrażenia. Po spędzeniu kilku godzin w terenie istnieje
+                      możliwość zorganizowania imprezy w motoryzacyjnych klimatach.
+                    </p>
+                    <p>
+                      Quady to doskonała zabawa, którą zapewnimy Ci podczas Twojego eventu, urodzin, wieczoru kawalerskiego lub panieńskiego.
+                      Organizujemy również obozy quadowe oraz wypady na quadach jedno i wielodniowe.
+                    </p>
+                    <p className="font-semibold text-white border-t border-white/10 pt-8">QUADOWA JAZDA INNA NIŻ WSZYSTKIE!</p>
+                  </div>
                 </div>
               ) : isOffRoadPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    OFF-ROAD to niesamowita przygoda, mnóstwo pozytywnych emocji oraz adrenalina, której nie uświadczysz nigdzie indziej.
-                  </p>
-                  <p>
-                    Nasi instruktorzy pokażą Wam niesamowite możliwości samochodów terenowych. Strome podjazdy, trawersy i zjazdy podniosą poziom
-                    adrenaliny i umożliwią zupełnie inne spojrzenie na jazdę samochodem.
-                  </p>
-                  <p>
-                    Omówimy zasady pokonywania trudnych przeszkód terenowych, na przykład jazdę w przechyle bocznym, maksymalne kąty natarcia i
-                    zejścia oraz wiele innych tajników. Umożliwimy sprawdzenie swoich umiejętności jako kierowcy samochodów o niewiarygodnych
-                    możliwościach terenowych.
-                  </p>
-                  <p>
-                    Nauka jazdy samochodem terenowym prowadzona jest w bardzo zróżnicowanym terenie. Przejażdżki zawsze poprzedzone są instruktarzem,
-                    po czym każdy uczestnik pod kontrolą instruktora może spróbować swoich sił w jeździe w terenie.
-                  </p>
-
-                  <p className="font-semibold text-white">UMÓW SIĘ NA SWOJĄ JAZDĘ JUŻ DZIŚ!</p>
-
-                  <p>
-                    Samochody terenowe i szeroko rozumiany OFF-ROAD są znakomitym uzupełnieniem każdej imprezy integracyjnej, firmowej, urodzin,
-                    pikniku itp. Mogą też być główną atrakcją lub super prezentem urodzinowym.
-                  </p>
-
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {OFFROAD_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: OFFROAD_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {OFFROAD_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: OFFROAD_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
-                  <p className="font-semibold text-white border-t border-white/10 pt-8">JAZDA INNA NIŻ WSZYSTKIE!</p>
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">
+                      OFF-ROAD to niesamowita przygoda, mnóstwo pozytywnych emocji oraz adrenalina, której nie uświadczysz nigdzie indziej.
+                    </p>
+                    <p>
+                      Nasi instruktorzy pokażą Wam niesamowite możliwości samochodów terenowych. Strome podjazdy, trawersy i zjazdy podniosą poziom
+                      adrenaliny i umożliwią zupełnie inne spojrzenie na jazdę samochodem.
+                    </p>
+                    <p>
+                      Omówimy zasady pokonywania trudnych przeszkód terenowych, na przykład jazdę w przechyle bocznym, maksymalne kąty natarcia i
+                      zejścia oraz wiele innych tajników. Umożliwimy sprawdzenie swoich umiejętności jako kierowcy samochodów o niewiarygodnych
+                      możliwościach terenowych.
+                    </p>
+                    <p>
+                      Nauka jazdy samochodem terenowym prowadzona jest w bardzo zróżnicowanym terenie. Przejażdżki zawsze poprzedzone są instruktarzem,
+                      po czym każdy uczestnik pod kontrolą instruktora może spróbować swoich sił w jeździe w terenie.
+                    </p>
+                    <p className="font-semibold text-white">UMÓW SIĘ NA SWOJĄ JAZDĘ JUŻ DZIŚ!</p>
+                    <p>
+                      Samochody terenowe i szeroko rozumiany OFF-ROAD są znakomitym uzupełnieniem każdej imprezy integracyjnej, firmowej, urodzin,
+                      pikniku itp. Mogą też być główną atrakcją lub super prezentem urodzinowym.
+                    </p>
+                    <p className="font-semibold text-white border-t border-white/10 pt-8">JAZDA INNA NIŻ WSZYSTKIE!</p>
+                  </div>
                 </div>
               ) : isMilitaryVehiclesPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    KRAZ to radziecka super maszyna z silnikiem V8 o pojemności piętnaście litrów, mocy 240 koni, momencie obrotowym 883 Nm i
-                    napędzie 6x6 na trzy osie... Brzmi ciekawie? To MUSISZ SIĘ NIM PRZEJECHAĆ!!!
-                  </p>
-                  <p>
-                    Oferujemy przejażdżki naszym „POTWOREM”. Mamy specjalnie przystosowaną pakę z ławkami do przewozu osób, gdzie bez problemu
-                    pomieści się około 30 chętnych na krazową przygodę. KRAZ-em jeździmy głównie na terenie Jury Krakowsko-Częstochowskiej, okolice
-                    Złotego Potoku, ale jeżeli chcesz, abyśmy obsłużyli Twoją imprezę w innym miejscu w Polsce, możemy go tam dowieźć.
-                  </p>
-                  <p>
-                    Musimy tylko doliczyć koszty transportu „POTWORA”, które wcale nie są jakieś przerażające. Obsługujemy zarówno grupy
-                    zorganizowane, jak też osoby indywidualne. Minimalna ilość osób, z którą ruszamy to 10. Przejażdżki trwają średnio 15/20 minut,
-                    ale jeżeli masz inne propozycje to skontaktuj się z nami i z pewnością się dogadamy.
-                  </p>
-                  <p>
-                    To wspaniała atrakcja podczas wycieczki szkolnej, wypadu na Jurę, wieczoru kawalerskiego/panieńskiego i na każdą inną okazję.
-                  </p>
-
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {MILITARY_VEHICLES_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: MILITARY_VEHICLES_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {MILITARY_VEHICLES_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: MILITARY_VEHICLES_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
-                  <p className="font-semibold text-white border-t border-white/10 pt-8">PRAWDZIWA JAZDA PRAWDZIWYM POTWOREM!</p>
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">
+                      KRAZ to radziecka super maszyna z silnikiem V8 o pojemności piętnaście litrów, mocy 240 koni, momencie obrotowym 883 Nm i
+                      napędzie 6x6 na trzy osie... Brzmi ciekawie? To MUSISZ SIĘ NIM PRZEJECHAĆ!!!
+                    </p>
+                    <p>
+                      Oferujemy przejażdżki naszym „POTWOREM”. Mamy specjalnie przystosowaną pakę z ławkami do przewozu osób, gdzie bez problemu
+                      pomieści się około 30 chętnych na krazową przygodę. KRAZ-em jeździmy głównie na terenie Jury Krakowsko-Częstochowskiej, okolice
+                      Złotego Potoku, ale jeżeli chcesz, abyśmy obsłużyli Twoją imprezę w innym miejscu w Polsce, możemy go tam dowieźć.
+                    </p>
+                    <p>
+                      Musimy tylko doliczyć koszty transportu „POTWORA”, które wcale nie są jakieś przerażające. Obsługujemy zarówno grupy
+                      zorganizowane, jak też osoby indywidualne. Minimalna ilość osób, z którą ruszamy to 10. Przejażdżki trwają średnio 15/20 minut,
+                      ale jeżeli masz inne propozycje to skontaktuj się z nami i z pewnością się dogadamy.
+                    </p>
+                    <p>
+                      To wspaniała atrakcja podczas wycieczki szkolnej, wypadu na Jurę, wieczoru kawalerskiego/panieńskiego i na każdą inną okazję.
+                    </p>
+                    <p className="font-semibold text-white border-t border-white/10 pt-8">PRAWDZIWA JAZDA PRAWDZIWYM POTWOREM!</p>
+                  </div>
                 </div>
               ) : isClimbingPage ? (
                 <div className="space-y-12 text-white/80 leading-relaxed">
-                  <div className="space-y-6">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {CLIMBING_PAGE_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: CLIMBING_PAGE_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-6 border-t border-white/10 pt-8">
                     <p className="text-lg font-semibold text-white">WYNAJEM ŚCIANKI WSPINACZKOWEJ</p>
                     <p>
                       NOWOŚĆ! Jeżeli chciałbyś, aby Twój festyn, piknik, wycieczkę, urodziny, czy też wieczór kawalerski urozmaiciło coś nietypowego i
@@ -411,20 +569,6 @@ export default function TopicSubPage() {
                     <p>
                       Ściankę można ustawić praktycznie na każdym w miarę równym terenie. Zapewniamy transport, montaż oraz obsługę ścianki.
                     </p>
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      {CLIMBING_WALL_GALLERY.map((image, i) => (
-                        <button
-                          key={image.src}
-                          type="button"
-                          onClick={() => setTopicGallery({ images: CLIMBING_WALL_GALLERY, index: i })}
-                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                          aria-label={`Powiększ: ${image.alt}`}
-                        >
-                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
-                        </button>
-                      ))}
-                    </div>
                   </div>
 
                   <div className="space-y-6 border-t border-white/10 pt-8">
@@ -538,13 +682,18 @@ export default function TopicSubPage() {
                         </p>
                       </div>
                     </div>
-
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
-                      {CLIMBING_ROCK_GALLERY.map((image, i) => (
+                  </div>
+                </div>
+              ) : isPaintballPage ? (
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {PAINTBALL_GALLERY.map((image, i) => (
                         <button
                           key={image.src}
                           type="button"
-                          onClick={() => setTopicGallery({ images: CLIMBING_ROCK_GALLERY, index: i })}
+                          onClick={() => setTopicGallery({ images: PAINTBALL_GALLERY, index: i })}
                           className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                           aria-label={`Powiększ: ${image.alt}`}
                         >
@@ -553,474 +702,489 @@ export default function TopicSubPage() {
                       ))}
                     </div>
                   </div>
-                </div>
-              ) : isPaintballPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    Emocjonująca, pełna akcji gra, w której zdolność myślenia zespołowego, szybkie podejmowanie decyzji i spryt są ważniejsze, niż
-                    siła mięśni graczy.
-                  </p>
-                  <p>
-                    Niebezpieczeństwo wyeliminowania przez wrogi zespół tworzy realne warunki walki, w której rośnie adrenalina, a gracz uświadamia
-                    sobie, na ile jest odporny na stres, a także jak szybko i trafnie potrafi podejmować w tych trudnych warunkach właściwe decyzje.
-                  </p>
-                  <p>
-                    Podczas naszych zajęć korzystamy wyłącznie z atestowanego, niezawodnego sprzętu, a stosowanie zdublowanych systemów zabezpieczeń,
-                    kamizelek asekuracyjnych i kasków daje naszym klientom komfort i poczucie bezpieczeństwa, co pozwala na bezstresowe oddawanie się
-                    przyjemności wynikającej z realizowanych zadań.
-                  </p>
-                  <p>
-                    Pole tworzymy wykorzystując naturalne przeszkody: drzewa, kępy krzaków, ukształtowanie terenu. Gdy elementów takich zabraknie,
-                    posiadamy własne przeszkody - system ścianek, z których łatwo można wykonać tunele, przeszkody niskie, wysokie, szerokie jak i
-                    wąskie.
-                  </p>
-                  <p>
-                    Posiadamy również własny poligon paintballowy, dzięki czemu możemy realizować scenariusze gry w sprawdzonej, dobrze przygotowanej
-                    przestrzeni.
-                  </p>
-                  <p>
-                    Po zakończonej grze istnieje możliwość zorganizowania grilla, ogniska lub wieczornej imprezy integracyjnej.
-                  </p>
 
-                  <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">
-                      W swej ofercie posiadamy kilkadziesiąt zestawów, w skład których wchodzą
-                    </h3>
-                    <ul className="space-y-3">
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        kompletny marker Spyder Victor II, Tippmann Custom lub BRAVO ONE Tactical US army Guns
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        maska
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        kamizelka ochronna
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        rękawiczki ochronne
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        kombinezon
-                      </li>
-                    </ul>
-                  </div>
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">
+                      Emocjonująca, pełna akcji gra, w której zdolność myślenia zespołowego, szybkie podejmowanie decyzji i spryt są ważniejsze, niż
+                      siła mięśni graczy.
+                    </p>
+                    <p>
+                      Niebezpieczeństwo wyeliminowania przez wrogi zespół tworzy realne warunki walki, w której rośnie adrenalina, a gracz uświadamia
+                      sobie, na ile jest odporny na stres, a także jak szybko i trafnie potrafi podejmować w tych trudnych warunkach właściwe decyzje.
+                    </p>
+                    <p>
+                      Podczas naszych zajęć korzystamy wyłącznie z atestowanego, niezawodnego sprzętu, a stosowanie zdublowanych systemów zabezpieczeń,
+                      kamizelek asekuracyjnych i kasków daje naszym klientom komfort i poczucie bezpieczeństwa, co pozwala na bezstresowe oddawanie się
+                      przyjemności wynikającej z realizowanych zadań.
+                    </p>
+                    <p>
+                      Pole tworzymy wykorzystując naturalne przeszkody: drzewa, kępy krzaków, ukształtowanie terenu. Gdy elementów takich zabraknie,
+                      posiadamy własne przeszkody - system ścianek, z których łatwo można wykonać tunele, przeszkody niskie, wysokie, szerokie jak i
+                      wąskie.
+                    </p>
+                    <p>
+                      Posiadamy również własny poligon paintballowy, dzięki czemu możemy realizować scenariusze gry w sprawdzonej, dobrze przygotowanej
+                      przestrzeni.
+                    </p>
+                    <p>
+                      Po zakończonej grze istnieje możliwość zorganizowania grilla, ogniska lub wieczornej imprezy integracyjnej.
+                    </p>
 
-                  <p>
-                    Na życzenie klienta możemy także zaaranżować miejsce do gry w paintball: teren leśny, poligon wojskowy, różne zabudowania.
-                  </p>
-                  <p>
-                    Grę paintballową można doskonale połączyć z wypoczynkiem w miejscach przez nas proponowanych oraz z wszelkimi innymi atrakcjami z
-                    działu Oferta.
-                  </p>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">
+                        W swej ofercie posiadamy kilkadziesiąt zestawów, w skład których wchodzą
+                      </h3>
+                      <ul className="space-y-3">
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          kompletny marker Spyder Victor II, Tippmann Custom lub BRAVO ONE Tactical US army Guns
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          maska
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          kamizelka ochronna
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          rękawiczki ochronne
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          kombinezon
+                        </li>
+                      </ul>
+                    </div>
 
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {PAINTBALL_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: PAINTBALL_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
+                    <p>
+                      Na życzenie klienta możemy także zaaranżować miejsce do gry w paintball: teren leśny, poligon wojskowy, różne zabudowania.
+                    </p>
+                    <p>
+                      Grę paintballową można doskonale połączyć z wypoczynkiem w miejscach przez nas proponowanych oraz z wszelkimi innymi atrakcjami z
+                      działu Oferta.
+                    </p>
                   </div>
                 </div>
               ) : isMilitariaPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    Musztra to oczywiście podstawa, a karabin to Twój jedyny przyjaciel. Nabędziesz umiejętności posługiwania się oraz strzelania z
-                    broni ASG, Paintball (możliwe jest również zorganizowania zajęć na strzelnicy z użyciem broni palnej). Poza tym mnóstwo czołgania,
-                    ćwiczeń w małpim gaju, wyzwisk i przekleństw, czyli FALA w najlepszym wydaniu 🙂 Z pewnością nie będzie nudno!!!
-                  </p>
-
+                <div className="space-y-12 text-white/80 leading-relaxed">
                   <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">
-                      PRZYKŁADOWE ZAJĘCIA MILITARNE W KTÓRYCH MOŻESZ WZIĄĆ UDZIAŁ
-                    </h3>
-                    <ul className="space-y-3">
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Czarna taktyka czyli sposoby prowadzenia działań wojskowych, specjalnych policyjnych i antyterrorystycznych w warunkach
-                        miejskich, w pomieszczeniach i budynkach.
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Zielona taktyka czyli działania w terenie niezurbanizowanym, szczególnie leśnym, maskowanie, terenoznawstwo, rajdy za linie
-                        wroga i zasadzki.
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Wojskowy tor przeszkód (małpi gaj)
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Dostarczanie amunicji na przedni skraj pola walki (atrapy amunicji)
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Nawiązywanie łączności telefonami polowymi, cb radiem, stacjami ukf
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Strzelanie
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Wykonywanie okopów i stanowisk ogniowych
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Rozminowanie terenu, ustawianie grupy min
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Desantowanie się jednostek specjalnych z wody na ląd za pomocą łodzi motorowej i pontonów
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {MILITARIA_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: MILITARIA_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : isSurvivalPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">SURVIVAL to inaczej PRZEŻYCIE/PRZETRWANIE dlatego te zajęcia spędzamy w terenie.</p>
-                  <p>
-                    W zależności od zapotrzebowania może to być przygoda pełna niespodzianek, która odbędzie się stacjonarnie w jednym miejscu, lub
-                    wyzwanie w postaci wędrówki, gdzie będziemy musieli przedostać się z punktu A do punktu B.
-                  </p>
-                  <p>Po drodze zaliczając punkty, w których zapewnimy Wam mnóstwo przygód oraz niespodzianek survivalowych, między innymi takich jak:</p>
-
-                  <ul className="space-y-3">
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Budowa tratw - przeprawy przez mokradła, bagna, rzeki i jeziora
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Nauka wiązania węzłów, techniki linowe
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Rozpalanie ognisk
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Budowa bezpiecznego obozowiska, nocleg w szałasach
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Konstruowanie noszy, udzielanie pierwszej pomocy, transport rannego w trudnych warunkach terenowych na lądzie i w wodzie
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Samodzielne przygotowanie posiłków
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Nauka poruszania się w różnego rodzaju uwarunkowaniach terenu (las, tereny podmokłe, góry)
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Maskowanie siebie i sprzętu
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Zdobywanie wody i pożywienia
-                    </li>
-                    <li className="pl-5 relative">
-                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                      Survival wodny (nauka przetrwania na wodzie w morskich tratwach ratunkowych)
-                    </li>
-                  </ul>
-
-                  <p>
-                    Zajęcia survivalowe są znakomitym dodatkiem do większości aktywności, jakimi się zajmujemy. Ale mogą być także tematem przewodnim
-                    wyjazdu firmowego, urodzin, wieczoru kawalerskiego lub panieńskiego. Organizujemy również obozy survivalowe, obozy dla klas
-                    mundurowych oraz wypady jedno i wielodniowe.
-                  </p>
-
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {SURVIVAL_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: SURVIVAL_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
-                  </div>
-
-                  <p className="font-semibold text-white border-t border-white/10 pt-8">CHODZENIE PO BAGNACH WCIĄGA! 🙂</p>
-                </div>
-              ) : isWaterPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    To właśnie nad wodą najchętniej wypoczywamy i spędzamy wolny czas - tam najłatwiej integrujemy się ze środowiskiem, jak też z innymi
-                    ludźmi. Zabawy proponowane przez nas mogą być typową rekreacją, jak również ekstremalnym wyzwaniem.
-                  </p>
-                  <p>
-                    Jedną z form zorganizowania imprezy integracyjnej, którą chcemy zaproponować, są zajęcia na wodzie i w jej otoczeniu. Mamy Ci do
-                    zaproponowania szereg gotowych programów zabaw na wodzie, jesteśmy też otwarci na każdy pomysł, do którego dostosujemy program lub
-                    stworzymy całkowicie nowy, w pełni dostosowany do Twoich potrzeb.
-                  </p>
-                  <p>
-                    Na wodzie używamy najróżniejszych sprzętów, począwszy od łodzi motorowych, poprzez morskie tratwy ratunkowe, kajaki, pontony,
-                    łodzie wiosłowe, łodzie żaglowe oraz wiele innych. Najchętniej jednak bawimy się z uczestnikami, kiedy sami muszą coś zbudować, a
-                    to coś musi jeszcze pływać.
-                  </p>
-                  <p>
-                    Charakter tych zabaw może się opierać na scenariuszu akcji ratunkowej, misji specjalnej czy też survivalu na wodzie. To, co
-                    Państwu proponujemy, to wspaniała zabawa i niezapomniane wrażenia, ale nie zapominamy przy tym wszystkim o bezpieczeństwie.
-                  </p>
-                  <p>
-                    Każde z naszych zajęć odbywa się zawsze pod bacznym okiem ratowników WOPR, GOPR oraz instruktorów poszczególnych form wypoczynku.
-                    Cała nasza kadra dysponuje niezbędnym atestowanym sprzętem ratunkowym.
-                  </p>
-                  <p>Zapraszamy do obejrzenia filmu przedstawiającego część naszej oferty wodnej!</p>
-                  <p>
-                    Każdy z programów może ulec rozszerzeniu lub pomniejszeniu w zależności od warunków atmosferycznych oraz stanu psychofizycznego
-                    uczestników. Wszystkie przedsięwzięcia realizujemy z wielką pasją, dlatego największą nagrodą dla nas jest zadowolenie Klienta.
-                  </p>
-
-                  <div className="border-t border-white/10 pt-8">
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Programy wodne - wybierz moduł</h3>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {WATER_MODULES.map((module) => (
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {MILITARIA_GALLERY.map((image, i) => (
                         <button
-                          key={module.id}
+                          key={image.src}
                           type="button"
-                          onClick={() => setActiveWaterModuleId(module.id)}
-                          className={`px-4 py-2 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider border transition-colors ${
-                            activeWaterModuleId === module.id
-                              ? 'bg-primary text-dark border-primary'
-                              : 'bg-white/5 text-white/70 border-white/10 hover:border-primary hover:text-white'
-                          }`}
+                          onClick={() => setTopicGallery({ images: MILITARIA_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
                         >
-                          {module.title}
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
                         </button>
                       ))}
                     </div>
+                  </div>
 
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-7 min-h-[320px]">
-                      <h4 className="text-white font-semibold text-lg md:text-xl mb-3">{activeWaterModule.title}</h4>
-                      {'intro' in activeWaterModule && activeWaterModule.intro && <p className="mb-4">{activeWaterModule.intro}</p>}
-                      {'body' in activeWaterModule && activeWaterModule.body && <p className="mb-4">{activeWaterModule.body}</p>}
-                      {'items' in activeWaterModule && activeWaterModule.items && (
-                        <ul className="space-y-2 mb-4">
-                          {activeWaterModule.items.map((item) => (
-                            <li key={item} className="pl-5 relative">
-                              <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      {'note' in activeWaterModule && activeWaterModule.note && (
-                        <p className="text-white/70 border-t border-white/10 pt-4">{activeWaterModule.note}</p>
-                      )}
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">
+                      Musztra to oczywiście podstawa, a karabin to Twój jedyny przyjaciel. Nabędziesz umiejętności posługiwania się oraz strzelania z
+                      broni ASG, Paintball (możliwe jest również zorganizowania zajęć na strzelnicy z użyciem broni palnej). Poza tym mnóstwo czołgania,
+                      ćwiczeń w małpim gaju, wyzwisk i przekleństw, czyli FALA w najlepszym wydaniu 🙂 Z pewnością nie będzie nudno!!!
+                    </p>
+
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">
+                        PRZYKŁADOWE ZAJĘCIA MILITARNE W KTÓRYCH MOŻESZ WZIĄĆ UDZIAŁ
+                      </h3>
+                      <ul className="space-y-3">
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Czarna taktyka czyli sposoby prowadzenia działań wojskowych, specjalnych policyjnych i antyterrorystycznych w warunkach
+                          miejskich, w pomieszczeniach i budynkach.
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Zielona taktyka czyli działania w terenie niezurbanizowanym, szczególnie leśnym, maskowanie, terenoznawstwo, rajdy za linie
+                          wroga i zasadzki.
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Wojskowy tor przeszkód (małpi gaj)
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Dostarczanie amunicji na przedni skraj pola walki (atrapy amunicji)
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Nawiązywanie łączności telefonami polowymi, cb radiem, stacjami ukf
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Strzelanie
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Wykonywanie okopów i stanowisk ogniowych
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Rozminowanie terenu, ustawianie grupy min
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Desantowanie się jednostek specjalnych z wody na ląd za pomocą łodzi motorowej i pontonów
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              ) : isSurvivalPage ? (
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {SURVIVAL_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: SURVIVAL_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {WATER_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: WATER_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">SURVIVAL to inaczej PRZEŻYCIE/PRZETRWANIE dlatego te zajęcia spędzamy w terenie.</p>
+                    <p>
+                      W zależności od zapotrzebowania może to być przygoda pełna niespodzianek, która odbędzie się stacjonarnie w jednym miejscu, lub
+                      wyzwanie w postaci wędrówki, gdzie będziemy musieli przedostać się z punktu A do punktu B.
+                    </p>
+                    <p>Po drodze zaliczając punkty, w których zapewnimy Wam mnóstwo przygód oraz niespodzianek survivalowych, między innymi takich jak:</p>
+
+                    <ul className="space-y-3">
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Budowa tratw - przeprawy przez mokradła, bagna, rzeki i jeziora
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Nauka wiązania węzłów, techniki linowe
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Rozpalanie ognisk
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Budowa bezpiecznego obozowiska, nocleg w szałasach
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Konstruowanie noszy, udzielanie pierwszej pomocy, transport rannego w trudnych warunkach terenowych na lądzie i w wodzie
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Samodzielne przygotowanie posiłków
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Nauka poruszania się w różnego rodzaju uwarunkowaniach terenu (las, tereny podmokłe, góry)
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Maskowanie siebie i sprzętu
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Zdobywanie wody i pożywienia
+                      </li>
+                      <li className="pl-5 relative">
+                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                        Survival wodny (nauka przetrwania na wodzie w morskich tratwach ratunkowych)
+                      </li>
+                    </ul>
+
+                    <p>
+                      Zajęcia survivalowe są znakomitym dodatkiem do większości aktywności, jakimi się zajmujemy. Ale mogą być także tematem przewodnim
+                      wyjazdu firmowego, urodzin, wieczoru kawalerskiego lub panieńskiego. Organizujemy również obozy survivalowe, obozy dla klas
+                      mundurowych oraz wypady jedno i wielodniowe.
+                    </p>
+
+                    <p className="font-semibold text-white border-t border-white/10 pt-8">CHODZENIE PO BAGNACH WCIĄGA! 🙂</p>
+                  </div>
+                </div>
+              ) : isWaterPage ? (
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {WATER_PAGE_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: WATER_PAGE_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">
+                      To właśnie nad wodą najchętniej wypoczywamy i spędzamy wolny czas - tam najłatwiej integrujemy się ze środowiskiem, jak też z innymi
+                      ludźmi. Zabawy proponowane przez nas mogą być typową rekreacją, jak również ekstremalnym wyzwaniem.
+                    </p>
+                    <p>
+                      Jedną z form zorganizowania imprezy integracyjnej, którą chcemy zaproponować, są zajęcia na wodzie i w jej otoczeniu. Mamy Ci do
+                      zaproponowania szereg gotowych programów zabaw na wodzie, jesteśmy też otwarci na każdy pomysł, do którego dostosujemy program lub
+                      stworzymy całkowicie nowy, w pełni dostosowany do Twoich potrzeb.
+                    </p>
+                    <p>
+                      Na wodzie używamy najróżniejszych sprzętów, począwszy od łodzi motorowych, poprzez morskie tratwy ratunkowe, kajaki, pontony,
+                      łodzie wiosłowe, łodzie żaglowe oraz wiele innych. Najchętniej jednak bawimy się z uczestnikami, kiedy sami muszą coś zbudować, a
+                      to coś musi jeszcze pływać.
+                    </p>
+                    <p>
+                      Charakter tych zabaw może się opierać na scenariuszu akcji ratunkowej, misji specjalnej czy też survivalu na wodzie. To, co
+                      Państwu proponujemy, to wspaniała zabawa i niezapomniane wrażenia, ale nie zapominamy przy tym wszystkim o bezpieczeństwie.
+                    </p>
+                    <p>
+                      Każde z naszych zajęć odbywa się zawsze pod bacznym okiem ratowników WOPR, GOPR oraz instruktorów poszczególnych form wypoczynku.
+                      Cała nasza kadra dysponuje niezbędnym atestowanym sprzętem ratunkowym.
+                    </p>
+                    <p>Zapraszamy do obejrzenia filmu przedstawiającego część naszej oferty wodnej!</p>
+                    <p>
+                      Każdy z programów może ulec rozszerzeniu lub pomniejszeniu w zależności od warunków atmosferycznych oraz stanu psychofizycznego
+                      uczestników. Wszystkie przedsięwzięcia realizujemy z wielką pasją, dlatego największą nagrodą dla nas jest zadowolenie Klienta.
+                    </p>
+
+                    <div className="border-t border-white/10 pt-8">
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Programy wodne - wybierz moduł</h3>
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {WATER_MODULES.map((module) => (
+                          <button
+                            key={module.id}
+                            type="button"
+                            onClick={() => setActiveWaterModuleId(module.id)}
+                            className={`px-4 py-2 rounded-full text-xs md:text-sm font-bold uppercase tracking-wider border transition-colors ${
+                              activeWaterModuleId === module.id
+                                ? 'bg-primary text-dark border-primary'
+                                : 'bg-white/5 text-white/70 border-white/10 hover:border-primary hover:text-white'
+                            }`}
+                          >
+                            {module.title}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-7 min-h-[320px]">
+                        <h4 className="text-white font-semibold text-lg md:text-xl mb-3">{activeWaterModule.title}</h4>
+                        {'intro' in activeWaterModule && activeWaterModule.intro && <p className="mb-4">{activeWaterModule.intro}</p>}
+                        {'body' in activeWaterModule && activeWaterModule.body && <p className="mb-4">{activeWaterModule.body}</p>}
+                        {'items' in activeWaterModule && activeWaterModule.items && (
+                          <ul className="space-y-2 mb-4">
+                            {activeWaterModule.items.map((item) => (
+                              <li key={item} className="pl-5 relative">
+                                <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {'note' in activeWaterModule && activeWaterModule.note && (
+                          <p className="text-white/70 border-t border-white/10 pt-4">{activeWaterModule.note}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               ) : isHorsePage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    To propozycja dla wszystkich tych, którzy nie wyobrażają sobie życia bez koni lub chcą dopiero spróbować swoich sił w tej
-                    dziedzinie.
-                  </p>
-                  <p>
-                    Proponujemy zajęcia w siodle, niezależnie od stopnia zaawansowania jeździeckiego. Możemy wybrać się konno w malowniczy teren,
-                    pojechać na konny spacer lub potrenować na padoku.
-                  </p>
-                  <p>
-                    Atrakcje konne mogą być główną i jedyną atrakcją eventu, urodzin, imprezy lub też ich częścią i uzupełnieniem. To Wy decydujecie
-                    jaki charakter ma mieć Wasza impreza!
-                  </p>
-
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    {HORSE_RIDING_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: HORSE_RIDING_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {HORSE_RIDING_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: HORSE_RIDING_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
-                  <p className="font-semibold text-white">MOŻLIWOŚĆ ZORGANIZOWANIA PASOWANIA NA JEŹDZCA! tzw CHRZEST ☺</p>
-                  <p className="font-semibold text-white border-t border-white/10 pt-8">SERDECZNIE ZAPRASZAMY!</p>
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">
+                      To propozycja dla wszystkich tych, którzy nie wyobrażają sobie życia bez koni lub chcą dopiero spróbować swoich sił w tej
+                      dziedzinie.
+                    </p>
+                    <p>
+                      Proponujemy zajęcia w siodle, niezależnie od stopnia zaawansowania jeździeckiego. Możemy wybrać się konno w malowniczy teren,
+                      pojechać na konny spacer lub potrenować na padoku.
+                    </p>
+                    <p>
+                      Atrakcje konne mogą być główną i jedyną atrakcją eventu, urodzin, imprezy lub też ich częścią i uzupełnieniem. To Wy decydujecie
+                      jaki charakter ma mieć Wasza impreza!
+                    </p>
+                    <p className="font-semibold text-white">MOŻLIWOŚĆ ZORGANIZOWANIA PASOWANIA NA JEŹDZCA! tzw CHRZEST ☺</p>
+                    <p className="font-semibold text-white border-t border-white/10 pt-8">SERDECZNIE ZAPRASZAMY!</p>
+                  </div>
                 </div>
               ) : isFirstAidPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    We wszytkich działaniach jakich się podejmujemy zawsze główny nacisk kładziemy na bezpieczeństwo. Stąd w naszych szeregach tak
-                    wiele osób wywodzących sie ze środowiska ratowniczego - ratownicy WOPR, GOPR, ratownicy medyczni i wielu innych.
-                  </p>
-
+                <div className="space-y-12 text-white/80 leading-relaxed">
                   <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Kursy pierwszej pomocy</h3>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {FIRST_AID_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: FIRST_AID_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">
+                      We wszytkich działaniach jakich się podejmujemy zawsze główny nacisk kładziemy na bezpieczeństwo. Stąd w naszych szeregach tak
+                      wiele osób wywodzących sie ze środowiska ratowniczego - ratownicy WOPR, GOPR, ratownicy medyczni i wielu innych.
+                    </p>
+
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Kursy pierwszej pomocy</h3>
+                      <p>
+                        Od wielu lat na całym świecie, a od długiego czasu również i u nas w kraju bardzo duży nacisk kładzie się na szkolenie różnego
+                        rodzaju instytucji oraz coraz częściej zwykłego „szarego” obywatela z zakresu pierwszej pomocy.
+                      </p>
+                      <p className="mt-4">
+                        Nasza firma, wychodząc naprzeciw takiemu zapotrzebowaniu i popierając tego typu idee, od paru już lat z wielkim powodzeniem
+                        oragaznizuje kursy i szkolenia z zakresu pierwszej pomocy BLS (Basic Life Support) i automatycznej defibrylacji zewnętrznej AED
+                        (Automated External Defibrillation) Europejskiej Rady Resuscytacji ERC (European Resuscitation Council).
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="mb-4">
+                        Po przeprowadzonym przez nas kursie lub szkoleniu, każda osoba biorąca w nim udział będzie miała wiedzę oraz przede wszystkim
+                        praktyczne umiejętności m.in. w następujących dziedzinach:
+                      </p>
+                      <ul className="space-y-3">
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          jak wykonać ocenę osoby nieprzytomnej
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          jak wykonać uciskanie klatki piersiowej i oddechy ratownicze
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          jak ułożyć nieprzytomnego, oddychającego poszkodowanego w pozycji bezpiecznej
+                        </li>
+                      </ul>
+                      <p className="mt-4">Po dodatkowym kursie AED:</p>
+                      <ul className="space-y-3 mt-3">
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          jak bezpiecznie używać automatycznego defibrylatora zewnętrznego
+                        </li>
+                      </ul>
+                    </div>
+
                     <p>
-                      Od wielu lat na całym świecie, a od długiego czasu również i u nas w kraju bardzo duży nacisk kładzie się na szkolenie różnego
-                      rodzaju instytucji oraz coraz częściej zwykłego „szarego” obywatela z zakresu pierwszej pomocy.
+                      Każde zajęcia są dodatkowo urozmaicone poprzez symulację różnego rodzaju wypadków i zdarzeń, które każdego z nas w zwykłym,
+                      codziennym życiu mogą spotkać, a z którymi jako świadome osoby powinniśmy potrafić sobie poradzić.
                     </p>
-                    <p className="mt-4">
-                      Nasza firma, wychodząc naprzeciw takiemu zapotrzebowaniu i popierając tego typu idee, od paru już lat z wielkim powodzeniem
-                      oragaznizuje kursy i szkolenia z zakresu pierwszej pomocy BLS (Basic Life Support) i automatycznej defibrylacji zewnętrznej AED
-                      (Automated External Defibrillation) Europejskiej Rady Resuscytacji ERC (European Resuscitation Council).
-                    </p>
-                  </div>
 
-                  <div>
-                    <p className="mb-4">
-                      Po przeprowadzonym przez nas kursie lub szkoleniu, każda osoba biorąca w nim udział będzie miała wiedzę oraz przede wszystkim
-                      praktyczne umiejętności m.in. w następujących dziedzinach:
-                    </p>
-                    <ul className="space-y-3">
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        jak wykonać ocenę osoby nieprzytomnej
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        jak wykonać uciskanie klatki piersiowej i oddechy ratownicze
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        jak ułożyć nieprzytomnego, oddychającego poszkodowanego w pozycji bezpiecznej
-                      </li>
-                    </ul>
-                    <p className="mt-4">Po dodatkowym kursie AED:</p>
-                    <ul className="space-y-3 mt-3">
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        jak bezpiecznie używać automatycznego defibrylatora zewnętrznego
-                      </li>
-                    </ul>
-                  </div>
-
-                  <p>
-                    Każde zajęcia są dodatkowo urozmaicone poprzez symulację różnego rodzaju wypadków i zdarzeń, które każdego z nas w zwykłym,
-                    codziennym życiu mogą spotkać, a z którymi jako świadome osoby powinniśmy potrafić sobie poradzić.
-                  </p>
-
-                  <div className="border-t border-white/10 pt-8">
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">POKAZY RATOWNICTWA</h3>
-                    <p>
-                      Pokazy są formą, w jakiej chcemy propagować wszelkiego rodzaju ratownictwo. My wiemy, że każda sekunda w ratowaniu życia ludzkiego
-                      jest ważna, dlatego pragniemy uświadamiać ludzi, jak ważna jest właśnie świadomość tego, że każdy z nas może je uratować.
-                    </p>
-                    <p className="mt-4">
-                      Nasze pokazy mają na celu bezpośrednie dotarcie do każdego z widzów tak, aby w przyszłości mógł zareagować w sposób właściwy, tzn.
-                      aby nie bał się wziąć odpowiedzialności za ratowanie czyjegoś życia. Dziedziny, w jakich się spełniamy to ratownictwo wodne,
-                      ratownictwo górskie, jak również ratownictwo medyczne.
-                    </p>
-                    <p className="mt-4">
-                      W pokazach używamy profesjonalnego sprzętu ratunkowego: łodzi motorowych, morskich tratew ratunkowych, sprzętu do nurkowania,
-                      atestowanego sprzętu alpinistycznego oraz sprzętu medycznego i asekuracyjnego.
-                    </p>
-                    <p className="mt-4">
-                      Pokazy, które wykonujemy, mają charakter show i są bardzo widowiskową imprezą. Łączymy techniki ratownictwa powietrznego, wodnego,
-                      linowego i medycznego, co daje bardzo dobry efekt widowiskowy, ale przede wszystkim pokazuje, jak wygląda profesjonalna akcja
-                      ratunkowa. Pokazujemy również, jak każda z osób, także za pomocą przedmiotów codziennego użytku, może uratować ludzkie życie.
-                    </p>
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {FIRST_AID_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: FIRST_AID_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
+                    <div className="border-t border-white/10 pt-8">
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">POKAZY RATOWNICTWA</h3>
+                      <p>
+                        Pokazy są formą, w jakiej chcemy propagować wszelkiego rodzaju ratownictwo. My wiemy, że każda sekunda w ratowaniu życia ludzkiego
+                        jest ważna, dlatego pragniemy uświadamiać ludzi, jak ważna jest właśnie świadomość tego, że każdy z nas może je uratować.
+                      </p>
+                      <p className="mt-4">
+                        Nasze pokazy mają na celu bezpośrednie dotarcie do każdego z widzów tak, aby w przyszłości mógł zareagować w sposób właściwy, tzn.
+                        aby nie bał się wziąć odpowiedzialności za ratowanie czyjegoś życia. Dziedziny, w jakich się spełniamy to ratownictwo wodne,
+                        ratownictwo górskie, jak również ratownictwo medyczne.
+                      </p>
+                      <p className="mt-4">
+                        W pokazach używamy profesjonalnego sprzętu ratunkowego: łodzi motorowych, morskich tratew ratunkowych, sprzętu do nurkowania,
+                        atestowanego sprzętu alpinistycznego oraz sprzętu medycznego i asekuracyjnego.
+                      </p>
+                      <p className="mt-4">
+                        Pokazy, które wykonujemy, mają charakter show i są bardzo widowiskową imprezą. Łączymy techniki ratownictwa powietrznego, wodnego,
+                        linowego i medycznego, co daje bardzo dobry efekt widowiskowy, ale przede wszystkim pokazuje, jak wygląda profesjonalna akcja
+                        ratunkowa. Pokazujemy również, jak każda z osób, także za pomocą przedmiotów codziennego użytku, może uratować ludzkie życie.
+                      </p>
+                    </div>
                   </div>
                 </div>
               ) : isOtherPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    Poza standardowymi usługami dostępnymi w naszej ofercie mamy do zaoferowania jeszcze kilka dodatkowych atrakcji.
-                  </p>
+                <div className="space-y-12 text-white/80 leading-relaxed">
                   <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Pozostałe atrakcje</h3>
-                    <ul className="space-y-3">
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Organizacja pikników/festynów
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Organizacja urodzin zarówno dla młodszych jak i starszych
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Organizacja wieczorów kawalerskich i panieńskich
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Organizacja szkoleń
-                      </li>
-                      <li className="pl-5 relative">
-                        <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                        Niekonwencjonalne sesje fotograficzne w trakcie naszych zajęć
-                      </li>
-                    </ul>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {OTHER_ATTRACTIONS_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setTopicGallery({ images: OTHER_ATTRACTIONS_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {OTHER_ATTRACTIONS_GALLERY.map((image, i) => (
-                      <button
-                        key={image.src}
-                        type="button"
-                        onClick={() => setTopicGallery({ images: OTHER_ATTRACTIONS_GALLERY, index: i })}
-                        className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        aria-label={`Powiększ: ${image.alt}`}
-                      >
-                        <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
-                      </button>
-                    ))}
+                  <div className="space-y-8 border-t border-white/10 pt-8">
+                    <p className="text-lg">
+                      Poza standardowymi usługami dostępnymi w naszej ofercie mamy do zaoferowania jeszcze kilka dodatkowych atrakcji.
+                    </p>
+                    <div>
+                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Pozostałe atrakcje</h3>
+                      <ul className="space-y-3">
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Organizacja pikników/festynów
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Organizacja urodzin zarówno dla młodszych jak i starszych
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Organizacja wieczorów kawalerskich i panieńskich
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Organizacja szkoleń
+                        </li>
+                        <li className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          Niekonwencjonalne sesje fotograficzne w trakcie naszych zajęć
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               ) : (

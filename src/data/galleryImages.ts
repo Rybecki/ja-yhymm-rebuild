@@ -24,6 +24,21 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { src: '/images/tematyka/wodne-1.png', alt: 'Skoki i manewry na łodzi motorowej', category: 'Atrakcje wodne i podwodne' },
   { src: '/images/tematyka/wodne-2.png', alt: 'Przejażdżka na bananie wodnym', category: 'Atrakcje wodne i podwodne' },
   { src: '/utils/obozy-kolonie/lato.png', alt: 'Rekreacja na kole wodnym', category: 'Atrakcje wodne i podwodne' },
+  {
+    src: '/images/tematyka/wodne-4.png',
+    alt: 'Skok z motorówki do wody w kamizelce ratunkowej',
+    category: 'Atrakcje wodne i podwodne',
+  },
+  {
+    src: '/images/tematyka/wodne-5.png',
+    alt: 'Grupa na dmuchanym bananie wodnym holowanym za łodzią',
+    category: 'Atrakcje wodne i podwodne',
+  },
+  {
+    src: '/images/tematyka/wodne-6.png',
+    alt: 'Nurkowanie podlodowe przy otworze w lodzie',
+    category: 'Atrakcje wodne i podwodne',
+  },
   { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-1.png', alt: 'Spływ kajakowy na jurajskim akwenie', category: 'Atrakcje wodne i podwodne' },
 
   { src: '/images/tematyka/linowe-1.png', alt: 'Wspinaczka skałkowa z asekuracją instruktora', category: 'Zajęcia linowe i wspniaczka' },
@@ -33,13 +48,41 @@ export const GALLERY_IMAGES: GalleryImage[] = [
 
   { src: '/images/tematyka/konie-1.png', alt: 'Jazda konna na padoku', category: 'Jazda konna' },
   { src: '/images/tematyka/konie-2.png', alt: 'Portret uczestniczki w siodle', category: 'Jazda konna' },
-  { src: '/images/tematyka/konie-3.png', alt: 'Nauka jazdy konnej w hali pod okiem instruktora', category: 'Jazda konna' },
-  { src: '/images/tematyka/konie-4.png', alt: 'Grupowy przejazd konny szlakiem w górskim krajobrazie', category: 'Jazda konna' },
+  {
+    src: '/images/tematyka/konie-3.png',
+    alt: 'Dwoje dzieci w kaskach podczas nauki jazdy konnej na piaszczystym padoku',
+    category: 'Jazda konna',
+  },
+  {
+    src: '/images/tematyka/konie-4.png',
+    alt: 'Vaulting — zajęcia woltyżerskie na koniu w hali jeździeckiej',
+    category: 'Jazda konna',
+  },
+  {
+    src: '/images/tematyka/konie-5.png',
+    alt: 'Portret konia — ujęcie z szerokiej optyki na padoku',
+    category: 'Jazda konna',
+  },
+  {
+    src: '/images/tematyka/konie-6.png',
+    alt: 'Amazonka tuląca szyję konia podczas zajęć jeździeckich',
+    category: 'Jazda konna',
+  },
 
   { src: '/images/szkolenia/szkolenia1.png', alt: 'Manewry ratownicze na łodzi', category: 'Szkolenia i kursy' },
   { src: '/images/szkolenia/szkolenia2.png', alt: 'Szkolenie linowe nad wodą', category: 'Szkolenia i kursy' },
   { src: '/images/szkolenia/szkolenia3.png', alt: 'Ćwiczenia BLS na fantomie', category: 'Szkolenia i kursy' },
   { src: '/images/tematyka/ratownictwo-1.png', alt: 'Grupa uczestników szkolenia', category: 'Szkolenia i kursy' },
+  {
+    src: '/images/tematyka/ratownictwo-2.png',
+    alt: 'Ratownicy na łodzi RIB podczas ćwiczeń na wodzie',
+    category: 'Szkolenia i kursy',
+  },
+  {
+    src: '/images/tematyka/ratownictwo-3.png',
+    alt: 'Akcja ratownicza z wody — amfibia Argo i ratownicy w kombinezonach',
+    category: 'Szkolenia i kursy',
+  },
 
   { src: '/images/tematyka/wojskowe-pojazdy.png', alt: 'Wojskowy pojazd KRAZ 6x6', category: 'Kraz' },
   { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-4.png', alt: 'Przejażdżka KRAZ-em', category: 'Kraz' },

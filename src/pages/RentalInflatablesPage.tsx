@@ -7,20 +7,16 @@ import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
 
-const INFLATABLES_IMAGES = [
-  '/images/tematyka/scianka1.png',
-  '/images/wynajem-sprzetu/scianka.png',
-  '/images/wypozyczalnia/dmuchance/dmuchance-3.png',
-  '/images/wypozyczalnia/dmuchance/dmuchance-4.png',
-  '/images/wypozyczalnia/dmuchance/dmuchance-5.png',
-];
+const INFLATABLES_HERO_SRC = '/images/wypozyczalnia/dmuchance/dmuchance-4.png';
 
-const INFLATABLES_GALLERY: GalleryImageItem[] = [
-  { src: INFLATABLES_IMAGES[0]!, alt: 'Dmuchana ścianka wspinaczkowa' },
-  { src: INFLATABLES_IMAGES[1]!, alt: 'Ścianka wspinaczkowa na evencie' },
-  { src: INFLATABLES_IMAGES[2]!, alt: 'Piana party podczas eventu plenerowego' },
-  { src: INFLATABLES_IMAGES[3]!, alt: 'Dmuchańce i atrakcje dla dzieci na terenie zielonym' },
-  { src: INFLATABLES_IMAGES[4]!, alt: 'Kolorowy zamek dmuchany podczas imprezy' },
+/** Galeria: Mario + dmuchańce z dziećmi, potem ścianki z galerii. */
+const INFLATABLES_GALLERY: readonly GalleryImageItem[] = [
+  { src: '/images/wypozyczalnia/dmuchance/dmuchance-mario.png', alt: 'Zjeżdżalnia „Mario” — dzieci korzystają ze zjazdu' },
+  { src: '/images/wypozyczalnia/dmuchance/dmuchance-3.png', alt: 'Piana party — dzieci bawią się na dmuchańcach' },
+  { src: '/images/wypozyczalnia/dmuchance/dmuchance-4.png', alt: 'Dmuchańce na trawie — dzieci przy atrakcjach' },
+  { src: '/images/wypozyczalnia/dmuchance/dmuchance-5.png', alt: 'Zamek dmuchany — dzieci na skakance' },
+  { src: '/images/tematyka/scianka1.png', alt: 'Ścianka wspinaczkowa — uczestnicy na trasach' },
+  { src: '/images/wynajem-sprzetu/scianka.png', alt: 'Ścianka wspinaczkowa na evencie plenerowym' },
 ];
 
 const REGULATIONS_TEXT = `REGULAMIN KORZYSTANIA Z URZĄDZEŃ DMUCHANYCH "JA YHYMM..."
@@ -144,11 +140,20 @@ export default function RentalInflatablesPage() {
       <main>
         <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
           <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${INFLATABLES_IMAGES[INFLATABLES_IMAGES.length - 2]})`, backgroundPosition: 'center 35%' }}
+            className="absolute inset-0 bg-no-repeat"
+            style={{
+              backgroundImage: `url(${INFLATABLES_HERO_SRC})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 35%',
+            }}
             aria-hidden
           />
-          <div className="absolute inset-0 bg-black/20" aria-hidden />
+          <div className="app-photo-scrim" aria-hidden />
+          <div
+            className="absolute inset-x-0 bottom-0 h-32 md:h-44 pointer-events-none z-[1]"
+            style={{ background: 'linear-gradient(to top, var(--color-dark) 0%, color-mix(in oklab, var(--color-dark) 55%, transparent) 45%, transparent 100%)' }}
+            aria-hidden
+          />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -174,6 +179,19 @@ export default function RentalInflatablesPage() {
                 Zapewniamy kompleksową usługę: przywozimy, rozstawiamy i pilnujemy bezpieczeństwa.
               </p>
             </div>
+
+            <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-5`}>
+              <h3 className="text-primary font-bold uppercase tracking-wider">Wynajem ścianki wspinaczkowej</h3>
+              <p className="text-white/80 leading-relaxed text-lg">
+                NOWOŚĆ! Jeżeli chciałbyś, aby Twój festyn, piknik, wycieczkę, urodziny, czy też wieczór kawalerski urozmaiciło coś nietypowego i
+                dającego wiele zabawy oraz szczyptę adrenaliny, dajemy Ci możliwość wypożyczenia atestowanej dmuchanej ścianki wspinaczkowej wraz z
+                obsługą.
+              </p>
+              <p className="text-white/80 leading-relaxed">Ścianka posiada cztery trasy o różnym poziomie trudności.</p>
+              <p className="text-white/80 leading-relaxed">
+                Ściankę można ustawić praktycznie na każdym w miarę równym terenie. Zapewniamy transport, montaż oraz obsługę ścianki.
+              </p>
+            </section>
 
             <section className={`glass-card ${RENTAL_GLASS_INNER} space-y-6`}>
               <h3 className="text-primary font-bold uppercase tracking-wider">Nasze atrakcje (wynajem na 6h z obsługą)</h3>
@@ -242,10 +260,10 @@ export default function RentalInflatablesPage() {
                   </tbody>
                 </table>
               </div>
-              <div className="grid md:grid-cols-2 gap-4 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
                 {INFLATABLES_GALLERY.map((item, index) => (
                   <motion.button
-                    key={item.src}
+                    key={`${item.src}-${index}`}
                     type="button"
                     whileHover={{ y: -6 }}
                     transition={{ duration: 0.25 }}
@@ -278,7 +296,9 @@ export default function RentalInflatablesPage() {
                   <li>Strefa II (16-50 km): 100-150 zł (ryczałt)</li>
                   <li>Strefa III (powyżej 50 km): 2,00 zł / km w obie strony</li>
                 </ul>
-                <p className="text-white/75 mt-3">Przy pakiecie KOMPLETNY FESTYN dojazd do 50 km często bierzemy na siebie.</p>
+                <p className="text-white/75 mt-3">
+                  Przy udostępnionym pakiecie KOMPLETNY FESTYN dojazd do 50 km często bierzemy na siebie.
+                </p>
               </div>
             </section>
 

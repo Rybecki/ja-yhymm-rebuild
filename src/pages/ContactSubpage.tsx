@@ -132,11 +132,13 @@ export default function ContactSubpage() {
                 Strona główna
               </Link>
               <span className="mx-2">/</span>
-              <span className="text-white/80">Kontakt</span>
+              <Link to="/dla-ciebie/formularze" className="hover:text-primary transition-colors text-white/80">
+                Dla Ciebie
+              </Link>
               <span className="mx-2">/</span>
               <span className="text-white/80">Regulaminy</span>
             </nav>
-            <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Kontakt</h1>
+            <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Dla Ciebie</h1>
             <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight">
               Regulaminy
             </motion.h2>

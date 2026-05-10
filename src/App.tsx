@@ -1,6 +1,6 @@
 
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ScrollToTop } from './components/ScrollToTop';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -37,8 +37,11 @@ export default function App() {
         <Route path="/wypozyczalnia/vip-bus" element={<RentalVipBusPage />} />
         <Route path="/wypozyczalnia/autolaweta" element={<RentalAutolawetaPage />} />
         <Route path="/wypozyczalnia/dmuchance" element={<RentalInflatablesPage />} />
-        <Route path="/kontakt/strefa-rodzica" element={<ParentZonePage />} />
-        <Route path="/kontakt/regulaminy" element={<ContactSubpage />} />
+        <Route path="/dla-ciebie/strefa-rodzica" element={<ParentZonePage />} />
+        <Route path="/dla-ciebie/regulaminy" element={<ContactSubpage />} />
+        <Route path="/dla-ciebie/formularze" element={<ContactPage />} />
+        <Route path="/kontakt/strefa-rodzica" element={<Navigate to="/dla-ciebie/strefa-rodzica" replace />} />
+        <Route path="/kontakt/regulaminy" element={<Navigate to="/dla-ciebie/regulaminy" replace />} />
         <Route path="/kontakt" element={<ContactPage />} />
         <Route path="/oferta" element={<OfferIndexPage />} />
         <Route path="/oferta/obozy-i-kolonie/lato/:offerSlug" element={<OfferLatoDetailPage />} />

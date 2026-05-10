@@ -62,7 +62,7 @@ export default function OfferIndexPage() {
                           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                           referrerPolicy="no-referrer"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-dark/55" />
+                        <div className="app-photo-scrim-card" aria-hidden />
 
                         <div className="relative z-10">
                           <div className="mb-4 inline-flex rounded-xl bg-dark/40 p-3 border border-white/15">

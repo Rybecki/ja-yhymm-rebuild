@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Calendar, ChevronDown, MapPin, User, Users, Phone, Mail, Landmark, Facebook } from 'lucide-react';
+import { Calendar, ChevronDown, MapPin, User, Users, Phone, Mail, Landmark, Facebook, Instagram, Youtube } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { SUMMER_OFFER_SECTIONS } from '../data/summerOffers';
@@ -17,54 +17,89 @@ function ContactInfoAndForm() {
           <h3 className="text-2xl md:text-3xl font-bold uppercase font-display text-white">Skontaktuj się z nami</h3>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:items-center">
-          <div className="glass-card p-8 md:p-10 rounded-[2rem]">
+        <div className="grid lg:grid-cols-2 gap-8 lg:items-stretch">
+          <div className="glass-card p-8 md:p-10 rounded-[2rem] h-full flex flex-col min-h-0">
             <h4 className="text-xl font-bold text-primary mb-6">Dane kontaktowe</h4>
-            <div className="space-y-6 leading-relaxed">
-              <div>
-                <p className="text-white font-semibold">Fundacja JA YHYMM...</p>
-                <p className="text-white/75">Integracja - Sport - Turystyka - Wypoczynek</p>
-                <p className="text-white/75">NIP 954 276 19 93</p>
-              </div>
-              <div className="border-t-2 border-primary pt-6">
-                <p className="text-white font-semibold">A Bo Co... Spółka z o.o.</p>
-                <p className="text-white/75">NIP 954 289 0070</p>
-              </div>
-              <p className="flex gap-3 text-white/75">
-                <MapPin size={18} className="text-primary shrink-0 mt-1" />
-                <span>ul. Niwna 9, 40-406 Katowice</span>
-              </p>
-              <p className="flex gap-3 text-white/75">
-                <Phone size={18} className="text-primary shrink-0 mt-1" />
-                <a href="tel:+48794997714" className="hover:text-primary transition-colors">
-                  +48 794-997-714
-                </a>
-              </p>
-              <p className="flex gap-3 text-white/75">
-                <Mail size={18} className="text-primary shrink-0 mt-1" />
-                <a href="mailto:biuro@ja-yhymm.pl" className="hover:text-primary transition-colors">
-                  biuro@ja-yhymm.pl
-                </a>
-              </p>
-              <div className="flex gap-3 text-white/75">
-                <Landmark size={18} className="text-primary shrink-0 mt-1" />
-                <div className="space-y-1 text-sm">
-                  <p>
-                    <span className="font-semibold">Fundacja JA YHYMM...</span>{' '}
-                    <span className="font-mono">49 1050 1214 1000 0090 3085 1225</span>
-                  </p>
-                  <p>
-                    <span className="font-semibold">A Bo Co... Spółka z o.o.</span>{' '}
-                    <span className="font-mono">54 1050 1214 1000 0090 8549 4533</span>
-                  </p>
+            <div className="flex-1 flex flex-col min-h-0 leading-relaxed">
+              <div className="shrink-0">
+                <div className="flex flex-col md:flex-row md:items-stretch gap-6 md:gap-0">
+                  <div className="flex-1 min-w-0 md:pr-6">
+                    <p className="text-white font-semibold">Fundacja JA YHYMM...</p>
+                    <p className="text-white/75 mt-1">Integracja - Sport - Turystyka - Wypoczynek</p>
+                    <p className="text-white/75 mt-2 text-sm tracking-wide">NIP 954 276 19 93</p>
+                  </div>
+                  <div className="h-px w-full shrink-0 bg-primary/40 md:hidden" aria-hidden />
+                  <div className="hidden md:block w-px shrink-0 bg-primary/40 self-stretch min-h-[3.5rem]" aria-hidden />
+                  <div className="flex-1 min-w-0 md:pl-6">
+                    <p className="text-white font-semibold">A Bo Co... Spółka z o.o.</p>
+                    <p className="text-white/75 mt-2 text-sm tracking-wide">NIP 954 289 0070</p>
+                  </div>
                 </div>
               </div>
-              <p className="flex gap-3 text-white/75">
-                <Facebook size={18} className="text-primary shrink-0 mt-1" />
-                <a href="https://www.facebook.com/jayhymmfp" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">
-                  facebook
+
+              <div className="flex-1 flex flex-col justify-center min-h-0 py-6 md:py-8">
+                <div className="space-y-5 md:space-y-6 text-left sm:text-center text-base md:text-lg text-white/85 w-full">
+                  <p className="flex flex-row items-start gap-3 justify-start sm:justify-center text-left sm:text-center">
+                    <MapPin size={22} className="text-primary shrink-0 mt-0.5" aria-hidden />
+                    <span>ul. Niwna 9, 40-406 Katowice</span>
+                  </p>
+                  <p className="flex flex-row items-start gap-3 justify-start sm:justify-center text-left sm:text-center">
+                    <Phone size={22} className="text-primary shrink-0 mt-0.5" aria-hidden />
+                    <a href="tel:+48794997714" className="hover:text-primary transition-colors min-w-0">
+                      +48 794-997-714
+                    </a>
+                  </p>
+                  <p className="flex flex-row items-start gap-3 justify-start sm:justify-center text-left sm:text-center">
+                    <Mail size={22} className="text-primary shrink-0 mt-0.5" aria-hidden />
+                    <a href="mailto:biuro@ja-yhymm.pl" className="hover:text-primary transition-colors min-w-0 break-words">
+                      biuro@ja-yhymm.pl
+                    </a>
+                  </p>
+                  <div className="flex flex-row items-start gap-3 justify-start sm:justify-center text-left sm:text-center max-w-full w-full sm:mx-auto sm:w-auto">
+                    <Landmark size={22} className="text-primary shrink-0 mt-0.5" aria-hidden />
+                    <div className="space-y-2 md:space-y-2.5 text-sm md:text-base leading-snug min-w-0">
+                      <p>
+                        <span className="font-semibold text-white/90">Fundacja JA YHYMM...</span>{' '}
+                        <span className="font-mono tracking-tight text-white/85">49 1050 1214 1000 0090 3085 1225</span>
+                      </p>
+                      <p>
+                        <span className="font-semibold text-white/90">A Bo Co... Spółka z o.o.</span>{' '}
+                        <span className="font-mono tracking-tight text-white/85">54 1050 1214 1000 0090 8549 4533</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto shrink-0 flex flex-wrap items-center justify-center gap-5 text-white/75 pt-2">
+                <a
+                  href="https://www.facebook.com/jayhymmfp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-white transition-colors"
+                  aria-label="Facebook — JA YHYMM"
+                >
+                  <Facebook className="w-7 h-7 md:w-9 md:h-9" strokeWidth={1.75} aria-hidden />
                 </a>
-              </p>
+                <a
+                  href="https://www.instagram.com/jayhymm_najlepszeobozy/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-white transition-colors"
+                  aria-label="Instagram — JA YHYMM"
+                >
+                  <Instagram className="w-7 h-7 md:w-9 md:h-9" strokeWidth={1.75} aria-hidden />
+                </a>
+                <a
+                  href="https://www.youtube.com/@jayhymm1996"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:text-white transition-colors"
+                  aria-label="YouTube — JA YHYMM"
+                >
+                  <Youtube className="w-7 h-7 md:w-9 md:h-9" strokeWidth={1.75} aria-hidden />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -72,7 +107,7 @@ function ContactInfoAndForm() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass-card p-8 md:p-10 rounded-[2rem]"
+            className="glass-card p-8 md:p-10 rounded-[2rem] h-full min-h-0"
           >
             <h4 className="text-xl font-bold text-primary mb-6">Formularz kontaktowy</h4>
             <form className="space-y-6">
@@ -756,42 +791,51 @@ function ApplicationFormsSection() {
 }
 
 export default function ContactPage() {
-  const { hash } = useLocation();
+  const { hash, pathname } = useLocation();
+  const navigate = useNavigate();
+  const isFormularzePath = pathname === '/dla-ciebie/formularze';
 
   useEffect(() => {
-    if (!hash) return;
-    const id = hash.replace('#', '');
+    if (pathname === '/kontakt' && hash === '#dla-ciebie') {
+      navigate('/dla-ciebie/formularze', { replace: true });
+      return;
+    }
+    const hashId = hash?.replace('#', '') ?? '';
+    const pathScrollId = isFormularzePath ? 'dla-ciebie' : '';
+    const id = hashId || pathScrollId;
+    if (!id) return;
+    const delay = pathScrollId && !hashId ? 120 : 0;
     const timer = window.setTimeout(() => {
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    }, 0);
+    }, delay);
     return () => clearTimeout(timer);
-  }, [hash]);
+  }, [hash, pathname, isFormularzePath, navigate]);
 
   return (
     <div className="bg-dark min-h-screen">
       <Navbar />
       <main>
-        <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className="max-w-4xl mx-auto px-6">
-            <nav className="text-sm text-white/50 mb-6">
-              <Link to="/" className="hover:text-primary transition-colors">
-                Strona główna
-              </Link>
-              <span className="mx-2">/</span>
-              <span className="text-white/80">Kontakt</span>
-            </nav>
-            <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Kontakt</h1>
-            <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight">
-              Napisz lub zadzwoń - jesteśmy do dyspozycji
-            </motion.h2>
-          </div>
-        </section>
-        <ContactInfoAndForm />
-        <div
-          className="h-px w-full max-w-6xl mx-auto bg-gradient-to-r from-transparent via-primary to-transparent opacity-90"
-          aria-hidden
-        />
-        <ApplicationFormsSection />
+        {!isFormularzePath ? (
+          <>
+            <section className="section-padding bg-dark-lighter border-b border-white/5">
+              <div className="max-w-4xl mx-auto px-6">
+                <nav className="text-sm text-white/50 mb-6">
+                  <Link to="/" className="hover:text-primary transition-colors">
+                    Strona główna
+                  </Link>
+                  <span className="mx-2">/</span>
+                  <span className="text-white/80">Kontakt</span>
+                </nav>
+                <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Kontakt</h1>
+                <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight">
+                  Napisz lub zadzwoń - jesteśmy do dyspozycji
+                </motion.h2>
+              </div>
+            </section>
+            <ContactInfoAndForm />
+          </>
+        ) : null}
+        {isFormularzePath ? <ApplicationFormsSection /> : null}
       </main>
       <Footer />
     </div>

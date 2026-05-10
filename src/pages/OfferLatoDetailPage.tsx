@@ -51,8 +51,7 @@ export default function OfferLatoDetailPage() {
               }}
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/55 to-dark/30 z-[1]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-dark/55 to-transparent z-[1]" />
+          <div className="app-photo-scrim" aria-hidden />
 
           <div className="relative z-10 max-w-4xl xl:max-w-5xl mx-auto px-6 sm:px-8 pb-12 md:pb-16 pt-28 w-full">
             <nav className="text-sm text-white/65 mb-6 flex flex-wrap gap-x-2 gap-y-1">

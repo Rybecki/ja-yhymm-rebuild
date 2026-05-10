@@ -57,7 +57,7 @@ export function GalleryLightbox({
 
   return createPortal(
     <div
-      className={`fixed inset-0 ${zIndexClass} flex items-center justify-center bg-black/92 p-4 sm:p-8`}
+      className={`fixed inset-0 ${zIndexClass} flex items-center justify-center bg-black/78 p-4 sm:p-8`}
       role="dialog"
       aria-modal="true"
       aria-label="Podgląd zdjęć"

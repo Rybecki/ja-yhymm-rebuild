@@ -127,7 +127,7 @@ export default function RentalVipBusPage() {
             style={{ backgroundImage: `url(${VIP_BUS_IMAGES[0]})`, backgroundPosition: 'center 35%' }}
             aria-hidden
           />
-          <div className="absolute inset-0 bg-black/20" aria-hidden />
+          <div className="app-photo-scrim" aria-hidden />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -238,8 +238,8 @@ export default function RentalVipBusPage() {
               </div>
 
               <p className="text-white/75 leading-relaxed">
-                Gotowy na bezpieczną i komfortową podróż? Zapnij pasy i poczuj różnicę. Zadzwoń do nas lub wypełnij formularz,
-                aby otrzymać darmową wycenę w 15 minut.
+                Asysta ubezpieczenia: pomoc przy zasilaniu i pełne wsparcie w sieci. Gotowy na bezpieczną i komfortową podróż?
+                Zapnij pasy i poczuj różnicę. Zadzwoń do nas lub wypełnij formularz, aby otrzymać bezpłatną wycenę w 15 minut.
               </p>
             </section>
 

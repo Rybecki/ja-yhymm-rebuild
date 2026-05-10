@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronDown, Facebook, Landmark, MapPin, Mail, Phone } from 'lucide-react';
+import { ChevronDown, Facebook, Instagram, Landmark, MapPin, Mail, Phone, Youtube } from 'lucide-react';
 import { OFFER_SUBPAGES } from '../data/offerPages';
 
-const hashLink = (id: string) => (id === 'kontakt' ? '/kontakt' : id === 'dla-ciebie' ? '/kontakt#dla-ciebie' : `/#${id}`);
+const hashLink = (id: string) =>
+  id === 'kontakt' ? '/kontakt' : id === 'dla-ciebie' ? '/dla-ciebie/formularze' : `/#${id}`;
 
 const aboutLinks = [
   { label: 'Poznaj nas', to: '/o-nas' },
@@ -107,42 +108,77 @@ export function Footer() {
               <h5 className="text-sm font-bold uppercase tracking-[0.2em] mb-8 text-primary">Kontakt</h5>
               <ul className="space-y-6">
                 <li className="flex gap-4">
-                  <MapPin className="text-primary shrink-0" size={20} />
-                  <span className="text-white">
-                    Fundacja JA YHYMM... <br />
-                    Integracja - Sport - Turystyka - Wypoczynek <br />
-                    NIP 954 276 19 93
-                    <div className="my-3 w-full border-t-2 border-primary" aria-hidden />
-                    A Bo Co... Spółka z o.o. <br />
-                    NIP 954 289 0070 <br />
-                    ul. Niwna 9, 40-406 Katowice
-                  </span>
+                  <MapPin className="text-primary shrink-0 mt-0.5" size={20} />
+                  <div className="min-w-0 flex-1 flex flex-col md:flex-row md:items-stretch gap-6 md:gap-0">
+                    <div className="flex-1 min-w-0 md:pr-8">
+                      <p className="text-white font-semibold">Fundacja JA YHYMM...</p>
+                      <p className="text-white/90 mt-1 leading-snug">Integracja - Sport - Turystyka - Wypoczynek</p>
+                      <p className="text-white/85 mt-2 text-sm tracking-wide">NIP 954 276 19 93</p>
+                    </div>
+                    <div className="h-px w-full shrink-0 bg-primary/40 md:hidden" aria-hidden />
+                    <div className="hidden md:block w-px shrink-0 bg-primary/40 self-stretch min-h-[3.5rem]" aria-hidden />
+                    <div className="flex-1 min-w-0 md:pl-8">
+                      <p className="text-white font-semibold">A Bo Co... Spółka z o.o.</p>
+                      <p className="text-white/85 mt-2 text-sm tracking-wide">NIP 954 289 0070</p>
+                      <p className="text-white/90 mt-3 leading-snug">ul. Niwna 9, 40-406 Katowice</p>
+                    </div>
+                  </div>
                 </li>
-                <li className="flex gap-4">
-                  <Mail className="text-primary shrink-0" size={20} />
-                  <a href="mailto:biuro@ja-yhymm.pl" className="text-white hover:text-primary transition-colors">biuro@ja-yhymm.pl</a>
+                <li className="flex w-full flex-row items-start gap-3 justify-start text-left sm:justify-center sm:text-center">
+                  <Mail className="text-primary shrink-0 mt-0.5" size={22} aria-hidden />
+                  <a
+                    href="mailto:biuro@ja-yhymm.pl"
+                    className="text-white hover:text-primary transition-colors min-w-0 break-words text-base md:text-lg"
+                  >
+                    biuro@ja-yhymm.pl
+                  </a>
                 </li>
-                <li className="flex gap-4">
-                  <Phone className="text-primary shrink-0" size={20} />
-                  <a href="tel:794997714" className="text-white hover:text-primary transition-colors">+48 794-997-714</a>
+                <li className="flex w-full flex-row items-start gap-3 justify-start text-left sm:justify-center sm:text-center">
+                  <Phone className="text-primary shrink-0 mt-0.5" size={22} aria-hidden />
+                  <a href="tel:+48794997714" className="text-white hover:text-primary transition-colors min-w-0 text-base md:text-lg">
+                    +48 794-997-714
+                  </a>
                 </li>
-                <li className="flex gap-3 text-white">
-                  <Landmark size={18} className="text-primary shrink-0 mt-1" aria-hidden />
-                  <div className="space-y-1 text-sm">
+                <li className="flex w-full flex-row items-start gap-3 justify-start text-left sm:justify-center sm:text-center text-white">
+                  <Landmark size={22} className="text-primary shrink-0 mt-0.5" aria-hidden />
+                  <div className="space-y-2 text-sm md:text-base leading-snug min-w-0 text-left">
                     <p>
-                      <span className="font-semibold">Fundacja JA YHYMM...</span>
-                      <span className="font-mono block sm:inline sm:ml-2">49 1050 1214 1000 0090 3085 1225</span>
+                      <span className="font-semibold text-white/90">Fundacja JA YHYMM...</span>{' '}
+                      <span className="font-mono tracking-tight text-white/85">49 1050 1214 1000 0090 3085 1225</span>
                     </p>
                     <p>
-                      <span className="font-semibold">A Bo Co... Spółka z o.o.</span>
-                      <span className="font-mono block sm:inline sm:ml-2">54 1050 1214 1000 0090 8549 4533</span>
+                      <span className="font-semibold text-white/90">A Bo Co... Spółka z o.o.</span>{' '}
+                      <span className="font-mono tracking-tight text-white/85">54 1050 1214 1000 0090 8549 4533</span>
                     </p>
                   </div>
                 </li>
-                <li className="flex gap-3 text-white">
-                  <Facebook size={18} className="text-primary shrink-0 mt-1" aria-hidden />
-                  <a href="https://www.facebook.com/jayhymmfp" target="_blank" rel="noreferrer" className="text-white hover:text-primary transition-colors">
-                    facebook
+                <li className="flex w-full flex-wrap items-center justify-center gap-5 text-white pt-1">
+                  <a
+                    href="https://www.facebook.com/jayhymmfp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:text-white transition-colors"
+                    aria-label="Facebook — JA YHYMM"
+                  >
+                    <Facebook className="w-7 h-7 md:w-9 md:h-9" strokeWidth={1.75} aria-hidden />
+                  </a>
+                  <a
+                    href="https://www.instagram.com/jayhymm_najlepszeobozy/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:text-white transition-colors"
+                    aria-label="Instagram — JA YHYMM"
+                  >
+                    <Instagram className="w-7 h-7 md:w-9 md:h-9" strokeWidth={1.75} aria-hidden />
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@jayhymm1996"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:text-white transition-colors"
+                    aria-label="YouTube — JA YHYMM"
+                  >
+                    <Youtube className="w-7 h-7 md:w-9 md:h-9" strokeWidth={1.75} aria-hidden />
                   </a>
                 </li>
               </ul>
@@ -173,7 +209,7 @@ export function Footer() {
             <Link to="/kontakt" className="text-white hover:text-primary transition-colors">
               Polityka prywatności
             </Link>
-            <Link to="/kontakt/regulaminy" className="text-white hover:text-primary transition-colors">
+            <Link to="/dla-ciebie/regulaminy" className="text-white hover:text-primary transition-colors">
               Regulamin
             </Link>
           </div>
