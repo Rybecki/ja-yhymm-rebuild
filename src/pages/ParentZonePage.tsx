@@ -5,6 +5,12 @@ import { ChevronDown, Download } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { RENTAL_CONTENT_WIDE } from '../constants/rentalPageLayout';
+import {
+  PARENT_ZONE_HERO_BG_POSITION,
+  PARENT_ZONE_HERO_CONTENT,
+  PARENT_ZONE_HERO_IMAGE,
+  PARENT_ZONE_HERO_SECTION,
+} from '../constants/parentZone';
 
 type FaqItem = {
   question: string;
@@ -162,23 +168,40 @@ export default function ParentZonePage() {
     <div className="bg-dark min-h-screen">
       <Navbar />
       <main>
-        <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className={RENTAL_CONTENT_WIDE}>
-            <nav className="text-sm text-white/50 mb-6">
+        <section className={`${PARENT_ZONE_HERO_SECTION} border-b border-white/[0.06]`}>
+          <motion.div
+            className="absolute inset-0 z-0 bg-cover bg-no-repeat scale-[1.08]"
+            style={{
+              backgroundImage: `url(${PARENT_ZONE_HERO_IMAGE})`,
+              backgroundPosition: PARENT_ZONE_HERO_BG_POSITION,
+            }}
+            aria-hidden
+          />
+          <div className="app-photo-scrim" aria-hidden />
+
+          <div className={PARENT_ZONE_HERO_CONTENT}>
+            <nav className="text-sm text-white/65 mb-6 flex flex-wrap gap-x-2 gap-y-1">
               <Link to="/" className="hover:text-primary transition-colors">
                 Strona główna
               </Link>
-              <span className="mx-2">/</span>
-              <Link to="/dla-ciebie/formularze" className="hover:text-primary transition-colors text-white/80">
+              <span>/</span>
+              <Link to="/dla-ciebie/formularze" className="hover:text-primary transition-colors">
                 Dla Ciebie
               </Link>
-              <span className="mx-2">/</span>
-              <span className="text-white/80">Strefa rodzica</span>
+              <span>/</span>
+              <span className="text-white/90">Strefa rodzica</span>
             </nav>
-            <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Dla Ciebie</h1>
-            <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight">
+            <p className="text-primary font-bold uppercase tracking-widest text-xs md:text-sm mb-2">Dla Ciebie</p>
+            <motion.h1
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl md:text-5xl font-extrabold font-display text-white leading-tight drop-shadow-lg"
+            >
               Strefa rodzica
-            </motion.h2>
+            </motion.h1>
+            <p className="mt-4 text-white/80 text-base md:text-lg max-w-2xl leading-relaxed">
+              FAQ, dokumenty i porady przed wyjazdem dziecka na obóz.
+            </p>
           </div>
         </section>
 

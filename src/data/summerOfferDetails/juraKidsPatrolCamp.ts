@@ -10,9 +10,10 @@ const G = '/utils/oferta-letnia/jura-kids-patrol-camp/gallery';
 
 export const JURA_KIDS_PATROL_CAMP_DETAIL: SummerOfferDetail = {
   gallery: [
+    { src: `${G}/kp-1.png`, alt: 'Uczestnik w umundurowaniu podczas gry terenowej' },
     { src: `${G}/kp-2.png`, alt: 'Dzieci w kamuflażu — zabawa terenowa i malowanie twarzy' },
     { src: `${G}/kp-3.png`, alt: 'Dwoje chłopców w kamuflażu na obozie przygody' },
-    { src: `${G}/kp-1.png`, alt: 'Uczestnik w umundurowaniu podczas gry terenowej' },
+    { src: `${G}/kp-4.png`, alt: 'Dzieci podczas zajęć terenowych Kids Patrol Camp' },
   ],
   aboutSectionTitle: 'O obozie',
   aboutLeadTitle: 'JURA KIDS PATROL – TWOJA PIERWSZA MISJA SPECJALNA!',

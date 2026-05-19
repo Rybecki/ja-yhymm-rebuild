@@ -13,8 +13,21 @@
 }
 
 @layer base {
+  html {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
   body {
     @apply bg-dark text-white font-sans antialiased;
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  html.mobile-menu-open,
+  html.mobile-menu-open body {
+    overflow: hidden;
+    overscroll-behavior: none;
   }
 
   /* Brighten photos app-wide (hero slider uses full-strength imagery, no extra dimming on <img>) */
@@ -26,7 +39,8 @@
   nav img,
   img[alt*='Logo'],
   img[alt*='logo'],
-  img[src*='logo_ja-yhymm'] {
+  img[src*='logo-ja-yhymm'],
+  img[src*='/partnerzy/'] {
     filter: none !important;
   }
 }
@@ -74,5 +88,46 @@ main :is(div, section, article, aside, figure, button).border.border-white\/10 {
   .section-padding > .px-6 {
     padding-left: 0 !important;
     padding-right: 0 !important;
+  }
+}
+
+.partner-marquee-mask {
+  overflow: hidden;
+  width: 100%;
+}
+
+.partner-marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 3rem;
+  animation: partner-marquee 70s linear infinite;
+}
+
+.partner-marquee-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  padding: 0 0.5rem;
+}
+
+@keyframes partner-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 2rem;
   }
 }

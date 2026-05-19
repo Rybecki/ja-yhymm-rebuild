@@ -1,23 +1,34 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RentalFormSummary } from '../components/RentalFormSummary';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { calculateVipBusPricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
 
-const VIP_BUS_IMAGES = [
-  '/images/wypozyczalnia/vip-bus/bus-1.png',
-  '/images/wypozyczalnia/vip-bus/bus-2.png',
-  '/images/wypozyczalnia/vip-bus/bus-3.png',
-  '/images/wypozyczalnia/vip-bus/bus-4.png',
+const VIP_BUS_HERO_SRC = '/images/wypozyczalnia/vip-bus/bus-hero.png';
+
+const VIP_BUS_GALLERY: GalleryImageItem[] = [
+  {
+    src: '/images/wypozyczalnia/vip-bus/bus-1.png',
+    alt: 'VIP Bus Renault Master — widok zewnętrzny całego pojazdu z otwartymi drzwiami',
+  },
+  {
+    src: '/images/wypozyczalnia/vip-bus/bus-2.png',
+    alt: 'Wnętrze VIP Bus — fotele skórzane i drewniana podłoga',
+  },
+  {
+    src: '/images/wypozyczalnia/vip-bus/bus-3.png',
+    alt: 'VIP Bus — kabina z monitorem na suficie i oświetleniem LED',
+  },
+  {
+    src: '/images/wypozyczalnia/vip-bus/bus-4.png',
+    alt: 'VIP Bus — kokpit i fotele pasażerskie z widokiem na przód',
+  },
 ];
-
-const VIP_BUS_GALLERY: GalleryImageItem[] = VIP_BUS_IMAGES.map((src, i) => ({
-  src,
-  alt: `VIP Bus — zdjęcie ${i + 1}`,
-}));
 
 const REGULATIONS_TEXT = `REGULAMIN USŁUGI VIP BUS A BO CO...
 1. Usługa przewozu realizowana jest przez A Bo Co... Sp. z o.o.
@@ -71,6 +82,15 @@ export default function RentalVipBusPage() {
     setFormData((previous) => ({ ...previous, [field]: value }));
   };
 
+  const priceSummary = useMemo(() => calculateVipBusPricing(formData.packageType), [formData.packageType]);
+
+  const equipmentLabel = useMemo(() => {
+    const parts = ['VIP Bus'];
+    if (formData.packageType) parts.push(formData.packageType);
+    if (formData.passengers) parts.push(`${formData.passengers} pasażerów`);
+    return parts.join(' – ');
+  }, [formData.packageType, formData.passengers]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     localStorage.setItem('vipBusForm', JSON.stringify(formData));
@@ -88,6 +108,8 @@ export default function RentalVipBusPage() {
       '',
       'Wiadomosc:',
       formData.message || '-',
+      formatSummaryForEmail(priceSummary),
+      formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
 
     window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Zapytanie VIP BUS')}&body=${encodeURIComponent(body)}`;
@@ -124,7 +146,7 @@ export default function RentalVipBusPage() {
         <section className="section-padding border-b border-white/5 relative overflow-hidden min-h-[56vh] md:min-h-[68vh] flex items-center">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${VIP_BUS_IMAGES[0]})`, backgroundPosition: 'center 35%' }}
+            style={{ backgroundImage: `url(${VIP_BUS_HERO_SRC})`, backgroundPosition: 'center 40%' }}
             aria-hidden
           />
           <div className="app-photo-scrim" aria-hidden />
@@ -296,6 +318,7 @@ export default function RentalVipBusPage() {
                   <label className="text-xs uppercase tracking-widest text-white/40">Wiadomość</label>
                   <textarea rows={5} value={formData.message} onChange={(event) => updateFormData('message', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none" />
                 </div>
+                <RentalFormSummary summary={priceSummary} renterName={formData.fullName} equipmentLabel={equipmentLabel} />
                 <p className="text-sm text-white/70 leading-relaxed">
                   Przed wysłaniem zapytania zapoznaj się z{' '}
                   <button type="button" className="text-primary font-semibold hover:underline" onClick={() => setIsRegulationsOpen(true)}>

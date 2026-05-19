@@ -9,8 +9,29 @@ import {
 const G = '/utils/oferta-letnia/jura-art-camp/gallery';
 
 export const JURA_ART_CAMP_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 55%',
+  heroImage: {
+    src: `${G}/art-2.png`,
+    alt: 'Uczestniczka obozu przy rysowaniu kolorowych kompozycji — Jura Art Camp',
+  },
+  /** Zawsze 4 zdjęcia w galerii. */
   gallery: [
-    { src: `${G}/art-4.jpg`, alt: 'Malowanie stóp kolorowymi farbami — warsztat plastyczny' },
+    {
+      src: `${G}/art-1.png`,
+      alt: 'Dzieci podczas warsztatów plastycznych — wycinanie i prace z kolorowego papieru',
+    },
+    {
+      src: `${G}/art-2.png`,
+      alt: 'Uczestniczka obozu przy rysowaniu kolorowych kompozycji — Jura Art Camp',
+    },
+    {
+      src: `${G}/art-3.png`,
+      alt: 'Warsztaty artystyczne — twórcza praca uczestników obozu',
+    },
+    {
+      src: `${G}/art-4.jpg`,
+      alt: 'Malowanie stóp kolorowymi farbami — warsztat plastyczny',
+    },
   ],
   aboutSectionTitle: 'O obozie',
   aboutLeadTitle: 'GDZIE SZTUKA SPOTYKA NATURĘ – ODKRYJ ARTYSTYCZNĄ DUSZĘ SWOJEGO DZIECKA!',

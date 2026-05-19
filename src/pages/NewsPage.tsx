@@ -52,7 +52,7 @@ export default function NewsPage() {
               animate={{ opacity: 1, y: 0 }}
               className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight"
             >
-              6 najnowszych artykułów
+              Najnowsze artykuły
             </motion.h2>
           </div>
         </section>

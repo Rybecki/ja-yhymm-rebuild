@@ -1,11 +1,13 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ChevronDown, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RentalFormSummary } from '../components/RentalFormSummary';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { calculateAutolawetaPricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
 
 const AUTOLAWETA_HERO_SRC = '/images/wypozyczalnia/autolaweta/laweta-1.png';
 
@@ -53,6 +55,15 @@ export default function RentalAutolawetaPage() {
     setFormData((previous) => ({ ...previous, [field]: value }));
   };
 
+  const priceSummary = useMemo(() => calculateAutolawetaPricing(formData.packageType), [formData.packageType]);
+
+  const equipmentLabel = useMemo(() => {
+    const parts = ['autolaweta'];
+    if (formData.packageType) parts.push(formData.packageType);
+    if (formData.cargoType) parts.push(formData.cargoType);
+    return parts.join(' – ');
+  }, [formData.packageType, formData.cargoType]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     localStorage.setItem('autolawetaForm', JSON.stringify(formData));
@@ -70,6 +81,8 @@ export default function RentalAutolawetaPage() {
       '',
       'Wiadomosc:',
       formData.message || '-',
+      formatSummaryForEmail(priceSummary),
+      formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
 
     window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Zapytanie Auto-laweta')}&body=${encodeURIComponent(body)}`;
@@ -334,6 +347,7 @@ export default function RentalAutolawetaPage() {
                   <label className="text-xs uppercase tracking-widest text-white/40">Wiadomość</label>
                   <textarea rows={5} value={formData.message} onChange={(event) => updateFormData('message', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none" />
                 </div>
+                <RentalFormSummary summary={priceSummary} renterName={formData.fullName} equipmentLabel={equipmentLabel} />
                 <p className="text-sm text-white/70 leading-relaxed">
                   Przed wysłaniem zapytania zapoznaj się z{' '}
                   <button type="button" className="text-primary font-semibold hover:underline" onClick={() => setIsRegulationsOpen(true)}>

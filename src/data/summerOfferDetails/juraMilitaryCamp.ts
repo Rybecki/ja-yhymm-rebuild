@@ -3,14 +3,16 @@ import type { SummerOfferDetail } from './types';
 const BASE = '/utils/oferta-letnia/jura-military-camp/gallery';
 
 export const JURA_MILITARY_CAMP_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: '68% 50%',
   gallery: [
+    { src: '/utils/oferta-letnia/military-camp.png', alt: 'Militarny patrol przy akwenie — Jura Military Camp' },
     { src: `${BASE}/militaria-1.png`, alt: 'Uczestnik obozu militarniego w kamuflażu i hełmie' },
     { src: `${BASE}/militaria-2.png`, alt: 'Ćwiczenia w dymie — przenoszenie sprzętu zespołowo' },
     { src: `${BASE}/militaria-3.png`, alt: 'Grupa taktyczna z replikami broni przy stawie' },
   ],
   youtubeVideoId: 'UxkhhSiKiTI',
   aboutSectionTitle: 'O obozie',
-  aboutLeadTitle: 'OPERACJA JURA: ELITARNA SZKOŁA PRZETRWANIA',
+  aboutLeadTitle: 'OPERACJA JURA: MILITARNA SZKOŁA PRZETRWANIA',
   aboutBlocks: [
     {
       title: 'TOTALNY FRONT PAINTBALLOWY',
@@ -25,7 +27,7 @@ export const JURA_MILITARY_CAMP_DETAIL: SummerOfferDetail = {
     {
       title: 'MISJA NOCNA I WOJSKOWY DRYLL',
       body:
-        'Zapomnij o wygodnym łóżku. Czekają Cię nocne warty, spanie w namiotach NS, patrole przy świetle księżyca i ewakuacja rannych pod ostrzałem.',
+        'Tej nocy zapomnij o wygodnym łóżku. Czekają Cię nocne warty, spanie w namiotach NS, patrole przy świetle księżyca i ewakuacja rannych pod ostrzałem.',
     },
   ],
   aboutClosing: 'To nie są wakacje. To sprawdzian charakteru. Zaciągnij się teraz!',

@@ -5,6 +5,7 @@ const LESNA = '/utils/oferta-letnia/jura-military-camp/gallery';
 
 export const JURA_SURVIVAL_CAMP_DETAIL: SummerOfferDetail = {
   gallery: [
+    { src: '/utils/oferta-letnia/survival-camp.png', alt: 'Survival w terenie — Jura Survival Camp' },
     { src: `${G}/survival-1.png`, alt: 'Survival — przygotowanie posiłku i ognia w lesie' },
     { src: `${G}/survival-2.png`, alt: 'Budowa szałasu z gałęzi — Leśna Baza przetrwania' },
     { src: `${G}/survival-3.png`, alt: 'Rozpalanie ognia i praca zespołowa przy ognisku' },

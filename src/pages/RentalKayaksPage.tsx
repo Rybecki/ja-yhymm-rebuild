@@ -1,11 +1,13 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RentalFormSummary } from '../components/RentalFormSummary';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { calculateKayakPricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
 
 const KAYAK_IMAGES = ['/images/wypozyczalnia/kajaki/kajak-1.png', '/images/wypozyczalnia/kajaki/kajak-2.png'];
 
@@ -102,6 +104,18 @@ export default function RentalKayaksPage() {
     setFormData((previous) => ({ ...previous, [field]: value }));
   };
 
+  const priceSummary = useMemo(
+    () => calculateKayakPricing(formData.packageType, formData.kayakCount, formData.dateFrom, formData.dateTo),
+    [formData.packageType, formData.kayakCount, formData.dateFrom, formData.dateTo]
+  );
+
+  const equipmentLabel = useMemo(() => {
+    const parts: string[] = [];
+    if (formData.kayakCount) parts.push(`${formData.kayakCount} kajak(ów)`);
+    if (formData.kayakType) parts.push(formData.kayakType);
+    return parts.length > 0 ? parts.join(', ') : 'kajaki';
+  }, [formData.kayakCount, formData.kayakType]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -121,6 +135,8 @@ export default function RentalKayaksPage() {
       '',
       'Wiadomosc:',
       formData.message || '-',
+      formatSummaryForEmail(priceSummary),
+      formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
 
     window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Rezerwacja kajakow')}&body=${encodeURIComponent(body)}`;
@@ -527,6 +543,7 @@ export default function RentalKayaksPage() {
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none"
                   />
                 </div>
+                <RentalFormSummary summary={priceSummary} renterName={formData.fullName} equipmentLabel={equipmentLabel} />
                 <p className="text-sm text-white/70 leading-relaxed">
                   Przed rezerwacją zapoznaj się z{' '}
                   <button type="button" className="text-primary font-semibold hover:underline" onClick={() => setIsRegulationsOpen(true)}>

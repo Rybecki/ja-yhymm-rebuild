@@ -5,6 +5,8 @@ import { Download, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 
+const REGULAMINY_HERO_SRC = '/utils/dla-ciebie/regulaminy-hero.png';
+
 type Regulation = {
   title: string;
   file: string;
@@ -125,9 +127,19 @@ export default function ContactSubpage() {
     <div className="bg-dark min-h-screen">
       <Navbar />
       <main>
-        <section className="section-padding bg-dark-lighter border-b border-white/5">
-          <div className="max-w-4xl mx-auto px-6">
-            <nav className="text-sm text-white/50 mb-6">
+        <section className="section-padding border-b border-white/5 relative overflow-hidden">
+          <motion.div
+            className="absolute inset-0 bg-cover bg-no-repeat"
+            style={{
+              backgroundImage: `url(${REGULAMINY_HERO_SRC})`,
+              backgroundPosition: 'center center',
+            }}
+            aria-hidden
+          />
+          <div className="app-photo-scrim" aria-hidden />
+
+          <div className="max-w-4xl mx-auto px-6 relative z-10">
+            <nav className="text-sm text-white/70 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
                 Strona główna
               </Link>
@@ -139,7 +151,11 @@ export default function ContactSubpage() {
               <span className="text-white/80">Regulaminy</span>
             </nav>
             <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">Dla Ciebie</h1>
-            <motion.h2 initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight">
+            <motion.h2
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl md:text-4xl font-extrabold font-display text-white leading-tight drop-shadow-lg"
+            >
               Regulaminy
             </motion.h2>
           </div>

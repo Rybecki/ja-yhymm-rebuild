@@ -1,11 +1,13 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RentalFormSummary } from '../components/RentalFormSummary';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { calculateEBikePricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
 
 const KROSS_IMAGES = ['/images/wypozyczalnia/e-rowery/kross-1-v3.png', '/images/wypozyczalnia/e-rowery/kross-2-v3.png'];
 const WINORA_IMAGES = ['/images/wypozyczalnia/e-rowery/winora-1-v3.png', '/images/wypozyczalnia/e-rowery/winora-2-v3.png'];
@@ -114,6 +116,16 @@ export default function RentalEBikesPage() {
     setFormData((previous) => ({ ...previous, [field]: value }));
   };
 
+  const priceSummary = useMemo(
+    () => calculateEBikePricing(formData.packageType, formData.dateFrom, formData.dateTo),
+    [formData.packageType, formData.dateFrom, formData.dateTo]
+  );
+
+  const equipmentLabel = useMemo(() => {
+    if (formData.bikeModel && formData.packageType) return `${formData.bikeModel} (${formData.packageType})`;
+    return formData.bikeModel || formData.packageType || 'e-rower';
+  }, [formData.bikeModel, formData.packageType]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -132,6 +144,8 @@ export default function RentalEBikesPage() {
       '',
       'Wiadomosc:',
       formData.message || '-',
+      formatSummaryForEmail(priceSummary),
+      formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
 
     window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Rezerwacja e-roweru')}&body=${encodeURIComponent(body)}`;
@@ -514,6 +528,7 @@ export default function RentalEBikesPage() {
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none"
                   />
                 </div>
+                <RentalFormSummary summary={priceSummary} renterName={formData.fullName} equipmentLabel={equipmentLabel} />
                 <p className="text-sm text-white/70 leading-relaxed">
                   Przed rezerwacją zapoznaj się z{' '}
                   <button

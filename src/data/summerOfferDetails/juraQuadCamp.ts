@@ -9,7 +9,13 @@ import {
 const G = '/utils/oferta-letnia/jura-quad-camp/gallery';
 
 export const JURA_QUAD_CAMP_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 45%',
+  heroImage: {
+    src: `${G}/qc-hero.png`,
+    alt: 'Jazda quadem o zachodzie słońca — rider na czerwonym quadzie w polu',
+  },
   gallery: [
+    { src: `${G}/qc-hero.png`, alt: 'Jazda quadem o zachodzie słońca — rider na czerwonym quadzie w polu' },
     { src: `${G}/qc-2.png`, alt: 'Jazda quadem po jurajskim piasku — rider na czarnym quadzie na wydmie' },
     { src: `${G}/qc-3.png`, alt: 'Grupa nastolatków z quadami pod namiotem w lesie' },
     { src: `${G}/qc-4.png`, alt: 'Quady na piaszczystym torze podczas jazdy grupowej' },

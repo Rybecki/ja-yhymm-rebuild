@@ -15,10 +15,16 @@ import {
 } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GoldenBorderSection } from '../components/GoldenBorderSection';
+import { PartnerLogosMarquee } from '../components/PartnerLogosMarquee';
 import { NEWS_ARTICLES } from '../data/newsArticles';
 
 
 const HERO_SLIDES = [
+  {
+    src: '/images/home/hero-slide-sunset.png',
+    alt: 'Zachód słońca na Jurze — skały i panorama nad lasem',
+  },
   { src: '/utils/quady-popr.png', alt: 'Quady i motocross — JA YHYMM' },
   {
     src: '/images/eventy/imprezy-firmowe-karta.png',
@@ -32,15 +38,11 @@ const HERO_SLIDES = [
     src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-1.png',
     alt: 'Jura Multi Camp — spływ kajakowy',
   },
-  {
-    src: '/utils/oferta-letnia/jura-chill-fun/gallery/chill-3.png',
-    alt: 'Jura Chill & Fun — relaks na obozie',
-  },
 ] as const;
 
 /** Kadrowanie tła per slajd (np. lekko w górę). */
 const HERO_SLIDE_BACKGROUND_POSITION: Partial<Record<(typeof HERO_SLIDES)[number]['src'], string>> = {
-  '/images/eventy/imprezy-firmowe-karta.png': 'center 38%',
+  '/images/eventy/imprezy-firmowe-karta.png': 'center 28%',
 };
 
 const Hero = () => {
@@ -128,14 +130,14 @@ const Hero = () => {
           <p className="text-lg md:text-2xl text-white/80 mb-12 font-sophisticated font-light tracking-wide">
             Z przyjemnością to wszystko zorganizujemy <span className="text-primary font-bold">DLA CIEBIE!</span>
           </p>
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="btn-primary font-display"
-          >
-            Sprawdź naszą ofertę
-          </motion.button>
         </motion.div>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="btn-primary font-display"
+        >
+          Sprawdź naszą ofertę
+        </motion.button>
       </div>
     </section>
   );
@@ -143,41 +145,40 @@ const Hero = () => {
 
 const About = () => {
   return (
-    <section id="o-nas" className="section-padding bg-dark-lighter relative overflow-hidden">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-        <motion.div 
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="relative group"
-        >
-          <div className="absolute -inset-4 bg-primary/20 rounded-2xl blur-2xl group-hover:bg-primary/30 transition-all" />
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-transparent group-hover:border-primary transition-colors duration-500">
-            <img 
-              src="/images/o-nas/kadra.png" 
-              alt="Zespół JA YHYMM nad wodą" 
-              className="relative w-full h-auto block transition-transform duration-700 group-hover:scale-[1.04]"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-primary font-bold uppercase tracking-widest mb-2">O nas</h2>
-          <h3 className="text-3xl md:text-4xl font-extrabold mb-8 leading-tight font-display">Pasja, Ludzie, <br />Doświadczenie.</h3>
-          <p className="text-lg text-white/70 leading-relaxed mb-10">
-            Przy każdym z przedsięwzięć, których się podejmujemy pracuje sztab ludzi, gdzie każdy z nich jest fachowcem w swojej dziedzinie, a współpraca pomiędzy nimi przebiega w atmosferze pełnego zrozumienia i zaufania.
-          </p>
-          <Link to="/o-nas" className="btn-primary inline-block text-center">
-            Poznaj nas bliżej
-          </Link>
-        </motion.div>
-      </div>
-    </section>
+    <GoldenBorderSection
+      id="o-nas"
+      surface="dark-lighter"
+      label="O nas"
+      title={
+        <>
+          Pasja, Ludzie,
+          <br />
+          Doświadczenie.
+        </>
+      }
+      description="Przy każdym z przedsięwzięć, których się podejmujemy pracuje sztab ludzi, gdzie każdy z nich jest fachowcem w swojej dziedzinie, a współpraca pomiędzy nimi przebiega w atmosferze pełnego zrozumienia i zaufania."
+      footerAction={
+        <Link to="/o-nas" className="btn-primary inline-block whitespace-nowrap px-5 text-sm sm:px-8 sm:text-base">
+          Poznaj nas bliżej
+        </Link>
+      }
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="relative group max-w-3xl mx-auto"
+      >
+        <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-primary">
+          <img
+            src="/images/o-nas/kadra.png"
+            alt="Zespół JA YHYMM nad wodą"
+            className="relative w-full h-auto block transition-transform duration-700 group-hover:scale-[1.04]"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+      </motion.div>
+    </GoldenBorderSection>
   );
 };
 
@@ -222,14 +223,17 @@ const Offer = () => {
   ];
 
   return (
-    <section id="oferta" className="section-padding bg-dark">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-primary font-bold uppercase tracking-widest mb-4">Nasza Oferta</h2>
-          <h3 className="text-3xl md:text-4xl font-extrabold uppercase font-display">Wybierz swoją przygodę</h3>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <GoldenBorderSection
+      id="oferta"
+      label="Nasza Oferta"
+      title="Wybierz swoją przygodę"
+      footerAction={
+        <Link to="/oferta" className="btn-primary inline-block">
+          Sprawdź pełną ofertę
+        </Link>
+      }
+    >
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {offers.map((item, index) => (
             <motion.div
               key={item.title}
@@ -271,32 +275,24 @@ const Offer = () => {
             </motion.div>
           ))}
         </div>
-
-        <div className="mt-16 text-center">
-          <Link to="/oferta" className="btn-primary inline-block">
-            Sprawdź pełną ofertę
-          </Link>
-        </div>
-      </div>
-    </section>
+    </GoldenBorderSection>
   );
 };
 
 const News = () => {
   return (
-    <section id="aktualnosci" className="section-padding bg-dark-lighter">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-          <div>
-            <h2 className="text-primary font-bold uppercase tracking-widest mb-4">Aktualności</h2>
-            <h3 className="text-3xl md:text-4xl font-extrabold uppercase font-display">Co u nas słychać?</h3>
-          </div>
-          <Link to="/aktualnosci" className="text-primary font-bold uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all font-display">
-            Wszystkie wpisy <ArrowRight size={20} />
-          </Link>
-        </div>
-
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+    <GoldenBorderSection
+      id="aktualnosci"
+      surface="dark-lighter"
+      label="Aktualności"
+      title="Co u nas słychać?"
+      footerAction={
+        <Link to="/aktualnosci" className="btn-primary inline-block">
+          Wszystkie wpisy
+        </Link>
+      }
+    >
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
           {NEWS_ARTICLES.map((post, index) => (
             <motion.article
               key={post.slug}
@@ -324,8 +320,7 @@ const News = () => {
             </motion.article>
           ))}
         </div>
-      </div>
-    </section>
+    </GoldenBorderSection>
   );
 };
 
@@ -406,7 +401,9 @@ const Reviews = () => {
           ))}
         </div>
 
-        <div className="text-center mt-20 mb-10">
+        <PartnerLogosMarquee />
+
+        <div className="text-center mb-10">
           <h4 className="text-2xl md:text-3xl font-extrabold uppercase font-display text-white">Firmy</h4>
         </div>
 

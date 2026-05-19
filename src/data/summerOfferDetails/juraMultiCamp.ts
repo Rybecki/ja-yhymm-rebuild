@@ -5,10 +5,13 @@ const LESNA = '/utils/oferta-letnia/jura-military-camp/gallery';
 const ZLOTY = '/utils/oferta-letnia/zloty-jelen';
 
 export const JURA_MULTI_CAMP_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 42%',
+  /** Zawsze 4 zdjęcia: grupa, paintball, KrAZ, kajaki. */
   gallery: [
-    { src: `${G}/multi-1.png`, alt: 'Spływ kajakowy — dwójka uczestników w kajaku na spokojnej wodzie' },
-    { src: `${G}/multi-2.png`, alt: 'Przejazd wojskowym KrAzem 255B 6×6 z grupą uczestników' },
-    { src: `${G}/multi-3.png`, alt: 'Grupa uczestników paintballu na jurajskich skałach' },
+    { src: `${G}/multi-4.png`, alt: 'Grupa obozowiczów na jurajskiej skale — integracja na Multi Camp' },
+    { src: `${G}/multi-1.png`, alt: 'Uczestnicy obozu w strojach paintballowych na polu — Jura Multi Camp' },
+    { src: `${G}/multi-kraz.png`, alt: 'Przejazd wojskowym KrAzem 255B 6×6 z grupą uczestników' },
+    { src: `${G}/multi-kajak.png`, alt: 'Spływ kajakowy — uczestnicy na jurajskiej rzece' },
   ],
   youtubeVideoId: '6LibrIoWBBo',
   aboutSectionTitle: 'O obozie',

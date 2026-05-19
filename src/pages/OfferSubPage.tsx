@@ -24,6 +24,85 @@ const SCHOOL_TRIP_TOPICS = [
 
 const SCHOOL_TRIP_ORGANIZATION = ['Transport', 'Zakwaterowanie na ośrodku', 'Wyżywienie', 'Program', 'Ubezpieczenie'];
 
+const SCHOOL_TRIPS_GALLERY: GalleryImageItem[] = [
+  {
+    src: '/images/wycieczki-szkolne/galeria-1.png',
+    alt: 'Grupa uczniów na skalnym urwisku podczas wycieczki szkolnej w terenie',
+  },
+  {
+    src: '/images/wycieczki-szkolne/galeria-2.png',
+    alt: 'Uczniowie zwiedzający ruiny zamku podczas wycieczki szkolnej',
+  },
+  {
+    src: '/images/wycieczki-szkolne/galeria-3.png',
+    alt: 'Uczeń fotografujący panoramę podczas wycieczki szkolnej',
+  },
+];
+
+const BACHELOR_ATTRACTIONS: { title: string; paragraphs: string[] }[] = [
+  {
+    title: 'Porwanie',
+    paragraphs: [
+      'Każdy na kogo dostaniemy zlecenie zostanie porwany (np. przez bramkarzy na dyskotece, zatrzymany przez „ABW”, przetrzymany i odpowiednio przesłuchany. Całość oczywiście musi być przygotowana z odpowiednim wyprzedzeniem czasowym oraz w pełnej konspiracji przed „głównym zainteresowanym”.',
+    ],
+  },
+  {
+    title: 'Pierwsza Pomoc',
+    paragraphs: [
+      'Tego wieczoru musicie koniecznie zachorować, a my będziemy Was leczyć. Oczywiście obsługa medyczna będzie bardzo HOT i przez cały wieczór będziecie w dobrych rękach. W trakcie imprezy mnóstwo zabaw, konkursów „medycznych” po których już nigdy nie będziecie chcieli być zdrowi, a medykamenty będą lały się strumieniami.',
+    ],
+  },
+  {
+    title: 'Militarnie',
+    paragraphs: [
+      'Musztra tego wieczoru to oczywiście podstawa, a karabin to Twój jedyny przyjaciel. Poza tym mnóstwo strzelania (ASG, Paintball), czołgania, ćwiczeń w małpim gaju, wyzwisk i przekleństw czyli FALA w najlepszym wydaniu. Z pewnością nie będzie nudno.',
+    ],
+  },
+  {
+    title: 'Off Road',
+    paragraphs: [
+      'Piach, błoto, woda, przeszkody to będzie charakteryzowało ten wieczór. Wszystkie te przeciwności losu postaramy się pokonać za pomocą samochodów terenowych i quadów. Poznacie możliwości różnego rodzaju pojazdów terenowych oraz ich niekonwencjonalne zastosowanie. Ostre pojazdy, oraz strome zjazdy i przechyły z pewnością dostarczą mnóstwa wrażeń i adrenaliny. Możemy również wybrać się na wyprawę nocną, co dodatkowo potęguje wrażenia. Po spędzeniu kilku godzin w terenie istnieje możliwość zorganizowania imprezy w motoryzacyjnych klimatach.',
+    ],
+  },
+  {
+    title: 'Na Wodzie',
+    paragraphs: [
+      'Chcesz poczuć się tego wieczoru jak prawdziwy WILK MORSKI? Masz to załatwione! Na tej imprezie z każdego szczura lądowego zrobimy prawdziwego wilka morskiego. Tego dnia będziemy spędzali czas pod żaglami, popływamy łodzią motorową, jak również spróbujemy swoich sił w kajaku. Możemy popływać również za motorówką na bananie, kole wodnym, platformie dwuosobowej lub w stroju sumo – jednym słowem, mnóstwo mokrej zabawy. Oczywiście chrzest morski nikogo nie ominie. Całość możemy zakończyć imprezą w żeglarskiej tawernie. Tę imprezę śmiało możemy nazwać PRZECHYŁ, ponieważ ta pozycja będzie dominowała cały czas!',
+    ],
+  },
+  {
+    title: 'Wspinaczka',
+    paragraphs: [
+      'Tego wieczoru bez liny ani rusz. W zależności od stopnia zaawansowania w tej tematyce uczestników wieczoru będziemy się bawili na sztucznej ścianie wspinaczkowej, w skałach, jaskiniach, zjedziemy na mega tyrolce oraz poszybujemy na linie pionowo w dół, a jeżeli zechcecie aby ten wieczór był naprawdę inny niż wszystkie, możecie spędzić go np. w uprzężach zawieszeni pod skałą, a my zorganizujemy Wam tam imprezę. O tym będziecie jeszcze długo mówili.',
+    ],
+  },
+  {
+    title: 'Pod Wodą',
+    paragraphs: [
+      'To propozycja zarówno dla tych, którzy posiadają już patent nurkowy, jak również dla osób, które chcą dopiero po raz pierwszy spróbować swoich zejść pod wodę w sprzęcie płetwonurka (aqualungu). W zależności od zaawansowania nurkowego proponujemy nurkowania nocne, nurkowanie na wraku, gry i konkursy pod wodą. GWARANTUJEMY, że zabawa zacznie się już w trakcie ubierania sprzętu.',
+      'Istnieje możliwość zorganizowania, zaręczyn pod wodą!',
+    ],
+  },
+  {
+    title: 'Survival',
+    paragraphs: [
+      'Ten wieczór spędzamy w terenie. W zależności od zapotrzebowania może to być wieczór pełen niespodzianek, który odbędzie się stacjonarnie w jednym miejscu, lub wieczór wędrowny gdzie będziemy musieli przedostać się z punktu A do punktu B. Po drodze oczywiście zapewniamy mnóstwo przygód oraz niespodzianek.',
+    ],
+  },
+  {
+    title: 'Klasycznie',
+    paragraphs: [
+      'W tym przypadku poza naszym profesjonalizmem niczym szczególnym was niezaskoczymy. Zorganizujemy waszą imprezę w klubie, pubie, mieszkaniu, limuzynie i tam gdzie sobie wymyślicie. Może być to np. impreza karaoke, dyskoteka lat 80/90, impreza techno, wieczór w klimatach PRL itp. Z pewnością będzie imprezowo.',
+    ],
+  },
+  {
+    title: 'W Siodle',
+    paragraphs: [
+      'To propozycja dla wszystkich tych, którzy nie wyobrażają sobie życia bez koni lub chcą dopiero spróbować swoich sił w tej dziedzinie. Ten wieczór spędzamy w siodle, w zależności od stopnia zaawansowania jeździeckiego może to być wyprawa na malowniczy teren, jazda na padoku czy na hali. Całość może być zakończona imprezą na terenie stadniny gdzie mamy do dyspozycji piękną, klimatyczną salę kominkową lub równie klimatyczną wiatę grillową.',
+    ],
+  },
+];
+
 const UNIFORMED_TOPICS = ['Strzelectwo - broń palna', 'Paintball', 'Air Soft Gun', 'Łuki', 'Pneumatyczna broń krótka i długa'];
 
 const UNIFORMED_MODULES = [
@@ -162,17 +241,27 @@ const UNIFORMED_GALLERY = [
 ];
 
 const EVENTS_GALLERY = [
-  { src: '/images/wypozyczalnia/dmuchance/dmuchance-4.png', alt: 'Dmuchańce i atrakcje plenerowe na evencie' },
-  { src: '/images/transport/transport2.png', alt: 'Autolaweta i przyczepa z quadem podczas transportu nocnego' },
-  { src: '/images/szkolenia/szkolenia1.png', alt: 'Ratownicy podczas manewrów na łodzi — szkolenia' },
+  { src: '/images/eventy/galeria-grill.png', alt: 'Grill i ognisko podczas wieczornej integracji firmowej' },
+  { src: '/images/eventy/galeria-grupa.png', alt: 'Grupa uczestników eventu firmowego na łące — integracja zespołu' },
+  { src: '/images/tematyka/paintball-3.png', alt: 'Gracz paintballowy podczas realizacji zadania terenowego' },
   { src: '/images/eventy/eventy-firma-1.png', alt: 'Zespół uczestników wydarzenia firmowego pod wiatą' },
   { src: '/images/eventy/eventy-firma-2.png', alt: 'Wieczorna integracja firmowa przy ognisku' },
   { src: '/images/eventy/eventy-firma-3.png', alt: 'Aktywności strzeleckie podczas eventu firmowego' },
 ];
 
-/** Galeria strony wieczorów kawalerskich / panieńskich — bez pierwszych trzech zdjęć z EVENTS_GALLERY (inne konteksty). */
 const BACHELOR_BACHELORETTE_GALLERY = [
-  ...EVENTS_GALLERY.slice(3),
+  {
+    src: '/images/wieczory-kawalerskie/galeria-kawalerski-1.png',
+    alt: 'Grupa mężczyzn świętująca wieczór kawalerski — toast piwem w klubie',
+  },
+  {
+    src: '/images/wieczory-kawalerskie/galeria-kawalerski-2.png',
+    alt: 'Wieczór kawalerski pod namiotem — cygara, karty i drinki przy stole',
+  },
+  {
+    src: '/images/wieczory-kawalerskie/galeria-kawalerski-3.png',
+    alt: 'Toast whisky podczas wieczoru kawalerskiego — szklanki w dłoniach',
+  },
   {
     src: '/images/wieczory-kawalerskie/galeria-1.png',
     alt: 'Wieczór panieński — grupa w sukienkach z balonami i girlandą w jasnym wnętrzu',
@@ -193,7 +282,7 @@ const RENTAL_WWW_TILES = [
     title: 'E-rowery',
     description:
       'Rower elektryczny na Jurze i Śląsku — komfortowe pokonywanie wzniesień i szlaków bez zadyszki, z opcją dowozu i pełnym wsparciem wypożyczalni.',
-    img: '/images/wypozyczalnia/e-rowery/kross-1-v3.png',
+    img: '/images/wypozyczalnia/e-rowery/kross-tile.png',
   },
   {
     to: '/wypozyczalnia/kajaki',
@@ -207,7 +296,7 @@ const RENTAL_WWW_TILES = [
     title: 'VIP Bus',
     description:
       '9-osobowy bus klasy VIP — komfortowy transport na eventy, wyjazdy i transfery, z indywidualną wyceną trasy.',
-    img: '/images/wypozyczalnia/vip-bus/bus-1.png',
+    img: '/images/wypozyczalnia/vip-bus/bus-2.png',
   },
   {
     to: '/wypozyczalnia/autolaweta',
@@ -221,9 +310,17 @@ const RENTAL_WWW_TILES = [
     title: 'Dmuchańce i eventy',
     description:
       'Atrakcje plenerowe z obsługą — m.in. dmuchańce i ścianka wspinaczkowa, rozstaw i logistyka pod Twoją imprezę.',
-    img: '/images/wynajem-sprzetu/scianka.png',
+    img: '/images/wypozyczalnia/dmuchance/dmuchance-mario.png',
   },
 ] as const;
+
+const RENTAL_WWW_CTA = {
+  to: '/kontakt',
+  title: 'Chcesz wypożyczyć sprzęt?',
+  description:
+    'Nie znalazłeś tego, czego szukasz? Napisz do nas — dopasujemy ofertę do Twojego eventu, wyjazdu lub imprezy.',
+  action: 'Zapytaj o wynajem',
+} as const;
 
 const EQUIPMENT_RENTAL_CATALOG = [
   {
@@ -338,30 +435,35 @@ const TRANSPORT_ITEMS = [
 
 const TRANSPORT_GALLERY = [
   { src: '/images/transport/transport2.png', alt: 'Autolaweta i przyczepa z quadem podczas transportu nocnego' },
-  { src: '/images/transport/transport1.png', alt: 'Flota transportowa na stacji paliw' },
-  { src: '/images/wypozyczalnia/vip-bus/bus-1.png', alt: 'VIP Bus z wypożyczalni — transport pasażerski' },
+  { src: '/images/transport/przyczepa.png', alt: 'Przyczepa towarowa dwuosiowa z najazdem' },
+  {
+    src: '/images/wypozyczalnia/vip-bus/bus-2.png',
+    alt: 'Wnętrze VIP Bus — fotele skórzane i drewniana podłoga',
+  },
 ];
 
 const ACCOMMODATION_LESNA_GALLERY = '/utils/oferta-letnia/jura-military-camp/gallery';
 const ACCOMMODATION_ZLOTY_GALLERY = '/utils/oferta-letnia/zloty-jelen';
+const ACCOMMODATION_GORY_GORZKOWSKIE = '/images/baza-noclegowa/gory-gorzkowskie.png';
 const ACCOMMODATION_NAMIOTY_NS64 = '/images/baza-noclegowa/namioty-ns64.png';
 
 const ACCOMMODATION_CARD_HOVER =
   'transition-all duration-300 hover:border-primary/50 hover:bg-white/[0.05] hover:shadow-[0_0_36px_rgba(247,199,59,0.07)]';
 
-/** Zakwaterowanie jak na Jura Multi Camp — te same opisy i zdjęcia Złotego Jelenia; w Leśnej Bazie drugie zdjęcie to namioty NS 64 z naszej bazy. */
 const ACCOMMODATION_VENUE_BLOCKS = [
   {
-    blockTitle: 'Leśna Baza (Janów)',
+    blockTitle: 'Góry Gorzkowskie',
     paragraphs: [
-      'Turnusy: 27.06 – 06.07 oraz 16.08 – 25.08.',
-      'Noclegi w drewnianych domkach letniskowych w „Leśnej Bazie” w Janowie, na Jurze Krakowsko-Częstochowskiej.',
-      'Domki 6–8-osobowe z łazienkami, możliwe łóżka piętrowe.',
-      'Do dyspozycji uczestników: budynek z jadalnią, świetlica, miejsce na ognisko, teren rekreacyjny.',
-      'Kod imprezy: KPOH.',
+      'Nasza baza noclegowa znajduje się w przepięknej miejscowości Góry Gorzkowskie na terenie Jury Krakowsko-Częstochowskiej.',
+      'Właśnie tam mamy do dyspozycji 6 nowoczesnych wojskowych namiotów NS 64, w których jesteśmy w stanie zakwaterować od 60 do 100 osób. Namioty mają drewniane podłogi, co pozwala na wygodne i bezproblemowe funkcjonowanie w ich wnętrzu.',
+      'Na terenie naszej bazy noclegowej posiadamy miejsce na ognisko wraz z ławkami, grill oraz kuchnię polową. Do dyspozycji mamy również kontener sanitarny, w którym znajdują się 4 prysznice i 4 toalety.',
+      'Na terenie obiektu znajdują się takie atrakcje jak: poligon paintballowy, mini park linowy, drogi wspinaczkowe, bouldering, trasa off-road/quad, strzelnica na broń pneumatyczną, strzelnica łucznicza oraz tor przeszkód.',
     ],
     images: [
-      { src: `${ACCOMMODATION_LESNA_GALLERY}/lesna-baza-1.png`, alt: 'Leśna Baza — obóz w lesie, widok z góry' },
+      {
+        src: ACCOMMODATION_GORY_GORZKOWSKIE,
+        alt: 'Baza noclegowa Góry Gorzkowskie — namioty NS 64 i teren rekreacyjny, widok z góry o zachodzie słońca',
+      },
       {
         src: ACCOMMODATION_NAMIOTY_NS64,
         alt: 'Namioty wojskowe NS 64 na terenie bazy — uczestnicy przy namiotach',
@@ -371,7 +473,6 @@ const ACCOMMODATION_VENUE_BLOCKS = [
   {
     blockTitle: '„Złoty Jeleń” (Złoty Potok)',
     paragraphs: [
-      'Turnusy: 07.07 – 16.07, 17.07 – 26.07, 27.07 – 05.08 oraz 06.08 – 15.08.',
       'Noclegi w Ośrodku Wypoczynkowym „Złoty Jeleń” w miejscowości Złoty Potok, na terenie rezerwatu przyrody Parkowe.',
       'Pokoje 3– i 4-osobowe z łazienką, Wi-Fi.',
       'Do dyspozycji uczestników: jadalnia, sala kominkowa, sala dyskotekowa, duży teren rekreacyjny do gier i zabaw.',
@@ -382,6 +483,22 @@ const ACCOMMODATION_VENUE_BLOCKS = [
       { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-2.png`, alt: 'Złoty Jeleń — teren rekreacyjny ośrodka' },
       { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-3.png`, alt: 'Złoty Jeleń — wnętrza i infrastruktura' },
       { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-4.png`, alt: 'Złoty Jeleń — pokój gościnny z łóżkami, widok na las' },
+    ],
+  },
+  {
+    blockTitle: 'Leśna Baza (Janów)',
+    paragraphs: [
+      'Noclegi w drewnianych domkach letniskowych w „Leśnej Bazie” w Janowie, na Jurze Krakowsko-Częstochowskiej.',
+      'Domki 6–8-osobowe z łazienkami, możliwe łóżka piętrowe.',
+      'Do dyspozycji uczestników: budynek z jadalnią, świetlica, miejsce na ognisko, teren rekreacyjny.',
+      'Kod imprezy: KPOH.',
+    ],
+    images: [
+      { src: `${ACCOMMODATION_LESNA_GALLERY}/lesna-baza-1.png`, alt: 'Leśna Baza — obóz w lesie, widok z góry' },
+      {
+        src: `${ACCOMMODATION_LESNA_GALLERY}/lesna-baza-2.png`,
+        alt: 'Leśna Baza — drewniane domki letniskowe w lesie',
+      },
     ],
   },
 ];
@@ -411,12 +528,12 @@ export default function OfferSubPage() {
   const schoolTripDescriptionImageSrc = '/images/wycieczki-szkolne/wycieczka-opis.png';
   const uniformedHeroSrc = '/images/klasy-mundurowe/militaria-4.png';
   const uniformedDescriptionImageSrc = '/images/klasy-mundurowe/militaria-5.png';
-  const eventsHeroSrc = '/images/eventy/eventy1.png';
-  /** Jak kafelek „Wynajem sprzętu” na /oferta (OfferIndexPage OFFER_CARD_MEDIA) */
-  const equipmentRentalHeroSrc = '/utils/quady-popr.png';
+  const eventsHeroSrc = '/images/eventy/galeria-grupa.png';
+  const bachelorHeroSrc = '/images/wieczory-kawalerskie/galeria-kawalerski-1.png';
+  const equipmentRentalHeroSrc = '/images/wynajem-sprzetu/wynajem-sprzetu-hero.png';
   const trainingsHeroSrc = '/images/szkolenia/szkolenie-linowe-stretcher.png';
   const transportHeroSrc = '/images/transport/transport2.png';
-  const accommodationHeroSrc = '/utils/oferta-letnia/jura-military-camp/gallery/lesna-baza-1.png';
+  const accommodationHeroSrc = ACCOMMODATION_NAMIOTY_NS64;
   const serviceBaseHeroSrc = '/images/serwis/serwis-1.png';
   const [activeUniformedModuleId, setActiveUniformedModuleId] = useState(UNIFORMED_MODULES[0].id);
   const [offerGallery, setOfferGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
@@ -455,7 +572,7 @@ export default function OfferSubPage() {
                         : isEventsPage
                           ? eventsHeroSrc
                           : isBachelorAndBachelorettePage
-                            ? '/images/eventy/eventy3.png'
+                            ? bachelorHeroSrc
                           : isEquipmentRentalPage
                             ? equipmentRentalHeroSrc
                             : isTrainingPage
@@ -467,7 +584,11 @@ export default function OfferSubPage() {
                                   : serviceBaseHeroSrc
                   })`,
                   backgroundSize: 'cover',
-                  backgroundPosition: 'center center',
+                  backgroundPosition: isEventsPage
+                    ? 'center 15%'
+                    : isAccommodationPage
+                      ? 'center 40%'
+                      : 'center center',
                 }}
                 aria-hidden
               />
@@ -554,7 +675,25 @@ export default function OfferSubPage() {
               className="bg-white/5 backdrop-blur-md border-2 border-primary rounded-[2rem] p-8 md:p-12"
             >
               {isSchoolTripsPage ? (
-                <div className="space-y-8 text-white/80 leading-relaxed">
+                <div className="space-y-12 text-white/80 leading-relaxed">
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+                      {SCHOOL_TRIPS_GALLERY.map((image, i) => (
+                        <button
+                          key={image.src}
+                          type="button"
+                          onClick={() => setOfferGallery({ images: SCHOOL_TRIPS_GALLERY, index: i })}
+                          className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          aria-label={`Powiększ: ${image.alt}`}
+                        >
+                          <img src={image.src} alt={image.alt} className="w-full h-48 object-cover pointer-events-none" loading="lazy" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-8 border-t border-white/10 pt-8">
                   <p className="text-lg">
                     Oferta skierowana jest do szkół, uczelni, dyrektorów i nauczycieli placówek edukacyjnych oraz wszystkich tych, którzy chcą
                     zorganizować wycieczkę w trakcie roku szkolnego.
@@ -639,6 +778,7 @@ export default function OfferSubPage() {
                       794 997 714
                     </a>
                   </p>
+                  </div>
                 </div>
               ) : isUniformedClassesPage ? (
                 <div className="space-y-12 text-white/80 leading-relaxed">
@@ -879,94 +1019,16 @@ export default function OfferSubPage() {
                   </div>
 
                   <div className="space-y-6">
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">W Siodle</h3>
-                      <p>
-                        To propozycja dla wszystkich tych, którzy nie wyobrażają sobie życia bez koni lub chcą dopiero spróbować swoich sił w tej
-                        dziedzinie. Ten wieczór spędzamy w siodle, w zależności od stopnia zaawansowania jeździeckiego może to być wyprawa na
-                        malowniczy teren, jazda na padoku czy na hali. Całość może być zakończona imprezą na terenie stadniny gdzie mamy do dyspozycji
-                        piękną, klimatyczną salę kominkową lub równie klimatyczną wiatę grillową.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Pierwsza Pomoc</h3>
-                      <p>
-                        Tego wieczoru musicie koniecznie zachorować, a my będziemy Was leczyć. Oczywiście obsługa medyczna będzie bardzo HOT i przez
-                        cały wieczór będziecie w dobrych rękach. W trakcie imprezy mnóstwo zabaw, konkursów „medycznych” po których już nigdy nie
-                        będziecie chcieli być zdrowi, a medykamenty będą lały się strumieniami.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Militarnie</h3>
-                      <p>
-                        Musztra tego wieczoru to oczywiście podstawa, a karabin to Twój jedyny przyjaciel. Poza tym mnóstwo strzelania (ASG,
-                        Paintball), czołgania, ćwiczeń w małpim gaju, wyzwisk i przekleństw czyli FALA w najlepszym wydaniu. Z pewnością nie będzie
-                        nudno.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Off Road</h3>
-                      <p>
-                        Piach, błoto, woda, przeszkody to będzie charakteryzowało ten wieczór. Wszystkie te przeciwności losu postaramy się pokonać za
-                        pomocą samochodów terenowych i quadów. Poznacie możliwości różnego rodzaju pojazdów terenowych oraz ich niekonwencjonalne
-                        zastosowanie. Ostre pojazdy, oraz strome zjazdy i przechyły z pewnością dostarczą mnóstwa wrażeń i adrenaliny. Możemy również
-                        wybrać się na wyprawę nocną, co dodatkowo potęguje wrażenia. Po spędzeniu kilku godzin w terenie istnieje możliwość
-                        zorganizowania imprezy w motoryzacyjnych klimatach.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Porwanie</h3>
-                      <p>
-                        Każdy na kogo dostaniemy zlecenie zostanie porwany (np. przez bramkarzy na dyskotece, zatrzymany przez „ABW”, przetrzymany i
-                        odpowiednio przesłuchany. Całość oczywiście musi być przygotowana z odpowiednim wyprzedzeniem czasowym oraz w pełnej
-                        konspiracji przed „głównym zainteresowanym”.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Klasycznie</h3>
-                      <p>
-                        W tym przypadku poza naszym profesjonalizmem niczym szczególnym was niezaskoczymy. Zorganizujemy waszą imprezę w klubie, pubie,
-                        mieszkaniu, limuzynie i tam gdzie sobie wymyślicie. Może być to np. impreza karaoke, dyskoteka lat 80/90, impreza techno,
-                        wieczór w klimatach PRL itp. Z pewnością będzie imprezowo.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Na Wodzie</h3>
-                      <p>
-                        Chcesz poczuć się tego wieczoru jak prawdziwy WILK MORSKI? Masz to załatwione! Na tej imprezie z każdego szczura lądowego
-                        zrobimy prawdziwego wilka morskiego. Tego dnia będziemy spędzali czas pod żaglami, popływamy łodzią motorową, jak również
-                        spróbujemy swoich sił w kajaku. Możemy popływać również za motorówką na bananie, kole wodnym, platformie dwuosobowej lub w
-                        stroju sumo – jednym słowem, mnóstwo mokrej zabawy. Oczywiście chrzest morski nikogo nie ominie. Całość możemy zakończyć
-                        imprezą w żeglarskiej tawernie. Tę imprezę śmiało możemy nazwać PRZECHYŁ, ponieważ ta pozycja będzie dominowała cały czas!
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Wspinaczka</h3>
-                      <p>
-                        Tego wieczoru bez liny ani rusz. W zależności od stopnia zaawansowania w tej tematyce uczestników wieczoru będziemy się bawili
-                        na sztucznej ścianie wspinaczkowej, w skałach, jaskiniach, zjedziemy na mega tyrolce oraz poszybujemy na linie pionowo w dół, a
-                        jeżeli zechcecie aby ten wieczór był naprawdę inny niż wszystkie, możecie spędzić go np. w uprzężach zawieszeni pod skałą, a my
-                        zorganizujemy Wam tam imprezę. O tym będziecie jeszcze długo mówili.
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Pod Wodą</h3>
-                      <p>
-                        To propozycja zarówno dla tych, którzy posiadają już patent nurkowy, jak również dla osób, które chcą dopiero po raz pierwszy
-                        spróbować swoich zejść pod wodę w sprzęcie płetwonurka (aqualungu). W zależności od zaawansowania nurkowego proponujemy
-                        nurkowania nocne, nurkowanie na wraku, gry i konkursy pod wodą. GWARANTUJEMY, że zabawa zacznie się już w trakcie ubierania
-                        sprzętu.
-                      </p>
-                      <p className="mt-4">Istnieje możliwość zorganizowania, zaręczyn pod wodą!</p>
-                    </div>
-                    <div>
-                      <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">Survival</h3>
-                      <p>
-                        Ten wieczór spędzamy w terenie. W zależności od zapotrzebowania może to być wieczór pełen niespodzianek, który odbędzie się
-                        stacjonarnie w jednym miejscu, lub wieczór wędrowny gdzie będziemy musieli przedostać się z punktu A do punktu B. Po drodze
-                        oczywiście zapewniamy mnóstwo przygód oraz niespodzianek.
-                      </p>
-                    </div>
+                    {BACHELOR_ATTRACTIONS.map((attraction) => (
+                      <div key={attraction.title}>
+                        <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-3">{attraction.title}</h3>
+                        {attraction.paragraphs.map((paragraph, i) => (
+                          <p key={i} className={i > 0 ? 'mt-4' : undefined}>
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    ))}
                   </div>
                   </div>
                 </div>
@@ -978,17 +1040,18 @@ export default function OfferSubPage() {
                     <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-6">
                       Oferta wypożyczalni
                     </h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <motion.div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                       {RENTAL_WWW_TILES.map((tile, index) => (
                         <motion.div
                           key={tile.to}
+                          className="h-full"
                           initial={{ opacity: 0, y: 14 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.05 }}
                         >
                           <Link
                             to={tile.to}
-                            className="group relative block min-h-[220px] overflow-hidden rounded-2xl border-2 border-white/10 p-6 transition-colors duration-300 hover:border-primary"
+                            className="group relative block h-full min-h-[220px] overflow-hidden rounded-2xl border-2 border-white/10 p-6 transition-colors duration-300 hover:border-primary"
                             aria-label={`${tile.title}: ${tile.description}`}
                           >
                             <img
@@ -1000,7 +1063,7 @@ export default function OfferSubPage() {
                             />
                             <div className="absolute inset-0 z-[1] bg-black/15 pointer-events-none" aria-hidden />
                             <div className="app-photo-scrim-card z-[2]" aria-hidden />
-                            <div className="relative z-10 flex min-h-[188px] flex-col justify-end">
+                            <motion.div className="relative z-10 flex h-full min-h-[188px] flex-col justify-end">
                               <h4 className="text-lg md:text-xl font-bold font-display text-white mb-2 group-hover:text-primary transition-colors">
                                 {tile.title}
                               </h4>
@@ -1009,11 +1072,37 @@ export default function OfferSubPage() {
                                 Szczegóły
                                 <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                               </span>
-                            </div>
+                            </motion.div>
                           </Link>
                         </motion.div>
                       ))}
-                    </div>
+                      <motion.div
+                        key="rental-cta"
+                        className="h-full"
+                        initial={{ opacity: 0, y: 14 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: RENTAL_WWW_TILES.length * 0.05 }}
+                      >
+                        <Link
+                          to={RENTAL_WWW_CTA.to}
+                          className="group relative flex h-full min-h-[220px] flex-col rounded-2xl border-2 border-primary bg-dark-lighter/60 p-6 text-center transition-all duration-300 hover:bg-primary/10 hover:shadow-[0_0_36px_rgba(247,199,59,0.14)]"
+                          aria-label={`${RENTAL_WWW_CTA.title} ${RENTAL_WWW_CTA.action}`}
+                        >
+                          <div className="relative z-10 flex h-full min-h-[188px] flex-col justify-end">
+                            <h4 className="text-lg md:text-xl font-bold font-display text-primary mb-2">
+                              {RENTAL_WWW_CTA.title}
+                            </h4>
+                            <p className="text-sm text-white/80 leading-relaxed mb-4 line-clamp-4">
+                              {RENTAL_WWW_CTA.description}
+                            </p>
+                            <span className="inline-flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest">
+                              {RENTAL_WWW_CTA.action}
+                              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                            </span>
+                          </div>
+                        </Link>
+                      </motion.div>
+                    </motion.div>
                   </div>
 
                   <div>
@@ -1122,22 +1211,6 @@ export default function OfferSubPage() {
                 </div>
               ) : isAccommodationPage ? (
                 <div className="space-y-8 text-white/80 leading-relaxed">
-                  <p className="text-lg">
-                    Nasza baza noclegowa znajduje się w przepięknej miejscowości Góry Gorzkowskie na terenie Jury Krakowsko-Częstochowskiej.
-                  </p>
-                  <p>
-                    Właśnie tam mamy do dyspozycji 6 nowoczesnych wojskowych namiotów NS 64, w których jesteśmy w stanie zakwaterować od 60 do 100
-                    osób. Namioty mają drewniane podłogi, co pozwala na wygodne i bezproblemowe funkcjonowanie w ich wnętrzu.
-                  </p>
-                  <p>
-                    Na terenie naszej bazy noclegowej posiadamy miejsce na ognisko wraz z ławkami, grill oraz kuchnię polową. Do dyspozycji mamy
-                    również kontener sanitarny, w którym znajdują się 4 prysznice i 4 toalety.
-                  </p>
-                  <p>
-                    Na terenie obiektu znajdują się takie atrakcje jak: poligon paintballowy, mini park linowy, drogi wspinaczkowe, bouldering, trasa
-                    off-road/quad, strzelnica na broń pneumatyczną, strzelnica łucznicza oraz tor przeszkód.
-                  </p>
-
                   <div className="space-y-14 md:space-y-16 pt-4">
                     {(() => {
                       let lightboxCursor = 0;

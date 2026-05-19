@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { GoldenBorderSection } from '../components/GoldenBorderSection';
 import { getOfferBySlug } from '../data/offerPages';
 
 const HERO_BG = '/utils/obozy-kolonie/obozy-hero.png';
@@ -47,22 +48,14 @@ export default function ObozyKoloniePage() {
           </div>
         </section>
 
-        {}
-        <section className="section-padding bg-dark border-b border-white/5">
-          <div className="max-w-3xl mx-auto px-6">
-            <div className="bg-white/5 backdrop-blur-md border-2 border-primary rounded-[2rem] p-6 md:p-8 lg:p-10">
-              <div className="text-center max-w-2xl mx-auto">
-                <h2 className="text-primary font-bold uppercase tracking-[0.2em] text-sm md:text-base mb-3">
-                  Wybierz sezon
-                </h2>
-                <p className="text-xl md:text-2xl font-display font-semibold text-white leading-snug mb-4">
-                  Każda pora roku to u nas inna przygoda
-                </p>
-                <p className="text-white/60 leading-relaxed text-base md:text-lg">
-                  Poniżej przejdziesz do szczegółowej oferty letniej albo zimowej — wybierz to, co pasuje Tobie lub Twojej grupie.
-                </p>
-              </div>
-              <div className="mt-6 md:mt-7 grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
+        <GoldenBorderSection
+          label="Wybierz sezon"
+          title="Każda pora roku to u nas inna przygoda"
+          description="Poniżej przejdziesz do szczegółowej oferty letniej albo zimowej — wybierz to, co pasuje Tobie lub Twojej grupie."
+          maxWidthClassName="max-w-3xl"
+          className="border-b border-white/5"
+        >
+          <motion.div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:gap-6">
               <Link
                 to="/oferta/obozy-i-kolonie/lato"
                 className="group relative flex min-h-[340px] sm:min-h-0 sm:aspect-[4/5] overflow-hidden rounded-3xl border-2 border-white/10 bg-dark/50 transition-colors duration-300 hover:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
@@ -120,10 +113,8 @@ export default function ObozyKoloniePage() {
                   </span>
                 </div>
               </Link>
-              </div>
-            </div>
-          </div>
-        </section>
+          </motion.div>
+        </GoldenBorderSection>
 
         <section className="section-padding bg-dark">
           <div className="max-w-4xl mx-auto px-6 text-center">

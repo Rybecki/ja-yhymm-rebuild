@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
@@ -6,6 +5,9 @@ import { ExternalLink } from 'lucide-react';
 import type { SummerOfferDetail, SummerOfferGalleryImage } from '../data/summerOfferDetails';
 import { parseOptionalFacultyLine } from '../utils/parseOptionalFacultyLine';
 import { GalleryLightbox } from './GalleryLightbox';
+import { OfferGoldenCard, OFFER_GOLDEN_CARD_INNER } from './OfferGoldenCard';
+import { OfferSectionTitle } from './OfferSectionTitle';
+import { ParentZoneCampCta } from './ParentZoneCampCta';
 
 
 const WIDE = 'max-w-4xl xl:max-w-6xl 2xl:max-w-[72rem] mx-auto px-6 sm:px-8 lg:px-10';
@@ -15,25 +17,20 @@ const CARD_HOVER =
 
 const SECTION_PAD = 'py-14 md:py-16 lg:py-20';
 
-function SectionTitle({ children, id }: { children: ReactNode; id?: string }) {
-  return (
-    <h2
-      id={id}
-      className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-6 md:mb-8 text-center"
-    >
-      {children}
-    </h2>
-  );
-}
+const GALLERY_IMAGE_COUNT = 4;
 
-function ProseCard({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return (
-    <div
-      className={`group/card rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-6 sm:px-7 sm:py-7 md:px-9 md:py-8 ${CARD_HOVER} ${className}`}
-    >
-      {children}
-    </div>
-  );
+function buildSummerOfferGalleryImages(
+  gallery: SummerOfferGalleryImage[],
+  tileImage?: SummerOfferGalleryImage
+): SummerOfferGalleryImage[] {
+  if (gallery.length >= GALLERY_IMAGE_COUNT) {
+    return gallery.slice(0, GALLERY_IMAGE_COUNT);
+  }
+  if (!tileImage) {
+    return gallery;
+  }
+  const rest = gallery.filter((img) => img.src !== tileImage.src);
+  return [tileImage, ...rest].slice(0, GALLERY_IMAGE_COUNT);
 }
 
 function SectionDivider() {
@@ -45,6 +42,106 @@ function SectionDivider() {
   );
 }
 
+function TermsSection({ detail }: { detail: SummerOfferDetail }) {
+  return (
+    <section id="terminy" className={`${SECTION_PAD} bg-dark-lighter`}>
+      <div className="max-w-6xl 2xl:max-w-[80rem] mx-auto px-6 sm:px-8 lg:px-10 w-full">
+        <OfferSectionTitle>{detail.termsSectionTitle}</OfferSectionTitle>
+        {detail.termsGroups && detail.termsGroups.length > 0 ? (
+          <motion.div>
+            {detail.termsGroups.map((group, groupIdx) => (
+              <motion.div key={group.groupTitle}>
+                {groupIdx > 0 ? (
+                  <motion.div className="py-8 md:py-10 lg:py-12">
+                    <SectionDivider />
+                  </motion.div>
+                ) : null}
+                <motion.div className="mb-8 md:mb-10">
+                  <p className="text-center font-display font-semibold text-white text-lg mb-2">{group.groupTitle}</p>
+                  {group.groupDisclaimer ? (
+                    <p className="text-center text-white/55 text-sm max-w-2xl mx-auto">{group.groupDisclaimer}</p>
+                  ) : null}
+                </motion.div>
+                <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 w-full">
+                  {group.terms.map((t, i) => (
+                    <motion.article
+                      key={`${group.groupTitle}-${t.dateRange}`}
+                      initial={{ opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.04 }}
+                      className={`w-full min-w-0 rounded-2xl border-2 border-white/10 bg-dark/60 p-6 flex flex-col ${CARD_HOVER}`}
+                    >
+                      <p className="font-display font-bold text-white text-lg">{t.dateRange}</p>
+                      <p className="text-white/50 text-sm mt-1">{t.durationLabel}</p>
+                      <p className="text-primary font-bold text-xl mt-4">{t.price}</p>
+                      <motion.div className="mt-auto pt-6 flex flex-col gap-3">
+                        <a
+                          href={t.planUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-primary hover:bg-primary/25 transition-colors"
+                        >
+                          Plan podróży
+                          <ExternalLink size={16} />
+                        </a>
+                        <a
+                          href={detail.reserveHref}
+                          className="inline-flex items-center justify-center rounded-full bg-primary text-dark text-sm font-bold uppercase tracking-wide py-2.5 hover:brightness-110 transition-all"
+                        >
+                          Zarezerwuj
+                        </a>
+                      </motion.div>
+                    </motion.article>
+                  ))}
+                </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          <>
+            <p className="text-center font-display font-semibold text-white mb-2">{detail.termsSubtitle}</p>
+            <p className="text-center text-white/55 text-sm mb-8 md:mb-10 max-w-2xl mx-auto">{detail.termsDisclaimer}</p>
+            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 w-full">
+              {detail.terms.map((t, i) => (
+                <motion.article
+                  key={t.dateRange}
+                  initial={{ opacity: 0, y: 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.04 }}
+                  className={`w-full min-w-0 rounded-2xl border-2 border-white/10 bg-dark/60 p-6 flex flex-col ${CARD_HOVER}`}
+                >
+                  <p className="font-display font-bold text-white text-lg">{t.dateRange}</p>
+                  <p className="text-white/50 text-sm mt-1">{t.durationLabel}</p>
+                  <p className="text-primary font-bold text-xl mt-4">{t.price}</p>
+                  <motion.div className="mt-auto pt-6 flex flex-col gap-3">
+                    <a
+                      href={t.planUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-primary hover:bg-primary/25 transition-colors"
+                    >
+                      Plan podróży
+                      <ExternalLink size={16} />
+                    </a>
+                    <a
+                      href={detail.reserveHref}
+                      className="inline-flex items-center justify-center rounded-full bg-primary text-dark text-sm font-bold uppercase tracking-wide py-2.5 hover:brightness-110 transition-all"
+                    >
+                      Zarezerwuj
+                    </a>
+                  </motion.div>
+                </motion.article>
+              ))}
+            </motion.div>
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export function SummerOfferDetailLayout({
   detail,
   tileImage,
@@ -52,12 +149,15 @@ export function SummerOfferDetailLayout({
   backLabel = 'Powrót do pełnej oferty',
 }: {
   detail: SummerOfferDetail;
-  
-  tileImage: SummerOfferGalleryImage;
+  /** Zdjęcie kafelka — pierwsze w galerii (zajęcia w `detail.gallery`). */
+  tileImage?: SummerOfferGalleryImage;
   backTo?: string;
   backLabel?: string;
 }) {
-  const galleryImages: SummerOfferGalleryImage[] = [tileImage, ...detail.gallery];
+  const galleryImages = useMemo(
+    () => buildSummerOfferGalleryImages(detail.gallery, tileImage),
+    [detail.gallery, tileImage]
+  );
 
   const accommodationGalleryImages: SummerOfferGalleryImage[] = useMemo(() => {
     if (detail.accommodationBlocks && detail.accommodationBlocks.length > 0) {
@@ -89,7 +189,7 @@ export function SummerOfferDetailLayout({
       ) : null}
       <section id="galeria" className={`${SECTION_PAD} bg-dark`}>
         <div className={`${WIDE} w-full`}>
-          <SectionTitle>Galeria</SectionTitle>
+          <OfferSectionTitle>Galeria</OfferSectionTitle>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-5">
             {galleryImages.map((img, i) => (
               <motion.figure
@@ -121,13 +221,13 @@ export function SummerOfferDetailLayout({
 
       <SectionDivider />
 
-      <section
-        id="o-obozie"
-        className={`${SECTION_PAD} bg-dark-lighter`}
-      >
+      <TermsSection detail={detail} />
+
+      <SectionDivider />
+
+      <section id="o-obozie" className={`${SECTION_PAD} bg-dark`}>
         <div className={`${WIDE} w-full`}>
-          <SectionTitle>{detail.aboutSectionTitle}</SectionTitle>
-          <ProseCard>
+          <OfferGoldenCard label={detail.aboutSectionTitle} surface="dark">
             <p className="text-center font-display font-bold text-white text-lg md:text-xl tracking-tight mb-8">
               {detail.aboutLeadTitle}
             </p>
@@ -144,16 +244,20 @@ export function SummerOfferDetailLayout({
                 {detail.aboutClosing}
               </p>
             ) : null}
-          </ProseCard>
+          </OfferGoldenCard>
+
+          <div className="mt-10 md:mt-12 w-full">
+            <ParentZoneCampCta />
+          </div>
         </div>
       </section>
 
       <SectionDivider />
 
       {detail.youtubeVideoId ? (
-        <section id="film" className={`${SECTION_PAD} bg-dark`}>
+        <section id="film" className={`${SECTION_PAD} bg-dark-lighter`}>
           <div className="max-w-5xl xl:max-w-6xl mx-auto px-6 sm:px-8 lg:px-10 w-full">
-            <SectionTitle>Film</SectionTitle>
+            <OfferSectionTitle>Film</OfferSectionTitle>
             <div
               className={`aspect-video rounded-2xl overflow-hidden border-2 border-white/10 bg-black shadow-xl ${CARD_HOVER}`}
             >
@@ -171,10 +275,9 @@ export function SummerOfferDetailLayout({
 
       {detail.youtubeVideoId ? <SectionDivider /> : null}
 
-      <section id="program" className={`${SECTION_PAD} bg-dark-lighter`}>
-        <div className={`${WIDE} w-full`}>
-          <SectionTitle>{detail.programSectionTitle}</SectionTitle>
-          <ProseCard>
+      <section id="program" className={`${SECTION_PAD} bg-dark`}>
+        <motion.div className={`${WIDE} w-full`}>
+          <OfferGoldenCard label={detail.programSectionTitle} surface="dark">
             <p className="text-center font-display font-bold text-white text-base md:text-lg mb-2">
               {detail.programHeadline}
             </p>
@@ -224,16 +327,15 @@ export function SummerOfferDetailLayout({
                 {detail.programFooter}
               </p>
             ) : null}
-          </ProseCard>
-        </div>
+          </OfferGoldenCard>
+        </motion.div>
       </section>
 
       <SectionDivider />
 
-      <section id="program-fakultatywny" className={`${SECTION_PAD} bg-dark`}>
-        <div className={`${WIDE} w-full`}>
-          <SectionTitle>{detail.optionalSectionTitle}</SectionTitle>
-          <ProseCard>
+      <section id="program-fakultatywny" className={`${SECTION_PAD} bg-dark-lighter`}>
+        <motion.div className={`${WIDE} w-full`}>
+          <OfferGoldenCard label={detail.optionalSectionTitle} surface="dark-lighter">
             <p className="text-white/85 leading-relaxed mb-8 max-w-3xl mx-auto text-center">
               {detail.optionalIntro}
             </p>
@@ -256,15 +358,15 @@ export function SummerOfferDetailLayout({
                 );
               })}
             </ul>
-          </ProseCard>
-        </div>
+          </OfferGoldenCard>
+        </motion.div>
       </section>
 
       <SectionDivider />
 
-      <section id="zakwaterowanie" className={`${SECTION_PAD} bg-dark-lighter`}>
-        <div className={`${WIDE} w-full`}>
-          <SectionTitle>{detail.accommodationSectionTitle}</SectionTitle>
+      <section id="zakwaterowanie" className={`${SECTION_PAD} bg-dark`}>
+        <motion.div className={`${WIDE} w-full`}>
+          <OfferGoldenCard label={detail.accommodationSectionTitle} surface="dark">
           {detail.accommodationBlocks && detail.accommodationBlocks.length > 0 ? (
             <div className="space-y-14 md:space-y-16">
               {(() => {
@@ -347,54 +449,60 @@ export function SummerOfferDetailLayout({
               </div>
             </>
           )}
-        </div>
+          </OfferGoldenCard>
+        </motion.div>
       </section>
 
       <SectionDivider />
 
-      <section id="cena-zawiera" className={`${SECTION_PAD} bg-dark`}>
+      <section id="cena-zawiera" className={`${SECTION_PAD} bg-dark-lighter`}>
         <div className={`${WIDE} grid md:grid-cols-2 gap-10 md:gap-12 xl:gap-16 w-full`}>
-          <ProseCard className="h-full">
-            <h3 className="text-primary font-bold uppercase tracking-widest text-xs mb-5">{detail.priceIncludesTitle}</h3>
+          <OfferGoldenCard
+            label={detail.priceIncludesTitle}
+            surface="dark-lighter"
+            className="h-full"
+            innerClassName={`${OFFER_GOLDEN_CARD_INNER} h-full`}
+          >
             <ul className="space-y-3 text-white/80 text-sm leading-relaxed list-disc pl-5 marker:text-primary">
               {detail.priceIncludes.map((line) => (
                 <li key={line}>{line}</li>
               ))}
             </ul>
-          </ProseCard>
-          <ProseCard className="h-full">
-            <h3 className="text-primary font-bold uppercase tracking-widest text-xs mb-5">{detail.priceExcludesTitle}</h3>
+          </OfferGoldenCard>
+          <OfferGoldenCard
+            label={detail.priceExcludesTitle}
+            surface="dark-lighter"
+            className="h-full"
+            innerClassName={`${OFFER_GOLDEN_CARD_INNER} h-full`}
+          >
             <ul className="space-y-3 text-white/80 text-sm leading-relaxed list-disc pl-5 marker:text-primary/70">
               {detail.priceExcludes.map((line) => (
                 <li key={line}>{line}</li>
               ))}
             </ul>
-          </ProseCard>
+          </OfferGoldenCard>
         </div>
       </section>
 
       <SectionDivider />
 
-      <section id="informacje-praktyczne" className={`${SECTION_PAD} bg-dark-lighter`}>
-        <div className={`${WIDE} w-full`}>
-          <SectionTitle>{detail.practicalSectionTitle}</SectionTitle>
-          <ProseCard>
+      <section id="informacje-praktyczne" className={`${SECTION_PAD} bg-dark`}>
+        <motion.div className={`${WIDE} w-full`}>
+          <OfferGoldenCard label={detail.practicalSectionTitle} surface="dark">
             <div className="max-w-3xl mx-auto space-y-4 text-white/85 leading-relaxed text-sm md:text-base text-center">
               {detail.practicalParagraphs.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
-          </ProseCard>
-        </div>
+          </OfferGoldenCard>
+        </motion.div>
       </section>
 
       <SectionDivider />
 
-      <section id="sprzet" className={`${SECTION_PAD} bg-dark`}>
-        <div className={`${WIDE} w-full`}>
-          <h2 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4 text-center">
-            {detail.equipmentSectionTitle}
-          </h2>
+      <section id="sprzet" className={`${SECTION_PAD} bg-dark-lighter`}>
+        <motion.div className={`${WIDE} w-full`}>
+          <OfferSectionTitle>{detail.equipmentSectionTitle}</OfferSectionTitle>
           <p className="text-center text-white/75 text-sm md:text-base mb-8 md:mb-10 max-w-3xl xl:max-w-4xl mx-auto leading-relaxed">
             {detail.equipmentIntro}
           </p>
@@ -412,105 +520,7 @@ export function SummerOfferDetailLayout({
           <p className="text-center text-white/90 font-semibold mt-10 max-w-3xl mx-auto">
             Z nami trenujesz na profesjonalnym sprzęcie, na jakim pracują zawodowcy!
           </p>
-        </div>
-      </section>
-
-      <SectionDivider />
-
-      <section id="terminy" className={`${SECTION_PAD} bg-dark-lighter`}>
-        <div className="max-w-6xl 2xl:max-w-[80rem] mx-auto px-6 sm:px-8 lg:px-10 w-full">
-          <SectionTitle>{detail.termsSectionTitle}</SectionTitle>
-          {detail.termsGroups && detail.termsGroups.length > 0 ? (
-            <div>
-              {detail.termsGroups.map((group, groupIdx) => (
-                <div key={group.groupTitle}>
-                  {groupIdx > 0 ? (
-                    <div className="py-8 md:py-10 lg:py-12">
-                      <SectionDivider />
-                    </div>
-                  ) : null}
-                  <div className="mb-8 md:mb-10">
-                    <p className="text-center font-display font-semibold text-white text-lg mb-2">{group.groupTitle}</p>
-                    {group.groupDisclaimer ? (
-                      <p className="text-center text-white/55 text-sm max-w-2xl mx-auto">{group.groupDisclaimer}</p>
-                    ) : null}
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 w-full">
-                    {group.terms.map((t, i) => (
-                      <motion.article
-                        key={`${group.groupTitle}-${t.dateRange}`}
-                        initial={{ opacity: 0, y: 14 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.04 }}
-                        className={`w-full min-w-0 rounded-2xl border-2 border-white/10 bg-dark/60 p-6 flex flex-col ${CARD_HOVER}`}
-                      >
-                        <p className="font-display font-bold text-white text-lg">{t.dateRange}</p>
-                        <p className="text-white/50 text-sm mt-1">{t.durationLabel}</p>
-                        <p className="text-primary font-bold text-xl mt-4">{t.price}</p>
-                        <div className="mt-auto pt-6 flex flex-col gap-3">
-                          <a
-                            href={t.planUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-primary hover:bg-primary/25 transition-colors"
-                          >
-                            Plan podróży
-                            <ExternalLink size={16} />
-                          </a>
-                          <a
-                            href={detail.reserveHref}
-                            className="inline-flex items-center justify-center rounded-full bg-primary text-dark text-sm font-bold uppercase tracking-wide py-2.5 hover:brightness-110 transition-all"
-                          >
-                            Zarezerwuj
-                          </a>
-                        </div>
-                      </motion.article>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <>
-              <p className="text-center font-display font-semibold text-white mb-2">{detail.termsSubtitle}</p>
-              <p className="text-center text-white/55 text-sm mb-8 md:mb-10 max-w-2xl mx-auto">{detail.termsDisclaimer}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6 w-full">
-                {detail.terms.map((t, i) => (
-                  <motion.article
-                    key={t.dateRange}
-                    initial={{ opacity: 0, y: 14 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.04 }}
-                    className={`w-full min-w-0 rounded-2xl border-2 border-white/10 bg-dark/60 p-6 flex flex-col ${CARD_HOVER}`}
-                  >
-                    <p className="font-display font-bold text-white text-lg">{t.dateRange}</p>
-                    <p className="text-white/50 text-sm mt-1">{t.durationLabel}</p>
-                    <p className="text-primary font-bold text-xl mt-4">{t.price}</p>
-                    <div className="mt-auto pt-6 flex flex-col gap-3">
-                      <a
-                        href={t.planUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-primary hover:bg-primary/25 transition-colors"
-                      >
-                        Plan podróży
-                        <ExternalLink size={16} />
-                      </a>
-                      <a
-                        href={detail.reserveHref}
-                        className="inline-flex items-center justify-center rounded-full bg-primary text-dark text-sm font-bold uppercase tracking-wide py-2.5 hover:brightness-110 transition-all"
-                      >
-                        Zarezerwuj
-                      </a>
-                    </div>
-                  </motion.article>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+        </motion.div>
       </section>
 
       <section className={`${SECTION_PAD} bg-dark border-t border-white/[0.06]`}>

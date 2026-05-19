@@ -5,8 +5,23 @@ import { BRENNA_HORSE_EQUIPMENT_BLOCKS, BRENNA_HORSE_EQUIPMENT_INTRO } from './s
 const G = '/utils/oferta-letnia/beskidzki-rajd-konny/gallery';
 
 export const BESKIDZKI_RAJD_KONNY_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 6%',
+  heroImage: {
+    src: `${G}/rajd-3.png`,
+    alt: 'Chłopiec na koniu w siodle — Beskidzki rajd konny',
+  },
+  /** Zawsze 4 zdjęcia w galerii. */
   gallery: [
     { src: `${G}/raid-2.png`, alt: 'Zajęcia na ujeżdżalni — młodzi jeźdźcy w kolejce za instruktorką' },
+    { src: `${G}/rajd-2.png`, alt: 'Jazda konna w terenie — uczestnicy na rajdzie beskidzkim' },
+    {
+      src: `${G}/rajd-3.png`,
+      alt: 'Chłopiec na koniu w siodle — Beskidzki rajd konny',
+    },
+    {
+      src: `${G}/rajd-4.png`,
+      alt: 'Jazda konna pod niebem — młody jeździec na koniu pinto',
+    },
   ],
   aboutSectionTitle: 'O obozie',
   aboutLeadTitle: 'Beskidzki rajd konny',

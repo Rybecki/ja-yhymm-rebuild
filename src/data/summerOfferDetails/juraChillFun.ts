@@ -10,9 +10,10 @@ const G = '/utils/oferta-letnia/jura-chill-fun/gallery';
 
 export const JURA_CHILL_FUN_DETAIL: SummerOfferDetail = {
   gallery: [
+    { src: `${G}/chill-1.png`, alt: 'Kolorowy festiwal Holi — grupa uczestników obozu' },
     { src: `${G}/chill-2.png`, alt: 'Dzieci bawiące się klockami na kocu na trawie' },
     { src: `${G}/chill-3.png`, alt: 'Dzieci na leżakach na trawie — relaks na obozie' },
-    { src: `${G}/chill-1.png`, alt: 'Kolorowy festiwal Holi — grupa uczestników obozu' },
+    { src: `${G}/chill-4.png`, alt: 'Dmuchańce i zabawy na świeżym powietrzu — Chill & Fun Camp' },
   ],
   aboutSectionTitle: 'O obozie',
   aboutLeadTitle: 'CHILL & FUN CAMP – TWOJA STREFA LETNIEGO LUZU!',

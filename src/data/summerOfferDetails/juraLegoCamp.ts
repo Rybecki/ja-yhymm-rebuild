@@ -9,7 +9,19 @@ import {
 const G = '/utils/oferta-letnia/jura-lego-camp/gallery';
 
 export const JURA_LEGO_CAMP_DETAIL: SummerOfferDetail = {
-  gallery: [{ src: `${G}/lego-2.png`, alt: 'Dziecko z tabletem i robotem z klocków LEGO' }],
+  heroBackgroundPosition: 'center 28%',
+  gallery: [
+    { src: `${G}/lego-1.png`, alt: 'Budowanie z klocków LEGO — kreatywna zabawa na obozie' },
+    { src: `${G}/lego-2.png`, alt: 'Dziecko z tabletem i robotem z klocków LEGO' },
+    {
+      src: `${G}/lego-3.png`,
+      alt: 'Dzieci budują pojazdy i domy z klocków LEGO — warsztaty konstrukcyjne',
+    },
+    {
+      src: `${G}/lego-4.png`,
+      alt: 'Klocki LEGO na dywanie i przy stole — swobodna i planowa budowa',
+    },
+  ],
   aboutSectionTitle: 'O obozie',
   aboutLeadTitle: 'JURAJSCY MISTRZOWIE LEGO® – ZBUDUJ WŁASNĄ LEGENDĘ!',
   aboutBlocks: [

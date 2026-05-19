@@ -3,7 +3,9 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { SummerOfferSectionFrame } from '../components/SummerOfferSectionFrame';
 import { SUMMER_OFFER_SECTIONS, summerOfferImageSrc } from '../data/summerOffers';
+import { CAMPS_HERO_BG_POSITION, CAMPS_HERO_CONTENT_LIST, CAMPS_HERO_SECTION } from '../constants/campOfferHero';
 
 const LATO_BG = '/utils/obozy-kolonie/lato.png';
 
@@ -13,16 +15,18 @@ export default function OfferLatoPage() {
       <Navbar />
 
       <main>
-        {}
-        <section className="relative min-h-[50vh] md:min-h-[55vh] flex flex-col justify-end overflow-hidden border-b border-white/5">
+        <section className={`${CAMPS_HERO_SECTION} border-b border-white/5`}>
           <div
-            className="absolute inset-0 bg-cover bg-center scale-105"
-            style={{ backgroundImage: `url(${LATO_BG})` }}
+            className="absolute inset-0 bg-cover scale-105"
+            style={{
+              backgroundImage: `url(${LATO_BG})`,
+              backgroundPosition: CAMPS_HERO_BG_POSITION,
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 via-orange-400/8 to-transparent" aria-hidden />
           <div className="app-photo-scrim" aria-hidden />
 
-          <div className="relative z-10 max-w-4xl mx-auto px-6 pb-16 md:pb-20 pt-32 w-full">
+          <div className={CAMPS_HERO_CONTENT_LIST}>
             <nav className="text-sm text-white/65 mb-6">
               <Link to="/oferta" className="hover:text-primary transition-colors">
                 Oferta
@@ -45,7 +49,6 @@ export default function OfferLatoPage() {
           </div>
         </section>
 
-        {}
         <section className="section-padding bg-dark border-b border-white/5">
           <div className="max-w-3xl mx-auto px-6 text-center space-y-6">
             <p className="text-lg md:text-xl text-white/85 leading-relaxed">
@@ -66,17 +69,14 @@ export default function OfferLatoPage() {
           </div>
         </section>
 
-        {}
         {SUMMER_OFFER_SECTIONS.map((section, sIndex) => (
           <section
             key={section.id}
             className={`section-padding ${sIndex % 2 === 0 ? 'bg-dark-lighter' : 'bg-dark'} border-b border-white/5`}
           >
             <div className="max-w-6xl mx-auto px-6">
-              <h2 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-6 md:mb-10 text-center">
-                {section.title}
-              </h2>
-              <div className="flex flex-wrap justify-center gap-6">
+              <SummerOfferSectionFrame title={section.title}>
+                <div className="flex flex-wrap justify-center gap-6">
                 {section.offers.map((offer, i) => (
                   <motion.div
                     key={offer.slug}
@@ -110,6 +110,7 @@ export default function OfferLatoPage() {
                   </motion.div>
                 ))}
               </div>
+              </SummerOfferSectionFrame>
             </div>
           </section>
         ))}

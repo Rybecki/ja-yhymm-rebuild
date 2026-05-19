@@ -4,18 +4,27 @@ const G = '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery';
 const LESNA = '/utils/oferta-letnia/jura-military-camp/gallery';
 
 export const JURA_OFF_ROAD_CAMP_4X4_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 40%',
+  heroImage: {
+    src: `${G}/offroad-1.png`,
+    alt: 'Jeep Cherokee 4×4 na stromym podjeździe w lesie — jazda off-road',
+  },
   gallery: [
     {
       src: `${G}/offroad-1.png`,
-      alt: 'Uczestnicy obozu off-road przy terenowym 4×4 w lesie',
+      alt: 'Jeep Cherokee 4×4 na stromym podjeździe w lesie — jazda off-road',
     },
     {
-      src: `${G}/offroad-2.png`,
-      alt: 'Mitsubishi Pajero i quad na piaszczystym terenie — Jura Off-Road Camp',
+      src: `${G}/offroad-convoy.png`,
+      alt: 'Kolumna terenówek 4×4 na leśnym szlaku — uczestnicy obozu off-road',
     },
     {
       src: `${G}/offroad-3.png`,
-      alt: 'Akcja ratunkowa — praca z lewarem i odblokowanie koła w błocie',
+      alt: 'Obozowicze na Jeepie 4×4 na piaszczystym torze — Jura Off-Road Camp',
+    },
+    {
+      src: `${G}/offroad-4.png`,
+      alt: 'Młodzież z Jeepem Cherokee w lesie — zajęcia off-road na Jurze',
     },
   ],
   youtubeVideoId: 'tHvdpK3fQLY',

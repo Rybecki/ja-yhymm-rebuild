@@ -10,6 +10,21 @@ export type NewsArticle = {
 
 export const NEWS_ARTICLES: NewsArticle[] = [
   {
+    slug: 'obozy-2026-sprawdz-nasza-oferte',
+    title: 'Obozy 2026 - sprawdź naszą ofertę',
+    excerpt:
+      'Już teraz zaplanuj lato 2026. Zobacz obozy survivalowe, sportowe, militarne i integracyjne dla dzieci i młodzieży.',
+    date: '20.04.2026',
+    imageSrc: '/utils/obozy-kolonie/lato.png',
+    imageAlt: 'Letnie aktywności obozowe nad wodą',
+    paragraphs: [
+      'Planujesz wakacje 2026? Już teraz warto pomyśleć o wyjątkowym wyjeździe dla dzieci i młodzieży! Nasze obozy to połączenie aktywności, przygody i rozwoju w bezpiecznym środowisku.',
+      'W ofercie znajdują się m.in. obozy survivalowe, sportowe, militarne oraz integracyjne. Każdy uczestnik znajdzie coś dla siebie - niezależnie od wieku czy zainteresowań.',
+      'Stawiamy na aktywne spędzanie czasu: zajęcia w terenie, gry zespołowe, naukę nowych umiejętności oraz świetną atmosferę. Nad wszystkim czuwają doświadczeni instruktorzy.',
+      'Nie czekaj do ostatniej chwili - liczba miejsc jest ograniczona. Sprawdź naszą ofertę i wybierz obóz idealny na lato 2026!',
+    ],
+  },
+  {
     slug: 'jak-zaczac-przygode-z-quadami',
     title: 'Jak zacząć przygodę z quadami?',
     excerpt:
@@ -37,21 +52,6 @@ export const NEWS_ARTICLES: NewsArticle[] = [
       'Na początku warto wiedzieć, że paintball jest bezpieczny - pod warunkiem przestrzegania zasad i używania odpowiedniego sprzętu ochronnego. Każdy uczestnik otrzymuje maskę, marker oraz specjalne kulki z farbą.',
       'Gra rozwija umiejętność pracy zespołowej, szybkiego podejmowania decyzji i planowania. To także świetny sposób na integrację - sprawdza się na wyjazdach firmowych, wieczorach kawalerskich czy szkolnych wycieczkach.',
       'Jeśli jeszcze nie próbowałeś - zdecydowanie warto!',
-    ],
-  },
-  {
-    slug: 'obozy-2026-sprawdz-nasza-oferte',
-    title: 'Obozy 2026 - sprawdź naszą ofertę',
-    excerpt:
-      'Już teraz zaplanuj lato 2026. Zobacz obozy survivalowe, sportowe, militarne i integracyjne dla dzieci i młodzieży.',
-    date: '20.04.2026',
-    imageSrc: '/utils/obozy-kolonie/lato.png',
-    imageAlt: 'Letnie aktywności obozowe nad wodą',
-    paragraphs: [
-      'Planujesz wakacje 2026? Już teraz warto pomyśleć o wyjątkowym wyjeździe dla dzieci i młodzieży! Nasze obozy to połączenie aktywności, przygody i rozwoju w bezpiecznym środowisku.',
-      'W ofercie znajdują się m.in. obozy survivalowe, sportowe, militarne oraz integracyjne. Każdy uczestnik znajdzie coś dla siebie - niezależnie od wieku czy zainteresowań.',
-      'Stawiamy na aktywne spędzanie czasu: zajęcia w terenie, gry zespołowe, naukę nowych umiejętności oraz świetną atmosferę. Nad wszystkim czuwają doświadczeni instruktorzy.',
-      'Nie czekaj do ostatniej chwili - liczba miejsc jest ograniczona. Sprawdź naszą ofertę i wybierz obóz idealny na lato 2026!',
     ],
   },
   {

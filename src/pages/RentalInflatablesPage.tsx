@@ -1,13 +1,15 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ChevronDown, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
+import { RentalFormSummary } from '../components/RentalFormSummary';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { calculateInflatablesPricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
 
-const INFLATABLES_HERO_SRC = '/images/wypozyczalnia/dmuchance/dmuchance-4.png';
+const INFLATABLES_HERO_SRC = '/images/wypozyczalnia/dmuchance/dmuchance-hero-collage.png';
 
 /** Galeria: Mario + dmuchańce z dziećmi, potem ścianki z galerii. */
 const INFLATABLES_GALLERY: readonly GalleryImageItem[] = [
@@ -90,6 +92,18 @@ export default function RentalInflatablesPage() {
     setFormData((previous) => ({ ...previous, [field]: value }));
   };
 
+  const priceSummary = useMemo(
+    () => calculateInflatablesPricing(formData.packageType, formData.attraction),
+    [formData.packageType, formData.attraction]
+  );
+
+  const equipmentLabel = useMemo(() => {
+    if (formData.packageType === 'Wynajem indywidualny') {
+      return formData.attraction || 'dmuchańce';
+    }
+    return formData.packageType || formData.attraction || 'dmuchańce i eventy';
+  }, [formData.packageType, formData.attraction]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     localStorage.setItem('inflatablesForm', JSON.stringify(formData));
@@ -106,6 +120,8 @@ export default function RentalInflatablesPage() {
       '',
       'Wiadomosc:',
       formData.message || '-',
+      formatSummaryForEmail(priceSummary),
+      formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
     window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Zapytanie dmuchance i eventy')}&body=${encodeURIComponent(body)}`;
   };
@@ -367,6 +383,7 @@ export default function RentalInflatablesPage() {
                   <label className="text-xs uppercase tracking-widest text-white/40">Wiadomość</label>
                   <textarea rows={5} value={formData.message} onChange={(event) => updateFormData('message', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none" />
                 </div>
+                <RentalFormSummary summary={priceSummary} renterName={formData.fullName} equipmentLabel={equipmentLabel} />
                 <p className="text-sm text-white/70 leading-relaxed">
                   Przed wysłaniem zapytania zapoznaj się z{' '}
                   <button type="button" className="text-primary font-semibold hover:underline" onClick={() => setIsRegulationsOpen(true)}>

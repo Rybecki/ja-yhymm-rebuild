@@ -33,8 +33,16 @@ export const SUMMER_OFFER_SECTIONS: SummerOfferSection[] = [
     id: 'offroad-multiprzygoda',
     title: 'Off-Road 4x4 & Multiprzygoda',
     offers: [
-      { slug: 'jura-off-road-camp-4x4', title: 'Jura Off-Road Camp 4x4', imageKey: 'off-road-camp' },
-      { slug: 'jura-multi-camp', title: 'Jura Multi Camp', imageKey: 'multi-camp' },
+      {
+        slug: 'jura-off-road-camp-4x4',
+        title: 'Jura Off-Road Camp 4x4',
+        imageKey: '@public/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-1.png',
+      },
+      {
+        slug: 'jura-multi-camp',
+        title: 'Jura Multi Camp',
+        imageKey: '@public/utils/oferta-letnia/jura-multi-camp/gallery/multi-4.png',
+      },
     ],
   },
   {
@@ -50,8 +58,16 @@ export const SUMMER_OFFER_SECTIONS: SummerOfferSection[] = [
     title: 'Przygody dla najmłodszych',
     offers: [
       { slug: 'jura-kids-patrol-camp', title: 'Jura Kids Patrol Camp', imageKey: 'kids-patrol-camp' },
-      { slug: 'jura-lego-camp', title: 'Jura LEGO® Camp', imageKey: 'lego-camp' },
-      { slug: 'jura-art-camp', title: 'Jura Art Camp', imageKey: 'art-camp' },
+      {
+        slug: 'jura-lego-camp',
+        title: 'Jura LEGO® Camp',
+        imageKey: '@public/utils/oferta-letnia/jura-lego-camp/gallery/lego-1.png',
+      },
+      {
+        slug: 'jura-art-camp',
+        title: 'Jura Art Camp',
+        imageKey: '@public/utils/oferta-letnia/jura-art-camp/gallery/art-1.png',
+      },
       { slug: 'jura-chill-fun', title: 'Jura Chill & Fun', imageKey: 'chill-fun' },
     ],
   },
@@ -64,7 +80,11 @@ export const SUMMER_OFFER_SECTIONS: SummerOfferSection[] = [
         title: 'Obóz jazdy konnej',
         imageKey: '@public/utils/oferta-letnia/oboz-jazdy-konnej/gallery/kon-2.png',
       },
-      { slug: 'beskidzki-rajd-konny', title: 'Beskidzki rajd konny', imageKey: 'rajd-konny' },
+      {
+        slug: 'beskidzki-rajd-konny',
+        title: 'Beskidzki rajd konny',
+        imageKey: '@public/utils/oferta-letnia/beskidzki-rajd-konny/gallery/rajd-4.png',
+      },
     ],
   },
 ];

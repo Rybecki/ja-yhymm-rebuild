@@ -55,6 +55,11 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle('mobile-menu-open', isMobileMenuOpen);
+    return () => document.documentElement.classList.remove('mobile-menu-open');
+  }, [isMobileMenuOpen]);
+
   const closeMobile = () => {
     setIsMobileMenuOpen(false);
     setMobileAboutOpen(false);
@@ -65,26 +70,33 @@ export function Navbar() {
     setMobileDlaCiebieOpen(false);
   };
 
+  const desktopDropdown =
+    'absolute top-full right-0 z-[100] pt-2 opacity-0 invisible translate-y-1 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200';
+
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-dark/90 backdrop-blur-md py-4 shadow-xl' : 'bg-transparent py-6'}`}>
-      <div className="mx-auto w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-10 flex justify-between items-center gap-3 min-w-0">
+    <>
+    <nav
+      className={`fixed top-0 inset-x-0 z-50 w-full overflow-visible transition-all duration-300 ${isScrolled || isMobileMenuOpen ? 'bg-dark/90 backdrop-blur-md py-4 shadow-xl' : 'bg-transparent py-6'}`}
+    >
+      <div className="mx-auto w-full max-w-none px-4 sm:px-6 lg:px-8 xl:px-10 flex justify-between items-center gap-3 overflow-visible">
         <Link to="/" className="flex items-center gap-2 shrink-0" onClick={closeMobile}>
           <img
-            src="/utils/logo_ja-yhymm.png"
-            alt="Ja-yhymm Logo"
+            src="/utils/logo-ja-yhymm-transparent.png"
+            alt="JA YHYMM — logo"
+            data-no-photo-filter
+            decoding="async"
             className="h-9 lg:h-10 xl:h-12 w-auto object-contain"
             referrerPolicy="no-referrer"
           />
         </Link>
 
-        {}
-        <div className="hidden lg:flex flex-1 min-w-0 items-center justify-end gap-4 xl:gap-5 2xl:gap-6 font-display flex-nowrap">
-          <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
+        <div className="hidden lg:flex flex-1 items-center justify-end gap-4 xl:gap-5 2xl:gap-6 font-display flex-nowrap overflow-visible">
+          <div className="relative overflow-visible group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
             <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-white cursor-default transition-colors group-hover:text-primary whitespace-nowrap">
               O nas
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
-            <div className="absolute top-[calc(100%+0.5rem)] left-0 min-w-[260px] z-50 opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 max-h-[min(70vh,520px)] overflow-y-auto">
+            <div className={`${desktopDropdown} min-w-[260px]`}>
               <div className="rounded-xl border border-white/10 bg-dark-lighter/95 backdrop-blur-md py-2 shadow-xl">
                 {aboutSubmenu.map((item) => (
                   <Link
@@ -99,13 +111,13 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
+          <div className="relative overflow-visible group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
             <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-white cursor-default transition-colors group-hover:text-primary whitespace-nowrap">
               Oferta
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
-            <div className="absolute top-[calc(100%+0.5rem)] left-0 min-w-[280px] z-50 opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 max-h-[min(70vh,520px)] overflow-y-auto">
-              <div className="rounded-xl border border-white/10 bg-dark-lighter/95 backdrop-blur-md py-2 shadow-xl">
+            <div className={`${desktopDropdown} min-w-[280px]`}>
+              <div className="rounded-xl border border-white/10 bg-dark-lighter/95 backdrop-blur-md py-2 shadow-xl max-h-[min(70vh,520px)] overflow-y-auto overscroll-contain">
                 {offerSubmenu.map((item) => (
                   <Link
                     key={item.to}
@@ -119,13 +131,13 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
+          <div className="relative overflow-visible group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
             <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-white cursor-default transition-colors group-hover:text-primary whitespace-nowrap">
               Tematyka
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
-            <div className="absolute top-[calc(100%+0.5rem)] left-0 min-w-[320px] z-50 opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 max-h-[min(70vh,520px)] overflow-y-auto">
-              <div className="rounded-xl border border-white/10 bg-dark-lighter/95 backdrop-blur-md py-2 shadow-xl">
+            <div className={`${desktopDropdown} min-w-[320px]`}>
+              <div className="rounded-xl border border-white/10 bg-dark-lighter/95 backdrop-blur-md py-2 shadow-xl max-h-[min(70vh,520px)] overflow-y-auto overscroll-contain">
                 {topicSubmenu.map((item) => (
                   <Link
                     key={item.to}
@@ -153,12 +165,12 @@ export function Navbar() {
             Aktualności
           </Link>
 
-          <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
+          <div className="relative overflow-visible group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
             <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-white cursor-default transition-colors group-hover:text-primary whitespace-nowrap">
               Wypożyczalnia
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
-            <div className="absolute top-[calc(100%+0.5rem)] left-0 min-w-[220px] z-50 opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+            <div className={`${desktopDropdown} min-w-[220px]`}>
               <div className="rounded-xl border border-white/10 bg-dark-lighter/95 backdrop-blur-md py-2 shadow-xl">
                 {rentalSubmenu.map((item) => (
                   <Link
@@ -173,12 +185,12 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
+          <div className="relative overflow-visible group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
             <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-white cursor-default transition-colors group-hover:text-primary whitespace-nowrap">
               Dla Ciebie
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
-            <div className="absolute top-[calc(100%+0.5rem)] left-0 min-w-[260px] z-50 opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+            <div className={`${desktopDropdown} min-w-[260px]`}>
               <div className="rounded-xl border border-white/10 bg-dark-lighter/95 backdrop-blur-md py-2 shadow-xl">
                 {dlaCiebieSubmenu.map((item) => (
                   <Link
@@ -193,12 +205,12 @@ export function Navbar() {
             </div>
           </div>
 
-          <div className="relative group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
+          <div className="relative overflow-visible group before:absolute before:left-0 before:right-0 before:top-full before:z-40 before:h-3 before:content-[''] shrink-0">
             <span className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-wide text-white cursor-default transition-colors group-hover:text-primary whitespace-nowrap">
               Kontakt
               <ChevronDown size={18} className="transition-transform duration-200 group-hover:rotate-180" />
             </span>
-            <div className="absolute top-[calc(100%+0.5rem)] left-0 min-w-[220px] z-50 opacity-0 invisible translate-y-0.5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+            <div className={`${desktopDropdown} min-w-[220px]`}>
               <div className="rounded-xl border border-white/10 bg-dark-lighter/95 backdrop-blur-md py-2 shadow-xl">
                 {contactSubmenu.map((item) => (
                   <Link
@@ -231,7 +243,13 @@ export function Navbar() {
           </a>
         </div>
 
-        <button type="button" className="lg:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} aria-expanded={isMobileMenuOpen}>
+        <button
+          type="button"
+          className="relative z-[60] lg:hidden text-white"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-expanded={isMobileMenuOpen}
+          aria-label={isMobileMenuOpen ? 'Zamknij menu' : 'Otwórz menu'}
+        >
           {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
@@ -239,10 +257,11 @@ export function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 w-full bg-dark-lighter border-t border-white/10 p-6 lg:hidden max-h-[85vh] overflow-y-auto"
+            exit={{ opacity: 0, y: -12 }}
+            className="absolute top-full left-0 right-0 z-40 border-t border-white/10 bg-dark-lighter p-4 sm:p-6 lg:hidden max-h-[min(85vh,100dvh)] overflow-y-auto overscroll-contain touch-pan-y"
           >
             <div className="flex flex-col gap-1">
               <button
@@ -457,5 +476,6 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </nav>
+    </>
   );
 }

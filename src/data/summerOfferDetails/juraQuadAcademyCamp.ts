@@ -9,10 +9,16 @@ import {
 const G = '/utils/oferta-letnia/jura-quad-academy-camp/gallery';
 
 export const JURA_QUAD_ACADEMY_CAMP_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 58%',
+  heroImage: {
+    src: `${G}/academy-1.png`,
+    alt: 'Uczestnicy Quad Academy Camp na quadach na wzgórzu z widokiem na las',
+  },
   gallery: [
-    { src: `${G}/academy-2.png`, alt: 'Jazda quadem po jurajskim piasku — dwójka riderów na quadach' },
     { src: `${G}/academy-3.png`, alt: 'Grupa młodzieży z quadami pod namiotem w lesie' },
-    { src: `${G}/academy-4.png`, alt: 'Kolumna quadów i uczestników przed wyjazdem w teren' },
+    { src: `${G}/academy-1.png`, alt: 'Uczestnicy Quad Academy Camp na quadach na wzgórzu z widokiem na las' },
+    { src: `${G}/academy-5.png`, alt: 'Kolumna quadów w lesie podczas wyprawy terenowej' },
+    { src: `${G}/academy-6.png`, alt: 'Grupa riderów na quadach na błotnistym lesnym szlaku' },
   ],
   youtubeVideoId: 'vcfExvLt-Jk',
   aboutSectionTitle: 'O obozie',

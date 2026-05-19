@@ -4,8 +4,10 @@ import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { SummerOfferDetailLayout } from '../components/SummerOfferDetailLayout';
+import { OfferSectionTitle } from '../components/OfferSectionTitle';
 import { getSummerOfferBySlug, summerOfferImageSrc } from '../data/summerOffers';
 import { getSummerOfferDetail } from '../data/summerOfferDetails';
+import { CAMPS_HERO_BG_POSITION, CAMPS_HERO_CONTENT, CAMPS_HERO_SECTION } from '../constants/campOfferHero';
 
 export default function OfferLatoDetailPage() {
   const { offerSlug } = useParams<{ offerSlug: string }>();
@@ -27,7 +29,10 @@ export default function OfferLatoDetailPage() {
   }
 
   const { offer, section } = found;
-  const heroSrc = summerOfferImageSrc(offer.imageKey);
+  const heroSrc =
+    detail?.heroImage?.src ??
+    (detail?.gallery?.length ? detail.gallery[detail.gallery.length - 1].src : undefined) ??
+    summerOfferImageSrc(offer.imageKey);
 
   return (
     <div className="bg-dark min-h-screen">
@@ -36,7 +41,7 @@ export default function OfferLatoDetailPage() {
       <main>
         <section
           onMouseMove={handleHeroMouseMove}
-          className="relative min-h-[42vh] md:min-h-[48vh] flex flex-col justify-end overflow-hidden border-b border-white/[0.06]"
+          className={`${CAMPS_HERO_SECTION} border-b border-white/[0.06]`}
         >
           <motion.div
             animate={{ x: mousePos.x, y: mousePos.y }}
@@ -47,13 +52,13 @@ export default function OfferLatoDetailPage() {
               className="absolute inset-0 bg-cover scale-[1.12]"
               style={{
                 backgroundImage: `url(${heroSrc})`,
-                backgroundPosition: 'center 28%',
+                backgroundPosition: detail?.heroBackgroundPosition ?? CAMPS_HERO_BG_POSITION,
               }}
             />
           </motion.div>
           <div className="app-photo-scrim" aria-hidden />
 
-          <div className="relative z-10 max-w-4xl xl:max-w-5xl mx-auto px-6 sm:px-8 pb-12 md:pb-16 pt-28 w-full">
+          <div className={CAMPS_HERO_CONTENT}>
             <nav className="text-sm text-white/65 mb-6 flex flex-wrap gap-x-2 gap-y-1">
               <Link to="/oferta" className="hover:text-primary transition-colors">
                 Oferta
@@ -83,7 +88,7 @@ export default function OfferLatoDetailPage() {
         {detail ? (
           <SummerOfferDetailLayout
             detail={detail}
-            tileImage={{ src: heroSrc, alt: `Zdjęcie tytułowe — ${offer.title}` }}
+            tileImage={{ src: summerOfferImageSrc(offer.imageKey), alt: `${offer.title} — zdjęcie obozu` }}
           />
         ) : (
           <>
@@ -111,7 +116,7 @@ export default function OfferLatoDetailPage() {
 
             <section className="py-14 md:py-16 bg-dark-lighter border-b border-white/[0.06]">
               <div className="max-w-5xl xl:max-w-6xl mx-auto px-6 sm:px-8">
-                <h2 className="text-primary font-bold uppercase tracking-widest text-sm mb-8 text-center">Galeria</h2>
+                <OfferSectionTitle>Galeria</OfferSectionTitle>
                 <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
                   <motion.figure
                     initial={{ opacity: 0, y: 12 }}

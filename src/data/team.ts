@@ -90,4 +90,15 @@ export const teamMembers: TeamMember[] = [
       'Zainteresowania i hobby: wspinaczka, techniki linowe, strzelectwo, łucznictwo, szeroko rozumiany survival, wiedźmińskie historie, dobry film, dobra książka.',
     ],
   },
+  {
+    id: 'patryk',
+    name: 'Patryk',
+    image: '/utils/zespol/patryk.png',
+    paragraphs: [
+      'Patryk — człowiek, który od 2007 roku regularnie dostaje kulkami w maskę i nadal uważa, że paintball to świetny pomysł. Weteran leśnych pól paintballowych z doświadczeniem w największych turniejach paintballa sportowego w Polsce. Według niepotwierdzonych informacji od lat popija posiłki farbą paintballową. Podobno potrafi rozpoznać typ repliki po samym dźwięku strzału, a zapach lasu działa na niego lepiej niż poranna kawa. Gdy znika na weekend, istnieje spora szansa, że właśnie buduje szałas gdzieś w środku niczego i testuje, czy da się przeżyć dwa dni z nożem, krzesiwem i konserwą turystyczną.',
+      'Miłośnik paintballa, bushcraftu i wszystkiego, co wiąże się z błotem, lasem oraz odrobiną kontrolowanego chaosu.',
+      'Zwolennik prostych zasad: ognisko ma się palić, nóż ma być ostry, a po każdej dobrej akcji musi być o czym opowiadać przy ognisku.',
+      'Dewiza życiowa? „Jak się zgubimy, to przynajmniej będzie przygoda.”',
+    ],
+  },
 ];

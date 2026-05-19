@@ -5,8 +5,23 @@ import { BRENNA_HORSE_EQUIPMENT_BLOCKS, BRENNA_HORSE_EQUIPMENT_INTRO } from './s
 const G = '/utils/oferta-letnia/oboz-jazdy-konnej/gallery';
 
 export const OBOZ_JAZDY_KONNEJ_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 40%',
+  heroImage: {
+    src: `${G}/kon-2.png`,
+    alt: 'Nauka jazdy konnej w ośrodku Hucuł — Brenna',
+  },
+  /** Zawsze 4 zdjęcia w galerii. */
   gallery: [
+    { src: `${G}/kon-2.png`, alt: 'Nauka jazdy konnej w ośrodku Hucuł — Brenna' },
     { src: `${G}/oboz-2.png`, alt: 'Jazda konna w terenie — grupa uczestników na koniach' },
+    {
+      src: `${G}/kon-3.png`,
+      alt: 'Wyjazd na konie — grupa uczestników z instruktorami w terenie',
+    },
+    {
+      src: `${G}/kon-4.png`,
+      alt: 'Dziecko na koniu podczas zajęć z instruktorką — nauka jazdy konnej',
+    },
   ],
   aboutSectionTitle: 'O obozie',
   aboutLeadTitle: 'Obóz jazdy konnej Brenna',

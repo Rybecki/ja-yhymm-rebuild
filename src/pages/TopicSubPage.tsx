@@ -25,27 +25,27 @@ const OFFROAD_GALLERY = [
     alt: 'Biały Jeep w dynamicznej jeździe przez głębokie błoto z rozbryzgiem',
   },
   {
-    src: '/images/tematyka/off-road-3.png',
-    alt: 'Dwa pojazdy 4×4 na błotnistym leśnym torze — lina wyciągarki między autami',
+    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-convoy.png',
+    alt: 'Kolumna terenówek 4×4 na leśnym szlaku — uczestnicy obozu off-road',
   },
   {
-    src: '/images/tematyka/off-road-4.png',
-    alt: 'Terenówka nocą z reflektorami — zajęcia terenowe w ofercie JA YHYMM',
-  },
-  {
-    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-4.png',
-    alt: 'Samochód terenowy pokonujący błotną przeszkodę',
+    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-1.png',
+    alt: 'Jeep Cherokee 4×4 na stromym podjeździe w lesie — jazda off-road',
   },
   {
     src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-3.png',
-    alt: 'Zajęcia off-road z elementami technik terenowych',
+    alt: 'Obozowicze na Jeepie 4×4 na piaszczystym torze',
+  },
+  {
+    src: '/images/tematyka/off-road-6.png',
+    alt: 'Nissan Terrano 4×4 w zielonym kamuflażu na piasku — jazda off-road JA YHYMM',
   },
 ];
 
 const MILITARY_VEHICLES_GALLERY = [
   { src: '/images/tematyka/kraz-1.png', alt: 'Przejażdżka wojskowym pojazdem KRAZ z uczestnikami na pace' },
   { src: '/images/tematyka/kraz-2.png', alt: 'Wojskowy pojazd terenowy KRAZ 6x6 na zielonej polanie' },
-  { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-4.png', alt: 'Przejażdżka wojskowym pojazdem KRAZ w terenie' },
+  { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-kraz.png', alt: 'Przejazd wojskowym KrAzem 255B 6×6 — Multi Camp' },
   { src: '/images/tematyka/wojskowe-pojazdy.png', alt: 'Wojskowy pojazd terenowy KRAZ 6x6 na torze off-road' },
   {
     src: '/images/tematyka/wojskowe-gmc-cckw.png',
@@ -58,8 +58,10 @@ const MILITARY_VEHICLES_GALLERY = [
 ];
 
 const CLIMBING_WALL_GALLERY = [
-  { src: '/images/tematyka/scianka1.png', alt: 'Dmuchana ścianka wspinaczkowa podczas zajęć linowych' },
-  { src: '/images/wynajem-sprzetu/scianka.png', alt: 'Uczestnicy pikniku korzystający ze ścianki wspinaczkowej' },
+  {
+    src: '/images/tematyka/linowe-gallery-1.png',
+    alt: 'Zjazd na linie ze skały — uczestnik na tle nieba i skalnego murem',
+  },
 ];
 
 const CLIMBING_ROCK_GALLERY = [
@@ -78,8 +80,12 @@ const CLIMBING_PAGE_GALLERY: GalleryImageItem[] = [
     alt: 'Zjazd kanioningowy w skafandrze i kasku przez wodospad na linach',
   },
   {
-    src: '/images/tematyka/linowe-tyrolka-las.png',
-    alt: 'Tyrolka nad lasem i skałą — zjazd na linie w kasku i uprzęży',
+    src: '/images/tematyka/linowe-gallery-last.png',
+    alt: 'Zjazd na linie z urwiska — uczestnik w kasku nad lasem',
+  },
+  {
+    src: '/images/wynajem-sprzetu/scianka.png',
+    alt: 'Uczestnicy pikniku korzystający ze ścianki wspinaczkowej',
   },
 ];
 
@@ -87,7 +93,7 @@ const PAINTBALL_GALLERY = [
   { src: '/images/tematyka/paintball-1.png', alt: 'Paintballowe działania w lesie' },
   { src: '/images/tematyka/paintball-2.png', alt: 'Zespół uczestników w pełnym wyposażeniu paintballowym' },
   { src: '/images/tematyka/paintball-3.png', alt: 'Gracz paintballowy podczas realizacji zadania terenowego' },
-  { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-3.png', alt: 'Drużyna paintballowa podczas zajęć integracyjnych' },
+  { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-1.png', alt: 'Uczestnicy obozu podczas zajęć paintballowych' },
   {
     src: '/images/tematyka/paintball-4.png',
     alt: 'Gra paintballowa w lesie — gracze za zasłoną z gałęzi, różowy dym w tle',
@@ -302,7 +308,7 @@ export default function TopicSubPage() {
                         : isMilitaryVehiclesPage
                           ? '/images/tematyka/kraz-1.png'
                           : isClimbingPage
-                            ? '/images/tematyka/linowe-tyrolka-las.png'
+                            ? '/images/tematyka/linowe-hero.png'
                             : isPaintballPage
                               ? '/images/tematyka/paintball-1.png'
                               : isMilitariaPage
@@ -310,7 +316,7 @@ export default function TopicSubPage() {
                                 : isSurvivalPage
                                   ? '/images/tematyka/survival-2.png'
                                   : isWaterPage
-                                    ? '/images/tematyka/wodne-4.png'
+                                    ? '/images/tematyka/wodne-5.png'
                                     : isHorsePage
                                       ? '/images/tematyka/konie-1.png'
                                       : isFirstAidPage

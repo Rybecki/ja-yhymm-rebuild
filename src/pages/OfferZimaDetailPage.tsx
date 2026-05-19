@@ -5,6 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { SummerOfferDetailLayout } from '../components/SummerOfferDetailLayout';
 import { getWinterOfferBySlug, getWinterOfferDetail } from '../data/winterOffers';
+import { CAMPS_HERO_BG_POSITION, CAMPS_HERO_CONTENT, CAMPS_HERO_SECTION } from '../constants/campOfferHero';
 
 export default function OfferZimaDetailPage() {
   const { offerSlug } = useParams<{ offerSlug: string }>();
@@ -34,7 +35,7 @@ export default function OfferZimaDetailPage() {
       <main>
         <section
           onMouseMove={handleHeroMouseMove}
-          className="relative min-h-[42vh] md:min-h-[48vh] flex flex-col justify-end overflow-hidden border-b border-white/[0.06]"
+          className={`${CAMPS_HERO_SECTION} border-b border-white/[0.06]`}
         >
           <motion.div
             animate={{ x: mousePos.x, y: mousePos.y }}
@@ -45,13 +46,13 @@ export default function OfferZimaDetailPage() {
               className="absolute inset-0 bg-cover scale-[1.12]"
               style={{
                 backgroundImage: `url(${heroSrc})`,
-                backgroundPosition: 'center 28%',
+                backgroundPosition: CAMPS_HERO_BG_POSITION,
               }}
             />
           </motion.div>
           <div className="app-photo-scrim" aria-hidden />
 
-          <div className="relative z-10 max-w-4xl xl:max-w-5xl mx-auto px-6 sm:px-8 pb-12 md:pb-16 pt-28 w-full">
+          <div className={CAMPS_HERO_CONTENT}>
             <nav className="text-sm text-white/65 mb-6 flex flex-wrap gap-x-2 gap-y-1">
               <Link to="/oferta" className="hover:text-primary transition-colors">
                 Oferta

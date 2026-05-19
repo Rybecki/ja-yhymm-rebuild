@@ -105,7 +105,7 @@ export function Footer() {
             </div>
 
             <div>
-              <h5 className="text-sm font-bold uppercase tracking-[0.2em] mb-8 text-primary">Kontakt</h5>
+              <h5 className="text-sm font-bold uppercase tracking-[0.2em] mb-8 text-primary text-center">Kontakt</h5>
               <ul className="space-y-6">
                 <li className="flex gap-4">
                   <MapPin className="text-primary shrink-0 mt-0.5" size={20} />
@@ -187,10 +187,11 @@ export function Footer() {
 
           <div className="mt-16 pt-12 border-t border-white/5">
             <img
-              src="/utils/logo_ja-yhymm.png"
-              alt="Ja-yhymm Logo"
+              src="/utils/logo-ja-yhymm-transparent.png"
+              alt="JA YHYMM — logo"
               className="h-12 w-auto object-contain mb-8"
-              referrerPolicy="no-referrer"
+              data-no-photo-filter
+              decoding="async"
             />
             <blockquote className="text-xl md:text-2xl font-serif italic text-white leading-relaxed mb-6">
               <span className="text-primary not-italic">„</span>

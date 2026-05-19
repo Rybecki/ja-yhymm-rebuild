@@ -6,6 +6,7 @@ const ZLOTY = '/utils/oferta-letnia/zloty-jelen';
 
 export const JURA_CLIMBING_CAMP_DETAIL: SummerOfferDetail = {
   gallery: [
+    { src: '/utils/oferta-letnia/climbing-camp.png', alt: 'Wspinaczka i linowe atrakcje — Jura Climbing Camp' },
     { src: `${G}/climbing-1.png`, alt: 'Zjazd linowy w jurajskiej szczelinie skalnej' },
     { src: `${G}/climbing-2.png`, alt: 'Przygotowanie do zjazdu ze skały z uprzężą i liną' },
     { src: `${G}/climbing-3.png`, alt: 'Wspinaczka na jurajskiej ścianie wapiennej' },

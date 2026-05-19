@@ -4,10 +4,15 @@ const G = '/utils/oferta-letnia/jura-fight-camp/gallery';
 const ZLOTY = '/utils/oferta-letnia/zloty-jelen';
 
 export const JURA_FIGHT_CAMP_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 55%',
+  heroImage: {
+    src: `${G}/fight-1.png`,
+    alt: 'Trening samoobrony na świeżym powietrzu — Fight Camp',
+  },
   gallery: [
     {
       src: `${G}/fight-1.png`,
-      alt: 'Trening grapplingowy na matach pod drewnianą altaną — Fight Camp',
+      alt: 'Trening samoobrony na świeżym powietrzu — Fight Camp',
     },
     {
       src: `${G}/fight-2.png`,
@@ -16,6 +21,10 @@ export const JURA_FIGHT_CAMP_DETAIL: SummerOfferDetail = {
     {
       src: `${G}/fight-3.png`,
       alt: 'Ćwiczenia w parterze pod okiem instruktora — bezpieczna nauka technik',
+    },
+    {
+      src: `${G}/fight-4.png`,
+      alt: 'Trening samoobrony pod drewnianą altaną — ćwiczenia na matach, Fight Camp',
     },
   ],
   aboutSectionTitle: 'O obozie',

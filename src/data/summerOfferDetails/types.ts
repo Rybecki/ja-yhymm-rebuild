@@ -45,7 +45,10 @@ export type SummerOfferTermsGroup = {
 };
 
 export type SummerOfferDetail = {
-  
+  /** Override hero `background-position` on the detail page (e.g. `center 22%`). */
+  heroBackgroundPosition?: string;
+  /** Tło hero na stronie szczegółów (niezależnie od kolejności w `gallery`). */
+  heroImage?: SummerOfferGalleryImage;
   gallery: SummerOfferGalleryImage[];
   youtubeVideoId?: string;
   aboutSectionTitle: string;

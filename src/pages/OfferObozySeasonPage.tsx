@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { WINTER_OFFERS } from '../data/winterOffers';
+import { CAMPS_HERO_BG_POSITION, CAMPS_HERO_CONTENT_LIST, CAMPS_HERO_SECTION } from '../constants/campOfferHero';
 
 const ZIMA = {
   title: 'Obozy i kolonie zimowe',
@@ -23,12 +24,15 @@ export default function OfferObozySeasonPage() {
       <Navbar />
 
       <main>
-        <section className="relative min-h-[45vh] md:min-h-[50vh] flex flex-col justify-end overflow-hidden border-b border-white/5">
-          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${ZIMA.bg})` }} />
+        <section className={`${CAMPS_HERO_SECTION} border-b border-white/5`}>
+          <div
+            className="absolute inset-0 bg-cover scale-105"
+            style={{ backgroundImage: `url(${ZIMA.bg})`, backgroundPosition: CAMPS_HERO_BG_POSITION }}
+          />
           <div className="absolute inset-0 bg-gradient-to-br from-sky-800/18 via-slate-800/10 to-transparent" aria-hidden />
           <div className="app-photo-scrim" aria-hidden />
 
-          <div className="relative z-10 max-w-4xl mx-auto px-6 pb-14 pt-28 w-full">
+          <div className={CAMPS_HERO_CONTENT_LIST}>
             <nav className="text-sm text-white/60 mb-6">
               <Link to="/oferta" className="hover:text-primary transition-colors">
                 Oferta
