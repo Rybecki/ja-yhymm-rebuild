@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Phone, Menu, X, ChevronDown } from 'lucide-react';
-import { OFFER_SUBPAGES } from '../data/offerPages';
+import { getOfferNavSubmenu } from '../data/offerPages';
 import { TOPIC_SUBPAGES } from '../data/topicPages';
 
 const hashLink = (id: string) => `/#${id}`;
@@ -13,10 +13,7 @@ const aboutSubmenu = [
   { label: 'Rekomendacje', to: '/o-nas#rekomendacje' },
 ] as const;
 
-const offerSubmenu = [
-  { label: 'Przegląd oferty', to: '/oferta' },
-  ...OFFER_SUBPAGES.map((p) => ({ label: p.title, to: `/oferta/${p.slug}` })),
-];
+const offerSubmenu = getOfferNavSubmenu();
 
 const topicSubmenu = TOPIC_SUBPAGES.map((topic) => ({ label: topic.title, to: `/tematyka/${topic.slug}` }));
 const rentalSubmenu = [

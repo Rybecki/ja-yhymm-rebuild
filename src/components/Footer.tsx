@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Facebook, Instagram, Landmark, MapPin, Mail, Phone, Youtube } from 'lucide-react';
-import { OFFER_SUBPAGES } from '../data/offerPages';
+import { getOfferNavSubmenu } from '../data/offerPages';
 
 const hashLink = (id: string) =>
   id === 'kontakt' ? '/kontakt' : id === 'dla-ciebie' ? '/dla-ciebie/formularze' : `/#${id}`;
@@ -12,7 +12,7 @@ const aboutLinks = [
   { label: 'Rekomendacje', to: '/o-nas#rekomendacje' },
 ] as const;
 
-const offerLinks = [{ label: 'Przegląd oferty', to: '/oferta' }, ...OFFER_SUBPAGES.map((p) => ({ label: p.title, to: `/oferta/${p.slug}` }))];
+const offerLinks = getOfferNavSubmenu();
 
 const menuItems: Array<{ label: string; hash: string }> = [
   { label: 'Tematyka', hash: 'tematyka' },
@@ -207,11 +207,11 @@ export function Footer() {
         <div className="pt-12 border-t border-white/5 text-center space-y-3">
           <p className="text-xs tracking-wide text-white/40">Wszystkie prawa zastrzeżone © 2026 JA YHYMM</p>
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-xs tracking-wide">
-            <Link to="/kontakt" className="text-white hover:text-primary transition-colors">
+            <Link to="/polityka-prywatnosci" className="text-white hover:text-primary transition-colors">
               Polityka prywatności
             </Link>
             <Link to="/dla-ciebie/regulaminy" className="text-white hover:text-primary transition-colors">
-              Regulamin
+              Regulaminy
             </Link>
           </div>
           <div className="text-xs tracking-wide">

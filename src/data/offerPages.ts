@@ -7,14 +7,14 @@ export type OfferSubpage = {
 
 export const OFFER_SUBPAGES: OfferSubpage[] = [
   {
-    slug: 'obozy-i-kolonie',
-    title: 'Obozy i kolonie',
-    lead: 'Aktywny wypoczynek dla dzieci i młodzieży — programy dopasowane do wieku i zainteresowań grupy.',
-  },
-  {
     slug: 'obozy-dla-klas-mundurowych',
     title: 'Obozy dla klas mundurowych',
     lead: 'Trening, dyscyplina i przygoda w formule przygotowanej pod klasy o profilu mundurowym.',
+  },
+  {
+    slug: 'obozy-i-kolonie',
+    title: 'Obozy i kolonie',
+    lead: 'Aktywny wypoczynek dla dzieci i młodzieży — programy dopasowane do wieku i zainteresowań grupy.',
   },
   {
     slug: 'wycieczki-szkolne',
@@ -61,4 +61,17 @@ export const OFFER_SUBPAGES: OfferSubpage[] = [
 export function getOfferBySlug(slug: string | undefined): OfferSubpage | undefined {
   if (!slug) return undefined;
   return OFFER_SUBPAGES.find((p) => p.slug === slug);
+}
+
+const MUNDUROWE_SLUG = 'obozy-dla-klas-mundurowych';
+
+/** Linki podmenu Oferta — obozy mundurowe na górze listy. */
+export function getOfferNavSubmenu(): { label: string; to: string }[] {
+  const mundurowe = OFFER_SUBPAGES.find((p) => p.slug === MUNDUROWE_SLUG);
+  const rest = OFFER_SUBPAGES.filter((p) => p.slug !== MUNDUROWE_SLUG);
+  return [
+    ...(mundurowe ? [{ label: mundurowe.title, to: `/oferta/${mundurowe.slug}` }] : []),
+    { label: 'Przegląd oferty', to: '/oferta' },
+    ...rest.map((p) => ({ label: p.title, to: `/oferta/${p.slug}` })),
+  ];
 }

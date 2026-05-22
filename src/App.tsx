@@ -17,6 +17,7 @@ import NewsPage from './pages/NewsPage';
 import ContactPage from './pages/ContactPage';
 import ParentZonePage from './pages/ParentZonePage';
 import ContactSubpage from './pages/ContactSubpage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import RentalEBikesPage from './pages/RentalEBikesPage';
 import RentalKayaksPage from './pages/RentalKayaksPage';
 import RentalVipBusPage from './pages/RentalVipBusPage';
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/dla-ciebie/strefa-rodzica" element={<ParentZonePage />} />
         <Route path="/dla-ciebie/regulaminy" element={<ContactSubpage />} />
         <Route path="/dla-ciebie/formularze" element={<ContactPage />} />
+        <Route path="/polityka-prywatnosci" element={<PrivacyPolicyPage />} />
         <Route path="/kontakt/strefa-rodzica" element={<Navigate to="/dla-ciebie/strefa-rodzica" replace />} />
         <Route path="/kontakt/regulaminy" element={<Navigate to="/dla-ciebie/regulaminy" replace />} />
         <Route path="/kontakt" element={<ContactPage />} />

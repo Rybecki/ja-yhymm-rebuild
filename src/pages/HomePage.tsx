@@ -182,8 +182,94 @@ const About = () => {
   );
 };
 
+const UNIFORMED_CAMP_PATH = '/oferta/obozy-dla-klas-mundurowych';
+
+const UniformedClassesCta = () => {
+  const highlights = [
+    'Profil mundurowy: wojsko, policja, straż pożarna, ratownictwo',
+    'Paintball, militaria, taktyka i survival na infrastrukturze Jury',
+    'Program wypełniony zajęciami — opieka 24h, nauczyciele bez kosztów pobytu',
+  ] as const;
+
+  return (
+    <section className="section-padding bg-dark border-t border-white/5" aria-labelledby="mundurowe-cta-heading">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="relative overflow-hidden rounded-[2rem] border-2 border-primary bg-dark-lighter shadow-2xl shadow-black/40"
+        >
+          <div
+            className="absolute inset-0 bg-cover bg-center scale-105 opacity-35"
+            style={{ backgroundImage: 'url(/utils/mili.jpg)' }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/92 to-dark/55" aria-hidden />
+          <div className="app-photo-scrim opacity-80" aria-hidden />
+
+          <div className="relative z-10 grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-8 lg:gap-10 p-8 md:p-12 lg:p-14 items-center">
+            <div>
+              <p className="text-primary font-bold uppercase tracking-widest text-xs md:text-sm mb-4 flex items-center gap-2">
+                <Shield size={18} aria-hidden />
+                Obozy dla klas mundurowych
+              </p>
+              <h2
+                id="mundurowe-cta-heading"
+                className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-display text-white leading-tight mb-5"
+              >
+                Trening, dyscyplina
+                <br />
+                i prawdziwa przygoda.
+              </h2>
+              <p className="text-white/85 text-base md:text-lg leading-relaxed mb-6 max-w-xl">
+                Programy dla szkół i klas mundurowych łączą szkolenie praktyczne, bezpieczeństwo i aktywny wyjazd z realnym
+                przełożeniem na przyszłą służbę. Jesteśmy jedną z nielicznych instytucji, które profesjonalnie organizują ten
+                typ wyjazdów dla młodzieży.
+              </p>
+              <ul className="space-y-3 mb-8 text-sm md:text-base text-white/75">
+                {highlights.map((item) => (
+                  <li key={item} className="flex gap-3 items-start">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                to={UNIFORMED_CAMP_PATH}
+                className="btn-primary inline-flex items-center gap-2 font-display text-sm md:text-base px-6 md:px-8 py-3.5 md:py-4"
+              >
+                Poznaj program obozów
+                <ArrowRight size={18} className="shrink-0" aria-hidden />
+              </Link>
+            </div>
+
+            <div className="relative rounded-2xl overflow-hidden border border-white/15 aspect-[4/3] lg:aspect-auto lg:min-h-[300px] shadow-xl">
+              <img
+                src="/images/klasy-mundurowe/militaria-4.png"
+                alt="Uczestnicy obozu dla klas mundurowych podczas ćwiczeń terenowych"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
+              <div className="app-photo-scrim-card" aria-hidden />
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const Offer = () => {
   const offers = [
+    {
+      title: 'Obozy dla klas mundurowych',
+      to: UNIFORMED_CAMP_PATH,
+      img: '/utils/mili.jpg',
+      icon: <Shield className="text-primary" size={32} />,
+    },
     {
       title: 'Obozy i kolonie',
       to: '/oferta/obozy-i-kolonie',
@@ -195,12 +281,6 @@ const Offer = () => {
       to: '/oferta/wycieczki-szkolne',
       img: '/images/wycieczki-szkolne/wycieczki-szkolne-karta.png',
       icon: <GraduationCap className="text-primary" size={32} />,
-    },
-    {
-      title: 'Obozy dla klas mundurowych',
-      to: '/oferta/obozy-dla-klas-mundurowych',
-      img: '/utils/mili.jpg',
-      icon: <Shield className="text-primary" size={32} />,
     },
     {
       title: 'Imprezy integracyjne, firmowe',
@@ -461,6 +541,7 @@ export default function HomePage() {
       <Navbar />
       <Hero />
       <About />
+      <UniformedClassesCta />
       <Offer />
       <News />
       <Reviews />
