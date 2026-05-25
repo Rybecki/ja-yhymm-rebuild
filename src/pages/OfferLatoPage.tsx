@@ -6,6 +6,7 @@ import { Footer } from '../components/Footer';
 import { SummerOfferSectionFrame } from '../components/SummerOfferSectionFrame';
 import { SUMMER_OFFER_SECTIONS, summerOfferImageSrc } from '../data/summerOffers';
 import { CAMPS_HERO_BG_POSITION, CAMPS_HERO_CONTENT_LIST, CAMPS_HERO_SECTION } from '../constants/campOfferHero';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 
 const LATO_BG = '/utils/obozy-kolonie/lato.png';
 
@@ -25,6 +26,7 @@ export default function OfferLatoPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 via-orange-400/8 to-transparent" aria-hidden />
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
 
           <div className={CAMPS_HERO_CONTENT_LIST}>
             <nav className="text-sm text-white/65 mb-6">
@@ -97,9 +99,13 @@ export default function OfferLatoPage() {
                         loading="lazy"
                       />
                       <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                      <PhotoBottomScrim card />
                       <div className="absolute inset-0 z-10 flex flex-col justify-end p-5 md:p-6">
                         <span className="text-lg md:text-xl font-bold font-display text-white leading-snug drop-shadow-md group-hover:text-primary transition-colors">
                           {offer.title}
+                        </span>
+                        <span className="mt-1 text-xs md:text-sm text-white/80 font-medium leading-snug drop-shadow-sm">
+                          {offer.subtitle}
                         </span>
                         <span className="mt-2 inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest">
                           Szczegóły

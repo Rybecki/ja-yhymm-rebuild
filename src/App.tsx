@@ -1,7 +1,9 @@
 
-
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { getRecaptchaSiteKey, isRecaptchaDisabled } from './config/recaptcha';
 import { ScrollToTop } from './components/ScrollToTop';
+import { RouteSeo } from './components/RouteSeo';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import OfferIndexPage from './pages/OfferIndexPage';
@@ -25,9 +27,10 @@ import RentalInflatablesPage from './pages/RentalInflatablesPage';
 import RentalAutolawetaPage from './pages/RentalAutolawetaPage';
 
 export default function App() {
-  return (
+  const appTree = (
     <BrowserRouter>
       <ScrollToTop />
+      <RouteSeo />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/o-nas" element={<AboutPage />} />
@@ -53,7 +56,17 @@ export default function App() {
         <Route path="/oferta/obozy-i-kolonie" element={<ObozyKoloniePage />} />
         <Route path="/oferta/:slug" element={<OfferSubPage />} />
         <Route path="/tematyka/:slug" element={<TopicSubPage />} />
-      </Routes>
+        </Routes>
     </BrowserRouter>
+  );
+
+  if (isRecaptchaDisabled()) {
+    return appTree;
+  }
+
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey={getRecaptchaSiteKey()} language="pl">
+      {appTree}
+    </GoogleReCaptchaProvider>
   );
 }

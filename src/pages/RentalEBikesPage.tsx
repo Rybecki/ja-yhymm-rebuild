@@ -4,10 +4,16 @@ import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { RentalFormSummary } from '../components/RentalFormSummary';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { getRentalRegulationText } from '../data/rentalRegulations';
+import { FormRecaptcha, FormSubmitButton, FormSubmitFeedback } from '../components/FormRecaptcha';
+import { PhoneInput } from '../components/PhoneInput';
 import { calculateEBikePricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
+import { submitRentalForm } from '../lib/rentalFormSubmit';
+import { useRecaptcha } from '../hooks/useRecaptcha';
 
 const KROSS_IMAGES = ['/images/wypozyczalnia/e-rowery/kross-1-v3.png', '/images/wypozyczalnia/e-rowery/kross-2-v3.png'];
 const WINORA_IMAGES = ['/images/wypozyczalnia/e-rowery/winora-1-v3.png', '/images/wypozyczalnia/e-rowery/winora-2-v3.png'];
@@ -21,84 +27,12 @@ const WINORA_GALLERY: GalleryImageItem[] = WINORA_IMAGES.map((src, i) => ({
   alt: `WINORA Yucatan X8 — zdjęcie ${i + 1}`,
 }));
 
-const REGULATIONS_TEXT = `REGULAMIN WYPOŻYCZALNI ROWERÓW ELEKTRYCZNYCH
-§1. Postanowienia ogólne
-Właścicielem wypożyczalni jest A Bo Co... spółka z.o.o z siedzibą w Katowicach przy ul. Niwnej 9.
-Przedmiotem wynajmu są rowery elektryczne marki Kross Influx Hybrid 1.0 oraz WINORA Yucatan X8.
-Wypożyczenie roweru następuje po podpisaniu Umowy Wynajmu oraz zaakceptowaniu niniejszego Regulaminu.
-
-§2. Warunki wypożyczenia
-Wypożyczającym może być osoba pełnoletnia, posiadająca ważny dokument tożsamości ze zdjęciem.
-Osoby niepełnoletnie mogą korzystać z rowerów wyłącznie pod opieką prawnych opiekunów, którzy biorą za nie pełną odpowiedzialność.
-Wypożyczający musi być w stanie trzeźwości. Wypożyczalnia ma prawo odmówić wydania roweru osobie pod wpływem alkoholu lub innych środków odurzających bez zwrotu kosztów rezerwacji.
-
-§3. Opłaty i Kaucja
-Opłata za wypożyczenie pobierana jest z góry zgodnie z aktualnym cennikiem dostępnym na stronie internetowej.
-Przy wypożyczeniu pobierana jest kaucja zwrotna w wysokości 500 PLN za każdy rower.
-Kaucja stanowi zabezpieczenie na wypadek uszkodzeń wynikających z niewłaściwego użytkowania sprzętu lub zagubienia akcesoriów.
-Kaucja jest zwracana w całości w momencie oddania sprawnego i nieuszkodzonego roweru.
-
-§4. Odpowiedzialność i użytkowanie
-Wypożyczający otrzymuje rower czysty i w pełni sprawny technicznie i zobowiązuje się oddać go w takim samym stanie.
-Rowery są przeznaczone do jazdy po drogach utwardzonych oraz wyznaczonych szlakach rowerowych. Zabrania się wykorzystywania rowerów do sportów ekstremalnych (downhill, skoki itp.).
-Wypożyczający ponosi pełną odpowiedzialność za szkody powstałe od momentu wypożyczenia do momentu zwrotu roweru.
-W przypadku kradzieży roweru, Wypożyczający ma obowiązek niezwłocznie powiadomić Policję oraz Właściciela wypożyczalni. Wypożyczający odpowiada finansowo za utratę roweru do pełnej jego wartości rynkowej.
-
-§5. Dowóz i Zwrot
-Dowóz roweru jest bezpłatny do 15 km od aktualnej bazy (Jura/Katowice). Powyżej tej odległości naliczana jest opłata 2,50 PLN / km.
-Rower należy zwrócić w ustalonym terminie. Przekroczenie czasu najmu o ponad 30 minut skutkuje naliczeniem opłaty za kolejną pełną dobę.
-W przypadku zwrotu roweru brudnego (błoto uniemożliwiające ocenę stanu technicznego), wypożyczalnia może naliczyć opłatę serwisową za czyszczenie w wysokości 50 PLN.
-
-§6. Awarie i wypadki
-W przypadku awarii silnika lub osprzętu elektrycznego nie wynikającej z winy klienta, Wypożyczalnia zobowiązuje się do podstawienia roweru zastępczego (w miarę dostępności) lub zwrotu części kosztów najmu.
-Wypożyczalnia nie ponosi odpowiedzialności za wypadki i szkody na zdrowiu powstałe podczas użytkowania rowerów przez Wypożyczającego.
-
-§7. Dane osobowe (RODO)
-Podpisując umowę, Wypożyczający wyraża zgodę na przetwarzanie danych osobowych wyłącznie w celu realizacji umowy najmu, zgodnie z obowiązującymi przepisami o ochronie danych osobowych.
-
-UMOWA WYNAJMU ROWERU ELEKTRYCZNEGO nr ____/202X
-Data i miejsce zawarcia umowy: ________________________________________
-
-1. STRONY UMOWY
-Wynajmujący: A Bo Co... spółka z.o.o, ul. Niwna 9, 40-406 Katowice, NIP: 954 289 00 70
-Najemca:
-Imię i nazwisko: ______________________________________________________
-Nr dokumentu tożsamości (PESEL/Paszport): _____________________________
-Adres zamieszkania: __________________________________________________
-Numer telefonu: ______________________________________________________
-
-2. PRZEDMIOT WYNAJMU
-Wynajmujący oddaje do używania Najemcy rower elektryczny:
-[] KROSS Influx Hybrid 1.0 (Nr ramy: ______________________)
-[] WINORA Yucatan X8 (Nr ramy: ______________________)
-Dodatki: [] Kask [] Zapięcie [] Ładowarka [] Inne: __________________
-
-3. CZAS I KOSZT WYNAJMU
-Data i godzina wydania: _____________________________________________
-Planowana data i godzina zwrotu: ____________________________________
-Opłata za wynajem: _____________ PLN (opłacono: [] Gotówka [] Karta/BLIK)
-Kaucja zwrotna: _____________ PLN (pobrano: [] Gotówka [] Preautoryzacja)
-
-4. OŚWIADCZENIA I ZASADY
-Najemca potwierdza, że otrzymał rower w dobrym stanie technicznym, bez widocznych wad (z wyjątkiem uwag w pkt 5).
-Najemca zobowiązuje się do przestrzegania Regulaminu Wypożyczalni, który stanowi załącznik do niniejszej umowy.
-Najemca ponosi pełną odpowiedzialność za uszkodzenia wynikające z niewłaściwego użytkowania oraz za kradzież roweru.
-W przypadku opóźnienia w zwrocie, Najemca zobowiązuje się do uiszczenia dopłaty zgodnie z cennikiem.
-
-5. STAN TECHNICZNY (UWAGI)
-(Miejsce na opisanie istniejących zarysowań lub uwag technicznych przed wydaniem)
-
-6. PODPISY
-Wynajmujący: _____________________ Najemca: _____________________
-
-Protokół zwrotu (wypełniany przy oddaniu roweru):
-Data zwrotu: ________________ Godzina: ________
-[] Rower zwrócono w stanie niepogorszonym.
-[] Stwierdzono uszkodzenia: ________________________________________________
-[] Kaucję zwrócono w całości / [] Kaucję zatrzymano w kwocie: ____________ PLN
-Podpis Wynajmującego: ____________________ Podpis Najemcy: ____________________`;
+const REGULATIONS_TEXT = getRentalRegulationText('e-rowery');
 
 export default function RentalEBikesPage() {
+  const recaptcha = useRecaptcha();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState<{ success?: string | null; error?: string | null }>({});
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
   const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
@@ -126,12 +60,12 @@ export default function RentalEBikesPage() {
     return formData.bikeModel || formData.packageType || 'e-rower';
   }, [formData.bikeModel, formData.packageType]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     localStorage.setItem('eBikeRentalForm', JSON.stringify(formData));
 
     const body = [
+      'Formularz: Rezerwacja e-rowerów (/wypozyczalnia/e-rowery)',
+      '',
       'Nowe zapytanie o rezerwacje e-roweru:',
       '',
       `Imie i nazwisko: ${formData.fullName}`,
@@ -148,7 +82,14 @@ export default function RentalEBikesPage() {
       formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
 
-    window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Rezerwacja e-roweru')}&body=${encodeURIComponent(body)}`;
+    await submitRentalForm(event, recaptcha, {
+      subject: 'Formularz: Rezerwacja e-roweru',
+      body,
+      replyTo: formData.email,
+      phone: formData.phone,
+      setSubmitting: setIsSubmitting,
+      setFeedback: setSubmitFeedback,
+    });
   };
 
   useEffect(() => {
@@ -193,11 +134,7 @@ export default function RentalEBikesPage() {
           />
           <div className="absolute inset-0 z-0 bg-black/25 pointer-events-none" aria-hidden />
           <div className="app-photo-scrim" aria-hidden />
-          <div
-            className="absolute inset-x-0 bottom-0 h-32 md:h-44 pointer-events-none z-[1]"
-            style={{ background: 'linear-gradient(to top, var(--color-dark) 0%, color-mix(in oklab, var(--color-dark) 55%, transparent) 45%, transparent 100%)' }}
-            aria-hidden
-          />
+          <PhotoBottomScrim />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -435,12 +372,10 @@ export default function RentalEBikesPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Telefon*</label>
-                    <input
-                      type="tel"
+                    <PhoneInput
                       required
                       value={formData.phone}
-                      onChange={(event) => updateFormData('phone', event.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                      onChange={(value) => updateFormData('phone', value)}
                     />
                   </div>
                 </div>
@@ -540,9 +475,11 @@ export default function RentalEBikesPage() {
                   </button>
                   , który podpiszesz przed wydaniem sprzętu.
                 </p>
-                <button type="submit" className="w-full btn-primary py-4 text-lg">
+                <FormRecaptcha recaptcha={recaptcha} className="pt-2" />
+                <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+                <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
                   Wyślij formularz
-                </button>
+                </FormSubmitButton>
               </form>
             </section>
           </div>

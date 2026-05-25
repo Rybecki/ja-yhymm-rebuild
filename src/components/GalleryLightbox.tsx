@@ -11,7 +11,6 @@ type GalleryLightboxProps = {
   index: number;
   onIndexChange: (index: number) => void;
   onClose: () => void;
-  /** Tailwind z-index class, e.g. z-[200] or z-[240] */
   zIndexClass?: string;
 };
 

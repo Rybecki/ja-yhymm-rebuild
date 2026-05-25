@@ -5,6 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { WINTER_OFFERS } from '../data/winterOffers';
 import { CAMPS_HERO_BG_POSITION, CAMPS_HERO_CONTENT_LIST, CAMPS_HERO_SECTION } from '../constants/campOfferHero';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 
 const ZIMA = {
   title: 'Obozy i kolonie zimowe',
@@ -31,6 +32,7 @@ export default function OfferObozySeasonPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-br from-sky-800/18 via-slate-800/10 to-transparent" aria-hidden />
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
 
           <div className={CAMPS_HERO_CONTENT_LIST}>
             <nav className="text-sm text-white/60 mb-6">
@@ -101,6 +103,7 @@ export default function OfferObozySeasonPage() {
                       loading="lazy"
                     />
                     <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                    <PhotoBottomScrim card />
                     <div className="absolute inset-0 z-10 flex flex-col justify-end p-5 md:p-6">
                       <span className="text-lg md:text-xl font-bold font-display text-white leading-snug drop-shadow-md group-hover:text-primary transition-colors">
                         {offer.title}

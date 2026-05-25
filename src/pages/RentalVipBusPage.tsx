@@ -4,10 +4,16 @@ import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { RentalFormSummary } from '../components/RentalFormSummary';
+import { getRentalRegulationText } from '../data/rentalRegulations';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { FormRecaptcha, FormSubmitButton, FormSubmitFeedback } from '../components/FormRecaptcha';
+import { PhoneInput } from '../components/PhoneInput';
 import { calculateVipBusPricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
+import { submitRentalForm } from '../lib/rentalFormSubmit';
+import { useRecaptcha } from '../hooks/useRecaptcha';
 
 const VIP_BUS_HERO_SRC = '/images/wypozyczalnia/vip-bus/bus-hero.png';
 
@@ -30,41 +36,12 @@ const VIP_BUS_GALLERY: GalleryImageItem[] = [
   },
 ];
 
-const REGULATIONS_TEXT = `REGULAMIN USŁUGI VIP BUS A BO CO...
-1. Usługa przewozu realizowana jest przez A Bo Co... Sp. z o.o.
-2. Każdy przejazd wyceniany jest indywidualnie na podstawie trasy, czasu i zakresu obsługi.
-3. Rezerwacja jest potwierdzona po akceptacji wyceny i ustaleniu terminu.
-4. Pasażerowie zobowiązani są do przestrzegania zasad bezpieczeństwa i poleceń kierowcy.
-5. W pojeździe obowiązuje zakaz spożywania alkoholu bez zgody Wynajmującego.
-6. Za szkody powstałe z winy pasażerów odpowiada osoba zamawiająca usługę.
-7. Szczegółowe warunki przejazdu określa umowa/zlecenie transportowe.
-
-UMOWA USŁUGI TRANSPORTOWEJ VIP BUS nr ____/202X
-Data i miejsce zawarcia umowy: ________________________________________
-
-1. STRONY UMOWY
-Wynajmujący: A Bo Co... sp. z o.o., ul. Niwna 9, 40-406 Katowice, NIP: 954 289 00 70
-Zamawiający:
-Imię i nazwisko / firma: ______________________________________________
-Telefon: _____________________  Email: ________________________________
-
-2. ZAKRES USŁUGI
-Trasa: _______________________________________________________________
-Data i godziny: _______________________________________________________
-Liczba pasażerów: ____________________________________________________
-Pakiet: _______________________________________________________________
-
-3. FINANSE
-Cena netto: ______________________ PLN
-Dodatkowe koszty: ______________________ PLN
-Sposób płatności: ________________________________________________
-
-4. OŚWIADCZENIA
-Zamawiający potwierdza zapoznanie się z regulaminem i akceptuje warunki usługi.
-
-Podpis Wynajmującego: ____________________  Podpis Zamawiającego: ____________________`;
+const REGULATIONS_TEXT = getRentalRegulationText('vip-bus');
 
 export default function RentalVipBusPage() {
+  const recaptcha = useRecaptcha();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState<{ success?: string | null; error?: string | null }>({});
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
   const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
@@ -91,11 +68,12 @@ export default function RentalVipBusPage() {
     return parts.join(' – ');
   }, [formData.packageType, formData.passengers]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     localStorage.setItem('vipBusForm', JSON.stringify(formData));
 
     const body = [
+      'Formularz: VIP BUS (/wypozyczalnia/vip-bus)',
+      '',
       'Nowe zapytanie o VIP BUS:',
       '',
       `Imie i nazwisko: ${formData.fullName}`,
@@ -112,7 +90,14 @@ export default function RentalVipBusPage() {
       formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
 
-    window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Zapytanie VIP BUS')}&body=${encodeURIComponent(body)}`;
+    await submitRentalForm(event, recaptcha, {
+      subject: 'Formularz: VIP BUS',
+      body,
+      replyTo: formData.email,
+      phone: formData.phone,
+      setSubmitting: setIsSubmitting,
+      setFeedback: setSubmitFeedback,
+    });
   };
 
   useEffect(() => {
@@ -150,6 +135,7 @@ export default function RentalVipBusPage() {
             aria-hidden
           />
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -275,7 +261,11 @@ export default function RentalVipBusPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Telefon*</label>
-                    <input type="tel" required value={formData.phone} onChange={(event) => updateFormData('phone', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                    <PhoneInput
+                      required
+                      value={formData.phone}
+                      onChange={(value) => updateFormData('phone', value)}
+                    />
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-5">
@@ -326,7 +316,11 @@ export default function RentalVipBusPage() {
                   </button>
                   .
                 </p>
-                <button type="submit" className="w-full btn-primary py-4 text-lg">Wyślij formularz</button>
+                <FormRecaptcha recaptcha={recaptcha} className="pt-2" />
+                <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+                <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
+                  Wyślij formularz
+                </FormSubmitButton>
               </form>
             </section>
           </div>

@@ -10,4 +10,6 @@ export const PARTNER_LOGOS = [
   { src: '/images/partnerzy/zloty-jelen.png', alt: 'Złoty Jeleń' },
   { src: '/images/partnerzy/slaska-izba-turystyki.png', alt: 'Śląska Izba Turystyki' },
   { src: '/images/partnerzy/wojewodztwo-slaskie.png', alt: 'Województwo Śląskie' },
+  { src: '/images/partnerzy/pzs-reda.png', alt: 'Powiatowy Zespół Szkół w Redzie' },
+  { src: '/images/partnerzy/moraj.png', alt: 'Moraj' },
 ] as const;

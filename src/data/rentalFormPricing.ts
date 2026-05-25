@@ -1,4 +1,3 @@
-/** Konto do przedpłat — A Bo Co... Sp. z o.o. (jak na stronie Kontakt). */
 export const RENTAL_BANK_ACCOUNT = {
   company: 'A Bo Co... Spółka z o.o.',
   number: '54 1050 1214 1000 0090 8549 4533',

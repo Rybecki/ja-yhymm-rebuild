@@ -4,14 +4,19 @@ import { motion } from 'motion/react';
 import { ChevronDown, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { RentalFormSummary } from '../components/RentalFormSummary';
+import { getRentalRegulationText } from '../data/rentalRegulations';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { FormRecaptcha, FormSubmitButton, FormSubmitFeedback } from '../components/FormRecaptcha';
+import { PhoneInput } from '../components/PhoneInput';
 import { calculateInflatablesPricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
+import { submitRentalForm } from '../lib/rentalFormSubmit';
+import { useRecaptcha } from '../hooks/useRecaptcha';
 
 const INFLATABLES_HERO_SRC = '/images/wypozyczalnia/dmuchance/dmuchance-hero-collage.png';
 
-/** Galeria: Mario + dmuchańce z dziećmi, potem ścianki z galerii. */
 const INFLATABLES_GALLERY: readonly GalleryImageItem[] = [
   { src: '/images/wypozyczalnia/dmuchance/dmuchance-mario.png', alt: 'Zjeżdżalnia „Mario” — dzieci korzystają ze zjazdu' },
   { src: '/images/wypozyczalnia/dmuchance/dmuchance-3.png', alt: 'Piana party — dzieci bawią się na dmuchańcach' },
@@ -21,60 +26,12 @@ const INFLATABLES_GALLERY: readonly GalleryImageItem[] = [
   { src: '/images/wynajem-sprzetu/scianka.png', alt: 'Ścianka wspinaczkowa na evencie plenerowym' },
 ];
 
-const REGULATIONS_TEXT = `REGULAMIN KORZYSTANIA Z URZĄDZEŃ DMUCHANYCH "JA YHYMM..."
-I. Zasady Ogólne
-1. Urządzenia są wynajmowane wraz z profesjonalną obsługą na czas 6 godzin, chyba że umowa stanowi inaczej.
-2. Korzystanie z atrakcji dozwolone jest wyłącznie pod nadzorem pracownika obsługi.
-3. Opiekę nad dziećmi przebywającymi na terenie atrakcji sprawują ich rodzice lub opiekunowie prawni.
-
-II. Zasady Bezpieczeństwa
-1. Przed wejściem na urządzenie należy zdjąć obuwie, okulary, biżuterię, zegarki oraz wszelkie ostre przedmioty.
-2. Na urządzeniach obowiązuje bezwzględny zakaz wnoszenia jedzenia, napojów oraz żucia gumy.
-3. Zabrania się:
-- pchania innych użytkowników, robienia salt oraz niebezpiecznych akrobacji,
-- wspinania się po ścianach zewnętrznych i siatkach ochronnych,
-- zjeżdżania głową w dół (dotyczy Zjeżdżalni "Mario"),
-- wchodzenia na urządzenie osób pod wpływem alkoholu lub środków odurzających.
-4. Na ściance wspinaczkowej mogą przebywać wyłącznie osoby odpowiednio zabezpieczone przez instruktora.
-
-III. Warunki Techniczne
-1. Najemca zobowiązany jest zapewnić płaski, uprzątnięty teren oraz stały dostęp do źródła prądu 230V.
-2. W przypadku niekorzystnych warunków atmosferycznych (wiatr powyżej 10 m/s, ulewny deszcz, burza), obsługa ma prawo przerwać pracę urządzeń.
-
-UMOWA WYNAJMU ATRAKCJI EVENTOWYCH
-Zawarta w dniu ........................... w ........................................... pomiędzy:
-Wynajmującym: Ja Yhymm (www.ja-yhymm.pl), reprezentowanym przez ...........................................
-a
-Najemcą: ....................................................................................................................................
-
-§ 1. Przedmiot Umowy
-1. Wynajmujący zobowiązuje się do wynajęcia, transportu i obsługi następujących atrakcji:
-[ ] Zjeżdżalnia "Mario" (1200 zł)
-[ ] Ścianka Wspinaczkowa (1500 zł)
-[ ] Zamek (700 zł)
-[ ] Żółw "Suchy basen" (1000 zł)
-[ ] Wytwornica Piany (900 zł / 1h)
-[ ] Pakiet: ..........................................................................
-2. Czas pracy atrakcji wynosi 6 godzin.
-3. Data i miejsce realizacji: ...........................................................................................................
-
-§ 2. Wynagrodzenie i Płatność
-1. Strony ustalają łączną kwotę wynajmu brutto na: ........................... zł.
-2. Koszt dojazdu wynosi: ........................... zł.
-3. Łączna należność płatna jest: [ ] Gotówką / [ ] Przelewem.
-
-§ 3. Oświadczenia Najemcy
-1. Najemca oświadcza, że zapoznał się z Regulaminem Korzystania z Urządzeń i zobowiązuje się do jego przestrzegania.
-2. Najemca zapewnia odpowiednie miejsce do rozstawienia urządzeń oraz przyłącze elektryczne.
-
-§ 4. Postanowienia Końcowe
-1. Wszelkie zmiany umowy wymagają formy pisemnej.
-2. Umowę sporządzono w dwóch jednobrzmiących egzemplarzach.
-
-.................................................. ..................................................
-(Wynajmujący) (Najemca)`;
+const REGULATIONS_TEXT = getRentalRegulationText('dmuchance');
 
 export default function RentalInflatablesPage() {
+  const recaptcha = useRecaptcha();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState<{ success?: string | null; error?: string | null }>({});
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
   const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
@@ -104,10 +61,11 @@ export default function RentalInflatablesPage() {
     return formData.packageType || formData.attraction || 'dmuchańce i eventy';
   }, [formData.packageType, formData.attraction]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     localStorage.setItem('inflatablesForm', JSON.stringify(formData));
     const body = [
+      'Formularz: Dmuchańce (/wypozyczalnia/dmuchance)',
+      '',
       'Nowe zapytanie o dmuchance i eventy:',
       '',
       `Imie i nazwisko: ${formData.fullName}`,
@@ -123,7 +81,15 @@ export default function RentalInflatablesPage() {
       formatSummaryForEmail(priceSummary),
       formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
-    window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Zapytanie dmuchance i eventy')}&body=${encodeURIComponent(body)}`;
+
+    await submitRentalForm(event, recaptcha, {
+      subject: 'Formularz: Dmuchańce i eventy',
+      body,
+      replyTo: formData.email,
+      phone: formData.phone,
+      setSubmitting: setIsSubmitting,
+      setFeedback: setSubmitFeedback,
+    });
   };
 
   useEffect(() => {
@@ -165,11 +131,7 @@ export default function RentalInflatablesPage() {
             aria-hidden
           />
           <div className="app-photo-scrim" aria-hidden />
-          <div
-            className="absolute inset-x-0 bottom-0 h-32 md:h-44 pointer-events-none z-[1]"
-            style={{ background: 'linear-gradient(to top, var(--color-dark) 0%, color-mix(in oklab, var(--color-dark) 55%, transparent) 45%, transparent 100%)' }}
-            aria-hidden
-          />
+          <PhotoBottomScrim />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -329,7 +291,11 @@ export default function RentalInflatablesPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Telefon*</label>
-                    <input type="tel" required value={formData.phone} onChange={(event) => updateFormData('phone', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                    <PhoneInput
+                      required
+                      value={formData.phone}
+                      onChange={(value) => updateFormData('phone', value)}
+                    />
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-5">
@@ -391,7 +357,11 @@ export default function RentalInflatablesPage() {
                   </button>
                   .
                 </p>
-                <button type="submit" className="w-full btn-primary py-4 text-lg">Wyślij formularz</button>
+                <FormRecaptcha recaptcha={recaptcha} className="pt-2" />
+                <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+                <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
+                  Wyślij formularz
+                </FormSubmitButton>
               </form>
             </section>
           </div>

@@ -6,6 +6,7 @@ import { Footer } from '../components/Footer';
 import { SummerOfferDetailLayout } from '../components/SummerOfferDetailLayout';
 import { getWinterOfferBySlug, getWinterOfferDetail } from '../data/winterOffers';
 import { CAMPS_HERO_BG_POSITION, CAMPS_HERO_CONTENT, CAMPS_HERO_SECTION } from '../constants/campOfferHero';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 
 export default function OfferZimaDetailPage() {
   const { offerSlug } = useParams<{ offerSlug: string }>();
@@ -26,7 +27,7 @@ export default function OfferZimaDetailPage() {
     return <Navigate to="/oferta/obozy-i-kolonie/zima" replace />;
   }
 
-  const heroSrc = offer.imageSrc;
+  const heroSrc = detail?.heroImage?.src ?? offer.imageSrc;
 
   return (
     <div className="bg-dark min-h-screen">
@@ -46,11 +47,12 @@ export default function OfferZimaDetailPage() {
               className="absolute inset-0 bg-cover scale-[1.12]"
               style={{
                 backgroundImage: `url(${heroSrc})`,
-                backgroundPosition: CAMPS_HERO_BG_POSITION,
+                backgroundPosition: detail?.heroBackgroundPosition ?? CAMPS_HERO_BG_POSITION,
               }}
             />
           </motion.div>
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
 
           <div className={CAMPS_HERO_CONTENT}>
             <nav className="text-sm text-white/65 mb-6 flex flex-wrap gap-x-2 gap-y-1">

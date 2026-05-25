@@ -10,7 +10,6 @@ export const OBOZ_JAZDY_KONNEJ_DETAIL: SummerOfferDetail = {
     src: `${G}/kon-2.png`,
     alt: 'Nauka jazdy konnej w ośrodku Hucuł — Brenna',
   },
-  /** Zawsze 4 zdjęcia w galerii. */
   gallery: [
     { src: `${G}/kon-2.png`, alt: 'Nauka jazdy konnej w ośrodku Hucuł — Brenna' },
     { src: `${G}/oboz-2.png`, alt: 'Jazda konna w terenie — grupa uczestników na koniach' },

@@ -6,7 +6,6 @@ const ZLOTY = '/utils/oferta-letnia/zloty-jelen';
 
 export const JURA_MULTI_CAMP_DETAIL: SummerOfferDetail = {
   heroBackgroundPosition: 'center 42%',
-  /** Zawsze 4 zdjęcia: grupa, paintball, KrAZ, kajaki. */
   gallery: [
     { src: `${G}/multi-4.png`, alt: 'Grupa obozowiczów na jurajskiej skale — integracja na Multi Camp' },
     { src: `${G}/multi-1.png`, alt: 'Uczestnicy obozu w strojach paintballowych na polu — Jura Multi Camp' },

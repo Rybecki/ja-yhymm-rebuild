@@ -5,6 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GoldenBorderSection } from '../components/GoldenBorderSection';
 import { OFFER_SUBPAGES } from '../data/offerPages';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 
 const HERO_BG = '/images/oferta/oferta-hero.png';
 
@@ -57,7 +58,7 @@ export default function OfferIndexPage() {
                 >
                   <Link
                     to={`/oferta/${item.slug}`}
-                    className="group relative block h-full min-h-[280px] overflow-hidden rounded-2xl border-2 border-white/10 p-6 transition-colors duration-300 hover:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-dark md:p-8"
+                    className="group relative block h-full min-h-[280px] overflow-hidden rounded-2xl border-2 border-white/10 transition-colors duration-300 hover:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-dark"
                   >
                     <img
                       src={media.img}
@@ -65,10 +66,11 @@ export default function OfferIndexPage() {
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="app-photo-scrim-card" aria-hidden />
+                    <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                    <PhotoBottomScrim card />
 
-                    <div className="relative z-10">
-                      <div className="mb-4 inline-flex rounded-xl border border-white/15 bg-dark/40 p-3">
+                    <div className="relative z-10 flex h-full min-h-[280px] flex-col justify-end p-6 md:p-8">
+                      <div className="mb-4">
                         <Icon className="text-primary" size={24} />
                       </div>
                       <h3 className="mb-3 font-display text-xl font-bold text-white transition-colors group-hover:text-primary md:text-2xl">

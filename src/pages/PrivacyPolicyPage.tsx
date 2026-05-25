@@ -98,7 +98,9 @@ export default function PrivacyPolicyPage() {
                     </h3>
                     <div className="space-y-5 text-white/80 leading-relaxed text-sm md:text-base">
                       {section.blocks.map((block, index) => (
-                        <PrivacyBlock key={`${section.roman}-${index}`} block={block} />
+                        <div key={`${section.roman}-${index}`}>
+                          <PrivacyBlock block={block} />
+                        </div>
                       ))}
                     </div>
                   </section>

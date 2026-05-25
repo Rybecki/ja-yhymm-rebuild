@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GoldenBorderSection } from '../components/GoldenBorderSection';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { getOfferBySlug } from '../data/offerPages';
 
 const HERO_BG = '/utils/obozy-kolonie/obozy-hero.png';
@@ -19,13 +20,13 @@ export default function ObozyKoloniePage() {
       <Navbar />
 
       <main>
-        {}
         <section className="relative min-h-[52vh] md:min-h-[58vh] flex flex-col justify-end overflow-hidden border-b border-white/5">
           <div
             className="absolute inset-0 bg-cover bg-center scale-105"
             style={{ backgroundImage: `url(${HERO_BG})`, backgroundPosition: 'center 47%' }}
           />
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
           <div className="relative z-10 max-w-4xl mx-auto px-6 pb-16 md:pb-20 pt-32 w-full">
             <nav className="text-sm text-white/60 mb-6">
               <Link to="/oferta" className="hover:text-primary transition-colors">
@@ -70,6 +71,7 @@ export default function ObozyKoloniePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400/22 via-orange-400/10 to-transparent" aria-hidden />
                 <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                <PhotoBottomScrim card />
                 <div className="relative z-10 mt-auto flex w-full flex-col gap-4 p-6 md:p-7">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-[0.25em] text-amber-200/95">Sezon letni</span>
@@ -99,6 +101,7 @@ export default function ObozyKoloniePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-sky-800/26 via-slate-800/14 to-transparent" aria-hidden />
                 <div className="app-photo-scrim-card opacity-95" aria-hidden />
+                <PhotoBottomScrim card />
                 <div className="relative z-10 mt-auto flex w-full flex-col gap-4 p-6 md:p-7">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-[0.25em] text-sky-200/95">Sezon zimowy</span>

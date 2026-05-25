@@ -1,14 +1,32 @@
-import { useEffect, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Calendar, ChevronDown, MapPin, User, Users, Phone, Mail, Landmark, Facebook, Instagram, Youtube } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { FormRecaptcha, FormSubmitButton, FormSubmitFeedback } from '../components/FormRecaptcha';
+import { PhoneInput } from '../components/PhoneInput';
+import { useRecaptcha } from '../hooks/useRecaptcha';
+import { buildMailtoBody, submitFormWithRecaptcha, validateFormPhones } from '../lib/formSubmit';
+import { submitFormMessage } from '../lib/submitFormMessage';
 import { SUMMER_OFFER_SECTIONS } from '../data/summerOffers';
 import { getSummerOfferDetail } from '../data/summerOfferDetails';
 import { WINTER_OFFERS, getWinterOfferDetail } from '../data/winterOffers';
 
 function ContactInfoAndForm() {
+  const recaptcha = useRecaptcha();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState<{ success?: string | null; error?: string | null }>({});
+
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    await submitFormWithRecaptcha(event, recaptcha, {
+      subject: 'Formularz: Kontakt',
+      setSubmitting: setIsSubmitting,
+      onSuccess: () => setSubmitFeedback({ success: 'Dziękujemy — wiadomość została wysłana.' }),
+      onError: (message) => setSubmitFeedback({ error: message }),
+    });
+  };
+
   return (
     <section id="kontakt" className="section-padding bg-dark border-b border-white/5">
       <div className="max-w-7xl mx-auto lg:min-h-[70vh] flex flex-col justify-center">
@@ -110,11 +128,12 @@ function ContactInfoAndForm() {
             className="glass-card p-8 md:p-10 rounded-[2rem] h-full min-h-0"
           >
             <h4 className="text-xl font-bold text-primary mb-6">Formularz kontaktowy</h4>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={(event) => void handleContactSubmit(event)}>
               <div className="space-y-2">
-                <label className="text-xs uppercase tracking-widest text-white/40">Imię*</label>
+                <label className="text-xs uppercase tracking-widest text-white/40">Imię i nazwisko*</label>
                 <input
                   type="text"
+                  name="Imię i nazwisko"
                   required
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
                 />
@@ -123,29 +142,29 @@ function ContactInfoAndForm() {
                 <label className="text-xs uppercase tracking-widest text-white/40">Email*</label>
                 <input
                   type="email"
+                  name="Email"
                   required
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
                 />
               </div>
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-white/40">Twój nr telefonu*</label>
-                <input
-                  type="tel"
-                  required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
-                />
+                <PhoneInput name="Telefon" required />
               </div>
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-white/40">Co możemy dla Ciebie zrobić?*</label>
                 <textarea
                   rows={5}
+                  name="Wiadomość"
                   required
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none"
                 />
               </div>
-              <button type="submit" className="w-full btn-primary py-4 text-lg">
+              <FormRecaptcha recaptcha={recaptcha} />
+              <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+              <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
                 Wyślij wiadomość
-              </button>
+              </FormSubmitButton>
             </form>
           </motion.div>
         </div>
@@ -155,6 +174,7 @@ function ContactInfoAndForm() {
 }
 
 function ApplicationFormsSection() {
+  const recaptcha = useRecaptcha();
   const [activeTab, setActiveTab] = useState(0);
   const [selectedTransport, setSelectedTransport] = useState<'Autobus' | 'Własny'>('Własny');
   const [departureTown, setDepartureTown] = useState('');
@@ -163,6 +183,39 @@ function ApplicationFormsSection() {
   const [eventConsent, setEventConsent] = useState(false);
   const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
   const [selectedEventThemes, setSelectedEventThemes] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState<{ success?: string | null; error?: string | null }>({});
+
+  useEffect(() => {
+    recaptcha.reset();
+  }, [activeTab]);
+
+  const sendApplication = async (event: FormEvent<HTMLFormElement>, subject: string, extraLines: string[] = []) => {
+    event.preventDefault();
+    setSubmitFeedback({});
+
+    const phoneError = validateFormPhones(event.currentTarget);
+    if (phoneError) {
+      setSubmitFeedback({ error: phoneError });
+      return;
+    }
+
+    const bodyParts = [`Formularz: ${subject}`, '', buildMailtoBody(event.currentTarget), ...extraLines.filter(Boolean)];
+    const text = bodyParts.join('\n\n');
+    const replyTo = event.currentTarget.querySelector<HTMLInputElement>('input[type="email"]')?.value;
+
+    const result = await submitFormMessage(
+      recaptcha,
+      { subject: `Formularz: ${subject}`, text, replyTo: replyTo || undefined },
+      { submitting: setIsSubmitting },
+    );
+
+    if (result.success) {
+      setSubmitFeedback({ success: 'Dziękujemy — zgłoszenie zostało wysłane.' });
+    } else if (result.success === false) {
+      setSubmitFeedback({ error: result.error });
+    }
+  };
 
   const tabs = ['Obozy młodzieżowe', 'Wycieczki i obozy szkolne', 'Imprezy/Eventy/Szkolenia'];
   const tripThemes = [
@@ -271,7 +324,14 @@ function ApplicationFormsSection() {
 
         <motion.div key={activeTab} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="glass-card p-8 md:p-12 rounded-[2rem]">
           {activeTab === 1 ? (
-            <form className="space-y-10">
+            <form
+              className="space-y-10"
+              onSubmit={(event) =>
+                void sendApplication(event, 'Zgłoszenie — wycieczki i obozy szkolne', [
+                  selectedThemes.length > 0 ? `Wybrane tematyka: ${selectedThemes.join(', ')}` : '',
+                ])
+              }
+            >
               <div className="space-y-6">
                 <h4 className="text-xl font-bold text-primary">Zgłaszający (osoba do kontaktu)</h4>
                 <div className="grid md:grid-cols-2 gap-6">
@@ -281,7 +341,7 @@ function ApplicationFormsSection() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Numer telefonu</label>
-                    <input type="tel" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                    <PhoneInput name="Telefon" />
                   </div>
                   <div className="space-y-2 md:col-span-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Adres e-mail</label>
@@ -446,12 +506,21 @@ function ApplicationFormsSection() {
                 poz. 883 z późn. zmianami).
               </label>
 
-              <button type="submit" className="w-full btn-primary py-4 text-lg">
+              <FormRecaptcha recaptcha={recaptcha} />
+              <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+              <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
                 Wyślij zgłoszenie
-              </button>
+              </FormSubmitButton>
             </form>
           ) : activeTab === 2 ? (
-            <form className="space-y-10">
+            <form
+              className="space-y-10"
+              onSubmit={(event) =>
+                void sendApplication(event, 'Zgłoszenie — imprezy i eventy', [
+                  selectedEventThemes.length > 0 ? `Wybrane tematyka: ${selectedEventThemes.join(', ')}` : '',
+                ])
+              }
+            >
               <div className="space-y-6">
                 <h4 className="text-xl font-bold text-primary">Zgłaszający (osoba do kontaktu)</h4>
                 <div className="grid md:grid-cols-2 gap-6">
@@ -461,7 +530,7 @@ function ApplicationFormsSection() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Numer telefonu</label>
-                    <input type="tel" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                    <PhoneInput name="Telefon" />
                   </div>
                   <div className="space-y-2 md:col-span-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Adres e-mail</label>
@@ -624,12 +693,22 @@ function ApplicationFormsSection() {
                 poz. 883 z późn. zmianami).
               </label>
 
-              <button type="submit" className="w-full btn-primary py-4 text-lg">
+              <FormRecaptcha recaptcha={recaptcha} />
+              <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+              <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
                 Wyślij zgłoszenie
-              </button>
+              </FormSubmitButton>
             </form>
           ) : (
-            <form className="space-y-12">
+            <form
+              className="space-y-12"
+              onSubmit={(event) =>
+                void sendApplication(event, 'Zgłoszenie na obóz młodzieżowy', [
+                  `Transport: ${selectedTransport}`,
+                  selectedTransport === 'Autobus' && departureTown ? `Miejscowość wyjazdu: ${departureTown}` : '',
+                ])
+              }
+            >
               <div>
                 <h4 className="text-xl font-bold mb-6 flex items-center gap-3 text-primary">
                   <User size={24} /> Osoba zgłaszająca
@@ -641,7 +720,7 @@ function ApplicationFormsSection() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Numer telefonu</label>
-                    <input type="tel" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                    <PhoneInput name="Telefon" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Adres email</label>
@@ -779,9 +858,11 @@ function ApplicationFormsSection() {
                 </label>
               )}
 
-              <button type="submit" className="w-full btn-primary py-4 text-lg">
+              <FormRecaptcha recaptcha={recaptcha} />
+              <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+              <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
                 Wyślij zgłoszenie
-              </button>
+              </FormSubmitButton>
             </form>
           )}
         </motion.div>

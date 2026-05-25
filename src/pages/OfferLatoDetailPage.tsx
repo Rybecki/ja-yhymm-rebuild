@@ -8,6 +8,7 @@ import { OfferSectionTitle } from '../components/OfferSectionTitle';
 import { getSummerOfferBySlug, summerOfferImageSrc } from '../data/summerOffers';
 import { getSummerOfferDetail } from '../data/summerOfferDetails';
 import { CAMPS_HERO_BG_POSITION, CAMPS_HERO_CONTENT, CAMPS_HERO_SECTION } from '../constants/campOfferHero';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 
 export default function OfferLatoDetailPage() {
   const { offerSlug } = useParams<{ offerSlug: string }>();
@@ -57,6 +58,7 @@ export default function OfferLatoDetailPage() {
             />
           </motion.div>
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
 
           <div className={CAMPS_HERO_CONTENT}>
             <nav className="text-sm text-white/65 mb-6 flex flex-wrap gap-x-2 gap-y-1">

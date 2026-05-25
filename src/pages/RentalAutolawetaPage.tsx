@@ -4,10 +4,16 @@ import { motion } from 'motion/react';
 import { ChevronDown, X } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { RentalFormSummary } from '../components/RentalFormSummary';
+import { getRentalRegulationText } from '../data/rentalRegulations';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { FormRecaptcha, FormSubmitButton, FormSubmitFeedback } from '../components/FormRecaptcha';
+import { PhoneInput } from '../components/PhoneInput';
 import { calculateAutolawetaPricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
+import { submitRentalForm } from '../lib/rentalFormSubmit';
+import { useRecaptcha } from '../hooks/useRecaptcha';
 
 const AUTOLAWETA_HERO_SRC = '/images/wypozyczalnia/autolaweta/laweta-1.png';
 
@@ -20,24 +26,12 @@ const AUTOLAWETA_GALLERY: readonly GalleryImageItem[] = [
   { src: '/images/wypozyczalnia/autolaweta/laweta-6.png', alt: 'Autolaweta — zestaw na placu' },
 ];
 
-const REGULATIONS_TEXT = `REGULAMIN USŁUGI AUTO-LAWETA
-1. Usługa transportu realizowana jest przez A Bo Co... Sp. z o.o.
-2. Każde zlecenie wyceniane jest indywidualnie na podstawie trasy, czasu i rodzaju ładunku.
-3. Zleceniodawca odpowiada za poprawne informacje o ładunku, wymiarach i wadze.
-4. Załadunek i rozładunek realizowane są zgodnie z zasadami bezpieczeństwa.
-5. Szczegółowe warunki określa zlecenie transportowe i umowa.
-
-UMOWA TRANSPORTU AUTO-LAWETA nr ____/202X
-Data i miejsce zawarcia umowy: ________________________________________
-Wynajmujący: A Bo Co... sp. z o.o., ul. Niwna 9, 40-406 Katowice
-Zleceniodawca: ________________________________________________________
-Ładunek: ______________________________________________________________
-Trasa: ________________________________________________________________
-Termin: _______________________________________________________________
-Cena: _________________________________________________________________
-Podpisy stron: ________________________________________________________`;
+const REGULATIONS_TEXT = getRentalRegulationText('autolaweta');
 
 export default function RentalAutolawetaPage() {
+  const recaptcha = useRecaptcha();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState<{ success?: string | null; error?: string | null }>({});
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
   const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
@@ -64,11 +58,12 @@ export default function RentalAutolawetaPage() {
     return parts.join(' – ');
   }, [formData.packageType, formData.cargoType]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     localStorage.setItem('autolawetaForm', JSON.stringify(formData));
 
     const body = [
+      'Formularz: Auto-laweta (/wypozyczalnia/autolaweta)',
+      '',
       'Nowe zapytanie o Auto-lawete:',
       '',
       `Imie i nazwisko: ${formData.fullName}`,
@@ -85,7 +80,14 @@ export default function RentalAutolawetaPage() {
       formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
 
-    window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Zapytanie Auto-laweta')}&body=${encodeURIComponent(body)}`;
+    await submitRentalForm(event, recaptcha, {
+      subject: 'Formularz: Auto-laweta',
+      body,
+      replyTo: formData.email,
+      phone: formData.phone,
+      setSubmitting: setIsSubmitting,
+      setFeedback: setSubmitFeedback,
+    });
   };
 
   useEffect(() => {
@@ -127,11 +129,7 @@ export default function RentalAutolawetaPage() {
             aria-hidden
           />
           <div className="app-photo-scrim" aria-hidden />
-          <div
-            className="absolute inset-x-0 bottom-0 h-32 md:h-44 pointer-events-none z-[1]"
-            style={{ background: 'linear-gradient(to top, var(--color-dark) 0%, color-mix(in oklab, var(--color-dark) 55%, transparent) 45%, transparent 100%)' }}
-            aria-hidden
-          />
+          <PhotoBottomScrim />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -304,7 +302,11 @@ export default function RentalAutolawetaPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Telefon*</label>
-                    <input type="tel" required value={formData.phone} onChange={(event) => updateFormData('phone', event.target.value)} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors" />
+                    <PhoneInput
+                      required
+                      value={formData.phone}
+                      onChange={(value) => updateFormData('phone', value)}
+                    />
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-5">
@@ -355,7 +357,11 @@ export default function RentalAutolawetaPage() {
                   </button>
                   .
                 </p>
-                <button type="submit" className="w-full btn-primary py-4 text-lg">Wyślij formularz</button>
+                <FormRecaptcha recaptcha={recaptcha} className="pt-2" />
+                <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+                <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
+                  Wyślij formularz
+                </FormSubmitButton>
               </form>
             </section>
           </div>

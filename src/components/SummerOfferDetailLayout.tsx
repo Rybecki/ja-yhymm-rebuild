@@ -98,6 +98,21 @@ function TermsSection({ detail }: { detail: SummerOfferDetail }) {
               </motion.div>
             ))}
           </motion.div>
+        ) : detail.termsComingSoon ? (
+          <>
+            <p className="text-center font-display font-semibold text-white mb-2">{detail.termsSubtitle}</p>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center text-xl md:text-2xl font-display font-bold text-primary max-w-2xl mx-auto py-8 md:py-10"
+            >
+              {detail.termsComingSoon}
+            </motion.p>
+            {detail.termsDisclaimer ? (
+              <p className="text-center text-white/55 text-sm max-w-2xl mx-auto">{detail.termsDisclaimer}</p>
+            ) : null}
+          </>
         ) : (
           <>
             <p className="text-center font-display font-semibold text-white mb-2">{detail.termsSubtitle}</p>
@@ -149,7 +164,6 @@ export function SummerOfferDetailLayout({
   backLabel = 'Powrót do pełnej oferty',
 }: {
   detail: SummerOfferDetail;
-  /** Zdjęcie kafelka — pierwsze w galerii (zajęcia w `detail.gallery`). */
   tileImage?: SummerOfferGalleryImage;
   backTo?: string;
   backLabel?: string;

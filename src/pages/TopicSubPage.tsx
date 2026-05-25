@@ -3,42 +3,43 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { getTopicBySlug } from '../data/topicPages';
 
 const QUADS_GALLERY = [
-  { src: '/images/tematyka/quady-1.png', alt: 'Quad przejeżdżający przez błotnistą przeszkodę terenową' },
-  { src: '/images/tematyka/quady-2.png', alt: 'Czerwony quad z dwoma uczestnikami w kaskach w lesie' },
-  { src: '/images/tematyka/quady-3.png', alt: 'Grupa uczestników na quadach pozujących na piaszczystym terenie' },
-  { src: '/images/tematyka/quady-4.png', alt: 'Zjazd zielonym quadem po piaszczystej wydmie — kask i jazda terenowa' },
-  { src: '/images/tematyka/quady-5.png', alt: 'Grupa na quadach zimą na śniegu w lesie — Arctic Cat i zimowy wyjazd' },
-  { src: '/images/tematyka/quady-6.png', alt: 'Zielony quad sportowy na wydmie — jazda z unoszoną chmurą piasku' },
+  { src: '/images/tematyka/quady-1.png', alt: 'Jazda quadem i pit bike na piaszczystym szlaku w lesie' },
+  { src: '/images/tematyka/quady-2.png', alt: 'Quad w dynamicznej jeździe po piasku — chmura pyłu za pojazdem' },
+  { src: '/images/tematyka/quady-3.png', alt: 'Grupa uczestników na quadach w lesie — wyjazd integracyjny' },
+  { src: '/images/tematyka/quady-4.png', alt: 'Czerwone quady na piaszczystych wzniesieniach w lesie' },
+  { src: '/images/tematyka/quady-5.png', alt: 'Grupa na quadach w sosnowym lesie — złota godzina' },
+  { src: '/images/tematyka/quady-6.png', alt: 'Kolumna quadów na torze off-road pod błękitnym niebem' },
 ];
 
 const OFFROAD_GALLERY = [
   {
-    src: '/images/tematyka/off-road-1.png',
-    alt: 'Terenówka w kamuflażu na szlaku przy leśnym strumieniu — jazda off-road',
-  },
-  {
     src: '/images/tematyka/off-road-2.png',
-    alt: 'Biały Jeep w dynamicznej jeździe przez głębokie błoto z rozbryzgiem',
+    alt: 'Jeep Cherokee 4×4 ze snorklem na leśnym szlaku — uczestnicy obozu off-road',
   },
   {
-    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-convoy.png',
-    alt: 'Kolumna terenówek 4×4 na leśnym szlaku — uczestnicy obozu off-road',
+    src: '/images/tematyka/off-road-3.png',
+    alt: 'Jeep na nierównym podłożu w lesie — jazda terenowa z młodzieżą',
   },
   {
-    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-1.png',
-    alt: 'Jeep Cherokee 4×4 na stromym podjeździe w lesie — jazda off-road',
+    src: '/images/tematyka/off-road-4.png',
+    alt: 'Jeep 4×4 na piaszczystym torze w lesie — widok od tyłu z uczestnikami',
   },
   {
-    src: '/utils/oferta-letnia/jura-off-road-camp-4x4/gallery/offroad-3.png',
-    alt: 'Obozowicze na Jeepie 4×4 na piaszczystym torze',
+    src: '/images/tematyka/off-road-5.png',
+    alt: 'Terenówka JA YHYMM w kamuflażu z grupą uczestników na leśnej trasie',
   },
   {
     src: '/images/tematyka/off-road-6.png',
-    alt: 'Nissan Terrano 4×4 w zielonym kamuflażu na piasku — jazda off-road JA YHYMM',
+    alt: 'Terenówka w błocie z uczestnikami obozu off-road na leśnym szlaku',
+  },
+  {
+    src: '/images/tematyka/off-road-7.png',
+    alt: 'Młodzież na dachu terenówki z dużymi oponami — wyjazd off-road w lesie',
   },
 ];
 
@@ -57,93 +58,114 @@ const MILITARY_VEHICLES_GALLERY = [
   },
 ];
 
-const CLIMBING_WALL_GALLERY = [
-  {
-    src: '/images/tematyka/linowe-gallery-1.png',
-    alt: 'Zjazd na linie ze skały — uczestnik na tle nieba i skalnego murem',
-  },
-];
-
-const CLIMBING_ROCK_GALLERY = [
-  { src: '/images/tematyka/linowe-1.png', alt: 'Instruktor asekurujący uczestnika wspinającego się po skale w lesie' },
-  { src: '/images/tematyka/linowe-2.png', alt: 'Uczestnik podczas zjazdu na linie z drzewa nad zboczem' },
-  { src: '/images/tematyka/linowe-3.png', alt: 'Wspinaczka po skale z asekuracją w słoneczny dzień' },
-  { src: '/images/tematyka/linowe-4.png', alt: 'Uczestnik zajęć linowych wiszący na linie w leśnym wąwozie' },
-];
-
-/** Cała galeria tematu: ścianka + skałki + canyoning i tyrolka — pierwsza na stronie, potem opisy (układ jak w ofercie klas mundurowych). */
 const CLIMBING_PAGE_GALLERY: GalleryImageItem[] = [
-  ...CLIMBING_WALL_GALLERY,
-  ...CLIMBING_ROCK_GALLERY,
   {
-    src: '/images/tematyka/linowe-canyoning-wodospad.png',
-    alt: 'Zjazd kanioningowy w skafandrze i kasku przez wodospad na linach',
+    src: '/images/tematyka/linowe-1.png',
+    alt: 'Grupa uczestników na szczycie skały — wspinaczka skałkowa w kaskach',
   },
   {
-    src: '/images/tematyka/linowe-gallery-last.png',
-    alt: 'Zjazd na linie z urwiska — uczestnik w kasku nad lasem',
+    src: '/images/tematyka/linowe-2.png',
+    alt: 'Wspinaczka na naturalnej skale z asekuracją na linie',
   },
   {
-    src: '/images/wynajem-sprzetu/scianka.png',
-    alt: 'Uczestnicy pikniku korzystający ze ścianki wspinaczkowej',
+    src: '/images/tematyka/linowe-3.png',
+    alt: 'Zajęcia wspinaczkowe na skale — asekuracja i wspinaczka w terenie',
+  },
+  {
+    src: '/images/tematyka/linowe-4.png',
+    alt: 'Tyrolka w lesie — uczestnik na linie w uprzęży i kasku',
+  },
+  {
+    src: '/images/tematyka/linowe-5.png',
+    alt: 'Wspinaczka na czerwonej ściance z chwytami — zajęcia linowe',
+  },
+  {
+    src: '/images/tematyka/linowe-6.png',
+    alt: 'Zawieszenie na linie przy ściance wspinaczkowej — zajęcia linowe',
   },
 ];
 
 const PAINTBALL_GALLERY = [
-  { src: '/images/tematyka/paintball-1.png', alt: 'Paintballowe działania w lesie' },
-  { src: '/images/tematyka/paintball-2.png', alt: 'Zespół uczestników w pełnym wyposażeniu paintballowym' },
-  { src: '/images/tematyka/paintball-3.png', alt: 'Gracz paintballowy podczas realizacji zadania terenowego' },
-  { src: '/utils/oferta-letnia/jura-multi-camp/gallery/multi-1.png', alt: 'Uczestnicy obozu podczas zajęć paintballowych' },
+  {
+    src: '/images/tematyka/paintball-2.png',
+    alt: 'Uczestnik paintballu w masce i kamizelce taktycznej — kciuk w górę',
+  },
+  {
+    src: '/images/tematyka/paintball-3.png',
+    alt: 'Gracz paintballowy celujący za drewnianą zasłoną na polu',
+  },
   {
     src: '/images/tematyka/paintball-4.png',
-    alt: 'Gra paintballowa w lesie — gracze za zasłoną z gałęzi, różowy dym w tle',
+    alt: 'Trójka graczy paintballowych za skałą — pozycja taktyczna w lesie',
   },
   {
     src: '/images/tematyka/paintball-5.png',
-    alt: 'Duża grupa uczestników paintballu w kamuflażu przed busem JA YHYMM w lesie',
+    alt: 'Gracz paintballowy w pozycji bojowej na łące — wskazanie kierunku',
+  },
+  {
+    src: '/images/tematyka/paintball-6.png',
+    alt: 'Duża grupa uczestników paintballu w lesie — zdjęcie zespołowe',
+  },
+  {
+    src: '/images/tematyka/paintball-7.png',
+    alt: 'Grupa graczy paintballowych w kamuflażu na śniegu w lesie',
   },
 ];
 
 const MILITARIA_GALLERY = [
-  { src: '/utils/oferta-letnia/jura-military-camp/gallery/militaria-3.png', alt: 'Uczestnicy zajęć militarnych podczas zadań terenowych' },
-  { src: '/utils/oferta-letnia/jura-military-camp/gallery/militaria-2.png', alt: 'Ćwiczenia zespołowe i ewakuacja w warunkach polowych' },
+  {
+    src: '/images/tematyka/militaria-1.png',
+    alt: 'Uczestnik zajęć militarnych w kamuflażu, hełmie taktycznym i farbie maskującej',
+  },
+  {
+    src: '/images/tematyka/militaria-2.png',
+    alt: 'Młodzież przenosząca ponton w dymie podczas ćwiczeń militarnych w błocie',
+  },
+  {
+    src: '/images/tematyka/militaria-3.png',
+    alt: 'Przeprawa przez błotnisty rów — grupa czołga się w lesie podczas zajęć militarnych',
+  },
   {
     src: '/images/tematyka/militaria-4.png',
-    alt: 'Manewry taktyczne w lesie — uczestnicy w kamuflażu z replikami przy terenówce',
+    alt: 'Grupa uczestników w mundurach wojskowych z replikami broni przed wojskowym transportem',
   },
   {
     src: '/images/tematyka/militaria-5.png',
-    alt: 'Przeprawa przez błotnisty rów — grupa czołga się w lesie podczas zajęć survivalowych',
-  },
-  {
-    src: '/images/tematyka/militaria-6.png',
     alt: 'Strzelec w ghillie z repliką — pozycja leżąca w lesie',
   },
   {
-    src: '/images/tematyka/militaria-7.png',
-    alt: 'Briefing w lesie — młodzież w mundurach i kamizelkach z markerami paintballowymi',
+    src: '/images/tematyka/militaria-6.png',
+    alt: 'Młodzież w kamuflażu z replikami broni na śniegu pod jurajskimi skałami',
   },
 ];
 
 const SURVIVAL_GALLERY = [
-  { src: '/images/tematyka/survival-1.png', alt: 'Uczestnicy zajęć survivalowych przy nocnym obozowisku' },
-  { src: '/images/tematyka/survival-2.png', alt: 'Przeprawa przez tereny podmokłe podczas zadań survivalowych' },
-  { src: '/utils/oferta-letnia/jura-survival-camp/gallery/survival-1.png', alt: 'Przygotowanie ogniska i posiłku w warunkach terenowych' },
+  {
+    src: '/images/tematyka/survival-1.png',
+    alt: 'Rozpalanie ognia krzemieniem i stalią — iskry na igiełkach sosnowych',
+  },
+  {
+    src: '/images/tematyka/survival-3.png',
+    alt: 'Gotowanie na ognisku w lesie — garnek nad płomieniami podczas zajęć survivalowych',
+  },
   {
     src: '/images/tematyka/survival-4.png',
-    alt: 'Budowa prymitywnego schronienia z gałęzi w sosnowym lesie — zajęcia survivalowe',
+    alt: 'Schronienie survivalowe z gałęzi i świerku — uczestnik w kamuflażu w lesie',
   },
   {
     src: '/images/tematyka/survival-5.png',
-    alt: 'Ognisko w wykopie typu Dakota — grupa przy ogniu na piasku',
+    alt: 'Budowa schronienia z gałęzi i igiełek — zajęcia bushcraft w lesie',
   },
   {
     src: '/images/tematyka/survival-6.png',
-    alt: 'Układanie ognia — konstrukcja z patyków podczas zajęć w lesie',
+    alt: 'Maskowanie w trawie — uczestnik z farbą maskującą podczas gry terenowej',
+  },
+  {
+    src: '/images/tematyka/survival-7.png',
+    alt: 'Uczestnik zajęć survivalowych z farbą maskującą i naturalnym kamuflażem',
   },
 ];
 
-/** Galeria strony wodnej — na górze karty, pod nią opis i moduły programów. */
 const WATER_PAGE_GALLERY: GalleryImageItem[] = [
   { src: '/images/tematyka/wodne-1.png', alt: 'Skoki i manewry na łodzi motorowej podczas zajęć wodnych' },
   { src: '/images/tematyka/wodne-2.png', alt: 'Przejażdżka na bananie wodnym' },
@@ -302,7 +324,7 @@ export default function TopicSubPage() {
                 style={{
                   backgroundImage: `url(${
                     isQuadsPage
-                      ? '/utils/oferta-letnia/quad-academy-camp.png'
+                      ? '/images/tematyka/quady-tt.png'
                       : isOffRoadPage
                         ? '/images/tematyka/off-road-1.png'
                         : isMilitaryVehiclesPage
@@ -324,12 +346,21 @@ export default function TopicSubPage() {
                                         : '/images/tematyka/inne-1.png'
                   })`,
                   backgroundSize: 'cover',
-                  backgroundPosition: isMilitariaPage ? 'center 19%' : 'center center',
+                  backgroundPosition: isMilitariaPage
+                    ? 'center 19%'
+                    : isQuadsPage
+                      ? 'center 20%'
+                    : isHorsePage
+                      ? 'center 18%'
+                      : isFirstAidPage
+                        ? 'center 25%'
+                        : 'center center',
                 }}
                 aria-hidden
               />
               <div className="absolute inset-0 z-0 bg-black/25 pointer-events-none" aria-hidden />
               <div className="app-photo-scrim" aria-hidden />
+              <PhotoBottomScrim />
             </>
           )}
           <div className="max-w-4xl mx-auto px-6">
@@ -549,7 +580,7 @@ export default function TopicSubPage() {
                 <div className="space-y-12 text-white/80 leading-relaxed">
                   <div>
                     <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div className="grid sm:grid-cols-2 gap-4">
                       {CLIMBING_PAGE_GALLERY.map((image, i) => (
                         <button
                           key={image.src}
@@ -558,7 +589,7 @@ export default function TopicSubPage() {
                           className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                           aria-label={`Powiększ: ${image.alt}`}
                         >
-                          <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
                         </button>
                       ))}
                     </div>
@@ -850,7 +881,7 @@ export default function TopicSubPage() {
                 <div className="space-y-12 text-white/80 leading-relaxed">
                   <div>
                     <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid sm:grid-cols-2 gap-4">
                       {SURVIVAL_GALLERY.map((image, i) => (
                         <button
                           key={image.src}
@@ -859,7 +890,7 @@ export default function TopicSubPage() {
                           className="rounded-xl overflow-hidden border border-white/10 bg-white/5 text-left hover:border-primary transition-colors cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                           aria-label={`Powiększ: ${image.alt}`}
                         >
-                          <img src={image.src} alt={image.alt} className="w-full h-52 object-cover pointer-events-none" loading="lazy" />
+                          <img src={image.src} alt={image.alt} className="w-full h-56 object-cover pointer-events-none" loading="lazy" />
                         </button>
                       ))}
                     </div>

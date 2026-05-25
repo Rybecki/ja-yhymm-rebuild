@@ -5,6 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GalleryLightbox } from '../components/GalleryLightbox';
 import { teamMembers } from '../data/team';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 
 const RECOMMENDATIONS = Array.from({ length: 13 }, (_, i) => ({
   src: `/utils/rekomendacje/rekomendacje-${i + 1}.png`,
@@ -38,6 +39,7 @@ export default function AboutPage() {
             aria-hidden
           />
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
           <div className="max-w-4xl mx-auto text-center px-6 relative z-10">
             <h1 className="text-primary font-bold uppercase tracking-widest mb-4 text-sm md:text-base">O nas</h1>
             <p className="text-base md:text-lg text-white/75 font-medium leading-snug max-w-3xl mx-auto mb-6">

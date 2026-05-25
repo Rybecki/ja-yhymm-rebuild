@@ -1,6 +1,6 @@
 
 
-import { useState, useEffect, useRef, MouseEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
@@ -16,6 +16,7 @@ import {
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GoldenBorderSection } from '../components/GoldenBorderSection';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { PartnerLogosMarquee } from '../components/PartnerLogosMarquee';
 import { NEWS_ARTICLES } from '../data/newsArticles';
 
@@ -40,15 +41,12 @@ const HERO_SLIDES = [
   },
 ] as const;
 
-/** Kadrowanie tła per slajd (np. lekko w górę). */
 const HERO_SLIDE_BACKGROUND_POSITION: Partial<Record<(typeof HERO_SLIDES)[number]['src'], string>> = {
   '/images/eventy/imprezy-firmowe-karta.png': 'center 28%',
 };
 
 const Hero = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [slideIndex, setSlideIndex] = useState(0);
-  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -57,26 +55,9 @@ const Hero = () => {
     return () => window.clearInterval(id);
   }, []);
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!heroRef.current) return;
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    const x = (clientX / innerWidth - 0.5) * 20;
-    const y = (clientY / innerHeight - 0.5) * 20;
-    setMousePos({ x, y });
-  };
-
   return (
-    <section 
-      ref={heroRef}
-      onMouseMove={handleMouseMove}
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center pt-20"
-    >
-      <motion.div 
-        animate={{ x: mousePos.x, y: mousePos.y }}
-        transition={{ type: 'spring', damping: 30, stiffness: 100 }}
-        className="absolute inset-0 z-0"
-      >
+    <section className="home-hero">
+      <div className="absolute inset-0 z-0">
         <AnimatePresence initial={false} mode="sync">
           <motion.div
             key={HERO_SLIDES[slideIndex].src}
@@ -93,9 +74,10 @@ const Hero = () => {
           />
         </AnimatePresence>
         <div className="app-photo-scrim" aria-hidden />
-      </motion.div>
+        <PhotoBottomScrim />
+      </div>
 
-      <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center gap-3 pointer-events-none">
+      <div className="home-hero__dots absolute left-0 right-0 z-20 flex flex-col items-center gap-3 pointer-events-none">
         <div className="pointer-events-auto flex items-center gap-2">
           {HERO_SLIDES.map((_, i) => (
             <button
@@ -112,7 +94,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-5xl">
+      <div className="home-hero__content relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -121,13 +103,13 @@ const Hero = () => {
           <h2 className="text-primary font-bold tracking-[0.3em] uppercase mb-4 text-sm md:text-base">
             Eventy inne niż wszystkie
           </h2>
-          <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold leading-tight mb-8 uppercase font-sophisticated tracking-tight text-white">
-            EVENTY, IMPREZY FIRMOWE, <br className="hidden md:block" />
-            OBOZY I KOLONIE, WYCIECZKI SZKOLNE, <br className="hidden md:block" />
+          <h1 className="mb-6 text-xl leading-snug font-extrabold uppercase tracking-tight text-white font-sophisticated sm:mb-8 sm:text-2xl md:text-4xl md:leading-tight lg:text-5xl">
             OBOZY dla klas mundurowych, <br className="hidden md:block" />
+            OBOZY I KOLONIE, WYCIECZKI SZKOLNE, <br className="hidden md:block" />
+            EVENTY, IMPREZY FIRMOWE, <br className="hidden md:block" />
             WYJAZDY STUDENCKIE
           </h1>
-          <p className="text-lg md:text-2xl text-white/80 mb-12 font-sophisticated font-light tracking-wide">
+          <p className="mb-8 text-base text-white/80 font-sophisticated font-light tracking-wide sm:mb-10 sm:text-lg md:mb-12 md:text-2xl">
             Z przyjemnością to wszystko zorganizujemy <span className="text-primary font-bold">DLA CIEBIE!</span>
           </p>
         </motion.div>
@@ -199,62 +181,67 @@ const UniformedClassesCta = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="relative overflow-hidden rounded-[2rem] border-2 border-primary bg-dark-lighter shadow-2xl shadow-black/40"
+          className="relative"
         >
-          <div
-            className="absolute inset-0 bg-cover bg-center scale-105 opacity-35"
-            style={{ backgroundImage: 'url(/utils/mili.jpg)' }}
-            aria-hidden
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/92 to-dark/55" aria-hidden />
-          <div className="app-photo-scrim opacity-80" aria-hidden />
-
-          <div className="relative z-10 grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-8 lg:gap-10 p-8 md:p-12 lg:p-14 items-center">
-            <div>
-              <p className="text-primary font-bold uppercase tracking-widest text-xs md:text-sm mb-4 flex items-center gap-2">
-                <Shield size={18} aria-hidden />
-                Obozy dla klas mundurowych
-              </p>
-              <h2
-                id="mundurowe-cta-heading"
-                className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-display text-white leading-tight mb-5"
-              >
-                Trening, dyscyplina
-                <br />
-                i prawdziwa przygoda.
-              </h2>
-              <p className="text-white/85 text-base md:text-lg leading-relaxed mb-6 max-w-xl">
-                Programy dla szkół i klas mundurowych łączą szkolenie praktyczne, bezpieczeństwo i aktywny wyjazd z realnym
-                przełożeniem na przyszłą służbę. Jesteśmy jedną z nielicznych instytucji, które profesjonalnie organizują ten
-                typ wyjazdów dla młodzieży.
-              </p>
-              <ul className="space-y-3 mb-8 text-sm md:text-base text-white/75">
-                {highlights.map((item) => (
-                  <li key={item} className="flex gap-3 items-start">
-                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                to={UNIFORMED_CAMP_PATH}
-                className="btn-primary inline-flex items-center gap-2 font-display text-sm md:text-base px-6 md:px-8 py-3.5 md:py-4"
-              >
-                Poznaj program obozów
-                <ArrowRight size={18} className="shrink-0" aria-hidden />
-              </Link>
-            </div>
-
-            <div className="relative rounded-2xl overflow-hidden border border-white/15 aspect-[4/3] lg:aspect-auto lg:min-h-[300px] shadow-xl">
-              <img
-                src="/images/klasy-mundurowe/militaria-4.png"
-                alt="Uczestnicy obozu dla klas mundurowych podczas ćwiczeń terenowych"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                referrerPolicy="no-referrer"
+          <div className="relative rounded-[2rem] border-2 border-primary bg-dark-lighter shadow-2xl shadow-black/40 pb-12 md:pb-14">
+            <div className="absolute inset-0 overflow-hidden rounded-[2rem]" aria-hidden>
+              <div
+                className="absolute inset-0 bg-cover bg-center scale-105 opacity-35"
+                style={{ backgroundImage: 'url(/utils/mili.jpg)' }}
               />
-              <div className="app-photo-scrim-card" aria-hidden />
+              <div className="absolute inset-0 bg-gradient-to-r from-dark via-dark/92 to-dark/55" />
+              <div className="app-photo-scrim opacity-80" />
             </div>
+
+            <div className="relative z-10 grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-8 lg:gap-10 p-8 md:p-12 lg:p-14 items-center">
+              <div>
+                <p className="text-primary font-bold uppercase tracking-widest text-xs md:text-sm mb-4 flex items-center gap-2">
+                  <Shield size={18} aria-hidden />
+                  Obozy dla klas mundurowych
+                </p>
+                <h2
+                  id="mundurowe-cta-heading"
+                  className="text-2xl md:text-3xl lg:text-4xl font-extrabold font-display text-white leading-tight mb-5"
+                >
+                  Trening, dyscyplina
+                  <br />
+                  i prawdziwa przygoda.
+                </h2>
+                <p className="text-white/85 text-base md:text-lg leading-relaxed mb-6 max-w-xl">
+                  Programy dla szkół i klas mundurowych łączą szkolenie praktyczne, bezpieczeństwo i aktywny wyjazd z realnym
+                  przełożeniem na przyszłą służbę. Jesteśmy jedną z nielicznych instytucji, które profesjonalnie organizują ten
+                  typ wyjazdów dla młodzieży.
+                </p>
+                <ul className="space-y-3 text-sm md:text-base text-white/75">
+                  {highlights.map((item) => (
+                    <li key={item} className="flex gap-3 items-start">
+                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" aria-hidden />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="relative rounded-2xl overflow-hidden border border-white/15 aspect-[4/3] lg:aspect-auto lg:min-h-[300px] shadow-xl">
+                <img
+                  src="/images/klasy-mundurowe/militaria-4.png"
+                  alt="Uczestnicy obozu dla klas mundurowych podczas ćwiczeń terenowych"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="app-photo-scrim-card" aria-hidden />
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute left-1/2 bottom-0 z-10 w-max max-w-[calc(100%-1.5rem)] -translate-x-1/2 translate-y-1/2 bg-dark px-3 text-center sm:max-w-none sm:px-10 md:px-14">
+            <Link
+              to={UNIFORMED_CAMP_PATH}
+              className="btn-primary inline-block whitespace-nowrap px-5 text-sm sm:px-8 sm:text-base"
+            >
+              Poznaj program obozów
+            </Link>
           </div>
         </motion.div>
       </div>
@@ -296,7 +283,7 @@ const Offer = () => {
     },
     {
       title: 'Wyjazdy jedno i wielodniowe',
-      to: '/oferta/transport',
+      to: '/oferta',
       img: '/images/wyjazdy/wyjazdy-jedno-wielodniowe-karta.png',
       icon: <Bus className="text-primary" size={32} />,
     },
@@ -335,14 +322,7 @@ const Offer = () => {
                   />
                 </div>
                 <div className="app-photo-scrim-card opacity-95" aria-hidden />
-                <div
-                  className="absolute inset-x-0 bottom-0 h-44 md:h-52 pointer-events-none z-[1]"
-                  style={{
-                    background:
-                      'linear-gradient(to top, color-mix(in oklab, var(--color-dark) 82%, transparent) 0%, color-mix(in oklab, var(--color-dark) 38%, transparent) 42%, transparent 100%)',
-                  }}
-                  aria-hidden
-                />
+                <PhotoBottomScrim card />
                 <div className="absolute bottom-0 left-0 z-10 w-full p-8">
                   <div className="mb-4">{item.icon}</div>
                   <h4 className="text-2xl font-bold mb-6 leading-tight text-white">{item.title}</h4>

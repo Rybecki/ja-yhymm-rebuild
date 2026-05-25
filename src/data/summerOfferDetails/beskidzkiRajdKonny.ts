@@ -10,7 +10,6 @@ export const BESKIDZKI_RAJD_KONNY_DETAIL: SummerOfferDetail = {
     src: `${G}/rajd-3.png`,
     alt: 'Chłopiec na koniu w siodle — Beskidzki rajd konny',
   },
-  /** Zawsze 4 zdjęcia w galerii. */
   gallery: [
     { src: `${G}/raid-2.png`, alt: 'Zajęcia na ujeżdżalni — młodzi jeźdźcy w kolejce za instruktorką' },
     { src: `${G}/rajd-2.png`, alt: 'Jazda konna w terenie — uczestnicy na rajdzie beskidzkim' },

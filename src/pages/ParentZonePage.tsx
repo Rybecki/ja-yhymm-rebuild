@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { ChevronDown, Download } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { RENTAL_CONTENT_WIDE } from '../constants/rentalPageLayout';
 import {
   PARENT_ZONE_HERO_BG_POSITION,
@@ -178,6 +179,7 @@ export default function ParentZonePage() {
             aria-hidden
           />
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
 
           <div className={PARENT_ZONE_HERO_CONTENT}>
             <nav className="text-sm text-white/65 mb-6 flex flex-wrap gap-x-2 gap-y-1">

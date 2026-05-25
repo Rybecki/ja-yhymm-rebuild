@@ -4,23 +4,15 @@ import { motion } from 'motion/react';
 type Surface = 'dark' | 'dark-lighter';
 
 export type GoldenBorderSectionProps = {
-  /** Label on the top border (e.g. „Oferta”, „Aktualności”). */
   label: string;
-  /** Optional heading inside the frame. */
   title?: ReactNode;
-  /** Optional intro copy inside the frame. */
   description?: ReactNode;
-  /** Extra row under title/description (e.g. link). */
   headerExtra?: ReactNode;
-  /** CTA overlapping the bottom border (same break pattern as `label` on top). */
   footerAction?: ReactNode;
   children: ReactNode;
-  /** Background behind the badge that breaks the border. */
   surface?: Surface;
-  /** Outer section id / extra classes. */
   id?: string;
   className?: string;
-  /** Inner max width wrapper. */
   maxWidthClassName?: string;
 };
 
@@ -34,9 +26,6 @@ const sectionBg: Record<Surface, string> = {
   'dark-lighter': 'bg-dark-lighter',
 };
 
-/**
- * Golden frame with a label overlapping the top edge — same pattern as home Offer / News blocks.
- */
 export function GoldenBorderSection({
   label,
   title,

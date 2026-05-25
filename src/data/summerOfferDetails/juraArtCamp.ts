@@ -14,7 +14,6 @@ export const JURA_ART_CAMP_DETAIL: SummerOfferDetail = {
     src: `${G}/art-2.png`,
     alt: 'Uczestniczka obozu przy rysowaniu kolorowych kompozycji — Jura Art Camp',
   },
-  /** Zawsze 4 zdjęcia w galerii. */
   gallery: [
     {
       src: `${G}/art-1.png`,

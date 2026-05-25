@@ -9,7 +9,7 @@ export const OFFER_SUBPAGES: OfferSubpage[] = [
   {
     slug: 'obozy-dla-klas-mundurowych',
     title: 'Obozy dla klas mundurowych',
-    lead: 'Trening, dyscyplina i przygoda w formule przygotowanej pod klasy o profilu mundurowym.',
+    lead: 'Profesjonalne obozy szkoleniowe dla klas mundurowych — ponad standardem, z 25-letnią tradycją na Jurze Krakowsko-Częstochowskiej.',
   },
   {
     slug: 'obozy-i-kolonie',
@@ -19,7 +19,7 @@ export const OFFER_SUBPAGES: OfferSubpage[] = [
   {
     slug: 'wycieczki-szkolne',
     title: 'Wycieczki szkolne',
-    lead: 'Organizacja wyjazdów klasowych z bezpieczeństwem, logistyką i merytoryką na pierwszym miejscu.',
+    lead: 'Autorskie wycieczki po Jurze i Śląsku — zamki, integracja, aktywności i programy dopasowane do wieku grupy.',
   },
   {
     slug: 'eventy',
@@ -65,13 +65,12 @@ export function getOfferBySlug(slug: string | undefined): OfferSubpage | undefin
 
 const MUNDUROWE_SLUG = 'obozy-dla-klas-mundurowych';
 
-/** Linki podmenu Oferta — obozy mundurowe na górze listy. */
 export function getOfferNavSubmenu(): { label: string; to: string }[] {
   const mundurowe = OFFER_SUBPAGES.find((p) => p.slug === MUNDUROWE_SLUG);
   const rest = OFFER_SUBPAGES.filter((p) => p.slug !== MUNDUROWE_SLUG);
   return [
-    ...(mundurowe ? [{ label: mundurowe.title, to: `/oferta/${mundurowe.slug}` }] : []),
     { label: 'Przegląd oferty', to: '/oferta' },
+    ...(mundurowe ? [{ label: mundurowe.title, to: `/oferta/${mundurowe.slug}` }] : []),
     ...rest.map((p) => ({ label: p.title, to: `/oferta/${p.slug}` })),
   ];
 }

@@ -7,7 +7,6 @@ type OfferSectionTitleProps = {
   className?: string;
 };
 
-/** Section heading with horizontal primary bars (offer list + camp detail pages). */
 export function OfferSectionTitle({ children, id, className = '' }: OfferSectionTitleProps) {
   return (
     <motion.div

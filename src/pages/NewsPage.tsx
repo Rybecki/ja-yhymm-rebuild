@@ -4,6 +4,7 @@ import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { NEWS_ARTICLES } from '../data/newsArticles';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 
 const NEWS_HERO_SRC = '/images/aktualnosci/aktualnosci-hero.jpg';
 
@@ -37,6 +38,7 @@ export default function NewsPage() {
             aria-hidden
           />
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
 
           <div className="max-w-5xl mx-auto px-6 relative z-10">
             <nav className="text-sm text-white/70 mb-6">

@@ -187,8 +187,8 @@ export function Footer() {
 
           <div className="mt-16 pt-12 border-t border-white/5">
             <img
-              src="/utils/logo-ja-yhymm-transparent.png"
-              alt="JA YHYMM — logo"
+              src="/utils/logo-jayhymm.png"
+              alt="JAYHYMM — logo"
               className="h-12 w-auto object-contain mb-8"
               data-no-photo-filter
               decoding="async"

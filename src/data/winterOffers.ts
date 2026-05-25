@@ -22,10 +22,19 @@ export const WINTER_OFFERS: WinterOffer[] = [
 const JURA_MIL_BASE = '/utils/oferta-letnia/jura-military-camp/gallery';
 
 export const JURAJSKA_AKADEMIA_KOMANDOSOW_DETAIL: SummerOfferDetail = {
+  heroImage: {
+    src: '/utils/oferta-zimowa/jurajska-akademia-komandosow/hero.png',
+    alt: 'Młodzież w mundurach kamuflażowych z replikami broni na zimowym terenie Jury',
+  },
+  heroBackgroundPosition: 'center 19%',
   gallery: [
-    { src: `${JURA_MIL_BASE}/militaria-1.png`, alt: 'Uczestnik obozu militarniego w kamuflazu i helmie' },
-    { src: `${JURA_MIL_BASE}/militaria-2.png`, alt: 'Cwiczenia w dymie - przenoszenie sprzetu zespolowo' },
     { src: `${JURA_MIL_BASE}/militaria-3.png`, alt: 'Grupa taktyczna z replikami broni przy stawie' },
+    { src: '/images/klasy-mundurowe/militaria-4.png', alt: 'Ćwiczenia z replikami broni nad wodą' },
+    {
+      src: '/utils/oferta-zimowa/jurajska-akademia-komandosow/hero.png',
+      alt: 'Młodzież w mundurach kamuflażowych z replikami broni na zimowym terenie Jury',
+    },
+    { src: '/images/klasy-mundurowe/militaria-6.png', alt: 'Zajęcia terenowe w warunkach leśnych' },
   ],
   aboutSectionTitle: 'O obozie',
   aboutLeadTitle: 'Zloty Potok - serce Jury Krakowsko-Czestochowskiej',
@@ -157,24 +166,10 @@ export const JURAJSKA_AKADEMIA_KOMANDOSOW_DETAIL: SummerOfferDetail = {
     },
   ],
   termsSectionTitle: 'Terminy i ceny',
-  termsSubtitle: 'Zloty Potok na Jurze - Jurajska Akademia Komandosow',
+  termsSubtitle: 'Zloty Potok na Jurze — Jurajska Akademia Komandosów',
   termsDisclaimer: '',
-  terms: [
-    {
-      dateRange: '14.02 - 21.02.2026',
-      durationLabel: '8 dni',
-      price: '2399 zl',
-      planUrl:
-        'https://www.almatur.pl/rozklad_ajax.php?sezon=zima&skrot=KPZZ~ZLOTY_POTOK_NA_JURZE_-_AKADEMIA_KOMANDOSOW_2026_PAX_FB&skrot2=KPZZ0214&klucz=ZLOTY%20POTOK%20NA%20JURZE%20-%20AKADEMIA%20KOMANDOSOW%202026',
-    },
-    {
-      dateRange: '21.02 - 28.02.2026',
-      durationLabel: '8 dni',
-      price: '2399 zl',
-      planUrl:
-        'https://www.almatur.pl/rozklad_ajax.php?sezon=zima&skrot=KPZZ~ZLOTY_POTOK_NA_JURZE_-_AKADEMIA_KOMANDOSOW_2026_PAX_FB&skrot2=KPZZ0221&klucz=ZLOTY%20POTOK%20NA%20JURZE%20-%20AKADEMIA%20KOMANDOSOW%202026',
-    },
-  ],
+  terms: [],
+  termsComingSoon: 'Jak tylko skończy się lato, pojawi się nowa oferta zima 2027!',
   reserveHref:
     'mailto:biuro@ja-yhymm.pl?subject=Rezerwacja%20%E2%80%93%20Jurajska%20akademia%20komandosow',
 };
@@ -182,6 +177,7 @@ export const JURAJSKA_AKADEMIA_KOMANDOSOW_DETAIL: SummerOfferDetail = {
 const ZIMA_MULTI_BASE = '/utils/oferta-zimowa/jurajska-zimowa-multi-przygoda';
 
 export const JURAJSKA_ZIMOWA_MULTI_PRZYGODA_DETAIL: SummerOfferDetail = {
+  heroBackgroundPosition: 'center 55%',
   gallery: [
     { src: `${ZIMA_MULTI_BASE}/gallery/multi-1.png`, alt: 'Uczestnicy na pojezdzie terenowym podczas obozu' },
     { src: `${ZIMA_MULTI_BASE}/gallery/multi-2.png`, alt: 'Przejazdzka quadami w zimowej scenerii' },
@@ -317,24 +313,10 @@ export const JURAJSKA_ZIMOWA_MULTI_PRZYGODA_DETAIL: SummerOfferDetail = {
     },
   ],
   termsSectionTitle: 'Terminy i ceny',
-  termsSubtitle: 'Zloty Potok na Jurze - Jurajska zimowa multi-przygoda',
+  termsSubtitle: 'Zloty Potok na Jurze — Jurajska zimowa multi-przygoda',
   termsDisclaimer: '',
-  terms: [
-    {
-      dateRange: '14.02 - 21.02.2026',
-      durationLabel: '8 dni',
-      price: '2399 zl',
-      planUrl:
-        'https://www.almatur.pl/rozklad_ajax.php?sezon=zima&skrot=KPZZ~ZLOTY_POTOK_NA_JURZE_-_ZIMOWA_MULTI-PRZYGODA_2026_PAX_FB&skrot2=KPZZ0214&klucz=ZLOTY%20POTOK%20NA%20JURZE%20-%20ZIMOWA%20MULTI-PRZYGODA%202026',
-    },
-    {
-      dateRange: '21.02 - 28.02.2026',
-      durationLabel: '8 dni',
-      price: '2399 zl',
-      planUrl:
-        'https://www.almatur.pl/rozklad_ajax.php?sezon=zima&skrot=KPZZ~ZLOTY_POTOK_NA_JURZE_-_ZIMOWA_MULTI-PRZYGODA_2026_PAX_FB&skrot2=KPZZ0221&klucz=ZLOTY%20POTOK%20NA%20JURZE%20-%20ZIMOWA%20MULTI-PRZYGODA%202026',
-    },
-  ],
+  terms: [],
+  termsComingSoon: 'Jak tylko skończy się lato, pojawi się nowa oferta zima 2027!',
   reserveHref:
     'mailto:biuro@ja-yhymm.pl?subject=Rezerwacja%20%E2%80%93%20Jurajska%20zimowa%20multi-przygoda',
 };

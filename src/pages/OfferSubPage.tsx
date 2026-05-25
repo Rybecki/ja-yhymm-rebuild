@@ -6,23 +6,8 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { getOfferBySlug } from '../data/offerPages';
-
-const SCHOOL_TRIP_TOPICS = [
-  'Wspinaczka skałkowa, zajęcia linowe',
-  'Ścianka wspinaczkowa',
-  'Strzelectwo, paintball, ASG, łuki, wiatrówki',
-  'Survival, szkoła przetrwania',
-  'Militaria, musztry i zabawy militarne, maskowanie',
-  'Quady, przejażdżki i jazda po specjalnych torach',
-  'Off-road, przejażdżki samochodami terenowymi',
-  'Przejażdżka wojskowym ciężarowym pojazdem terenowym 6x6 typu KRAZ 255B (jednorazowo przewozimy około 50 osób)',
-  'Samoobrona, sztuki walki',
-  'Sporty wodne, kajakarstwo, pływanie motorówką, bananem, kołem wodnym, platformą, nurkowanie',
-  'Pierwsza pomoc, praktyczne szkolenia z pierwszej pomocy',
-  'Gry, zabawy, podchody, biegi na orientację',
-];
-
-const SCHOOL_TRIP_ORGANIZATION = ['Transport', 'Zakwaterowanie na ośrodku', 'Wyżywienie', 'Program', 'Ubezpieczenie'];
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
+import { SchoolTripsContent } from '../components/SchoolTripsContent';
 
 const SCHOOL_TRIPS_GALLERY: GalleryImageItem[] = [
   {
@@ -103,133 +88,65 @@ const BACHELOR_ATTRACTIONS: { title: string; paragraphs: string[] }[] = [
   },
 ];
 
-const UNIFORMED_TOPICS = ['Strzelectwo - broń palna', 'Paintball', 'Air Soft Gun', 'Łuki', 'Pneumatyczna broń krótka i długa'];
+const UNIFORMED_BASE_FACILITIES = [
+  'Profesjonalny poligon paintballowy.',
+  'Dynamiczną strzelnicę ASG.',
+  'Tory Off-Road dla samochodów terenowych i quadów.',
+  'Survival Park oraz specjalistyczny szkoleniowy park linowy.',
+  'Wojskową bazę noclegową wyposażoną w kultowe, nowoczesne namioty NS-64.',
+  'Flotę wodną: pontony desantowe oraz niezniszczalne kajaki polietylenowe.',
+];
 
 const UNIFORMED_MODULES = [
   {
-    id: 'wojsko-militaria',
-    title: 'Wojsko / Militaria',
+    id: 'arsenal',
+    title: 'Arsenał strzelecki',
     intro:
-      'Każdy obóz może być zorganizowany w klimatach militarnych: musztra, ustalenie hierarchii wg stopni, wojskowy plan dnia i zadania zespołowe.',
-    blocks: [
-      {
-        title: 'Maskowanie - zielona taktyka',
-        body:
-          'Nieodzownym elementem służb mundurowych jest umiejętność maskowania oraz poruszania się w sposób niezauważalny po terenie niezurbanizowanym (zielonym, leśnym).',
-      },
-      {
-        title: 'Wspinaczka / techniki linowe',
-        body:
-          'Dysponujemy ścianką wspinaczkową i zajęciami w skałach o różnym stopniu trudności. Uczestnicy nabywają praktyczne umiejętności linowe przydatne w pracy służb.',
-        items: ['Nauka węzłów', 'Budowanie stanowisk linowych', 'Przeprawy przez mosty linowe', 'Zjazdy pionowe na linach', 'Podchodzenie na linie'],
-      },
-      {
-        title: 'Ścianka wspinaczkowa',
-        items: [
-          'Nauka podstaw wspinaczki',
-          'Doskonalenie technik wspinaczkowych',
-          'Cztery trasy o różnym stopniu trudności - dla początkujących i zaawansowanych',
-        ],
-      },
-    ],
+      'U nas realizm stoi na pierwszym miejscu. Uczniowie przechodzą pełną ścieżkę strzelecką: od broni pneumatycznej, przez dynamiczne systemy ASG, aż po profesjonalne markery paintballowe idealnie imitujące wagę i obsługę prawdziwej broni palnej. Wisienką na torcie jest ostre strzelanie z prawdziwej broni palnej pod okiem licencjonowanych instruktorów!',
   },
   {
-    id: 'survival',
-    title: 'Survival',
+    id: 'linowe',
+    title: 'Techniki linowe',
     intro:
-      'Zajęcia pozwalają zdobyć umiejętności przetrwania: budowa schronienia, poruszanie się w terenie, zdobywanie pożywienia i wody oraz działanie w trudnych warunkach.',
-  },
-  {
-    id: 'samoobrona',
-    title: 'Samoobrona, Krav Maga, Sztuka Walki bez Walki',
-    intro:
-      'Każdy przyszły żołnierz, policjant, strażak lub ratownik powinien umieć zadbać o bezpieczeństwo własne i innych w sytuacjach zagrożenia.',
-    items: [
-      'Jak unikać konfrontacji',
-      'Obezwładnianie przeciwnika',
-      '„Obrączkowanie”, czyli skuteczne zakładanie kajdanek',
-      'Techniki antyterrorystyczne i służb specjalnych',
-      'Techniki walki w stójce oraz w parterze',
-    ],
-  },
-  {
-    id: 'nurkowanie',
-    title: 'Nurkowanie',
-    intro:
-      'Odkryjemy przed Wami podwodny świat i pokażemy bezpieczny start w nurkowaniu - od podstaw po zejście pod wodę w kompletnym zestawie płetwonurka.',
-    items: [
-      'Zasady obowiązujące pod wodą',
-      'Podstawowa sygnalizacja pod wodą',
-      'Nurkowanie w sprzęcie ABC (maska, fajka, płetwy)',
-      'Zaznajomienie z profesjonalnym sprzętem typu aqualung',
-      'Zejście pod wodę w kompletnym sprzęcie płetwonurka',
-    ],
-  },
-  {
-    id: 'kajakarstwo',
-    title: 'Kajakarstwo',
-    intro:
-      'Kajakarstwo to świetna forma aktywnego wypoczynku i kontaktu z naturą. Podczas zajęć ćwiczymy technikę oraz bezpieczeństwo na wodzie.',
-    items: [
-      'Zasady bezpieczeństwa i budowa kajaka',
-      'Technika wiosłowania i podstawowe manewry',
-      'Zasady pływania kajakiem pojedynczo i w parach',
-      'Organizacja spływów kajakowych',
-      'Technika wsiadania i wysiadania z kajaka',
-      'Szybkie zatrzymanie i zmiana kierunku płynięcia',
-      'Manewr ratunkowy „człowiek za burtą”',
-    ],
-  },
-  {
-    id: 'ratownictwo',
-    title: 'Ratownictwo',
-    intro: 'Szkolenie z zakresu pierwszej pomocy z naciskiem na praktyczne działania w terenie.',
-    items: [
-      'Udzielanie pierwszej pomocy w nagłych zagrożeniach życia',
-      'Opatrywanie ran',
-      'Transport rannego i przemieszczanie poszkodowanego w trudnym terenie',
-      'Resuscytacja krążeniowo-oddechowa na fantomach',
-      'Ratowanie życia „za pomocą byle czego”',
-    ],
+      'Jura to stolica polskiego wspinania, a my wykorzystujemy to w 100%. Uczymy bezpiecznej pracy na wysokościach, technik zjazdowych (w tym zjazdów w kluczu i z przyrządami), budowania mostów linowych oraz technik ewakuacji poszkodowanych z rejonów wysokogórskich i skalnych.',
   },
   {
     id: 'off-road',
     title: 'Off-Road',
     intro:
-      'Dysponujemy samochodami terenowymi i quadami wykorzystywanymi do szkolenia praktycznego oraz przejazdów terenowych w warunkach zbliżonych do działań służb.',
-    items: [
-      'Szyki ubezpieczone za pojazdem',
-      'Konwojowanie bandyty',
-      'Ewakuacja z pojazdu podczas ostrzału',
-      'Zatrzymanie pojazdu i obezwładnienie kierowcy',
-      'Jazda w terenie OFF-ROAD i jazda na orientację',
-      'Przejażdżka ciężarowym pojazdem transportowym 6x6 typu KRAZ 255B',
-    ],
+      'Dysponujemy własną flotą samochodów terenowych 4x4 oraz quadów. Uczniowie wykorzystują je do realnych ćwiczeń taktycznych: nauki szyków ubezpieczonych za pojazdem, dynamicznej ewakuacji pod ostrzałem czy konwojowania.',
   },
   {
-    id: 'sporty-wodne',
-    title: 'Sporty wodne',
-    intro: 'MNÓSTWO mokrej zabawy dla osób, które świetnie czują się w wodzie i lubią aktywne atrakcje.',
-    items: [
-      'Banan',
-      'Koło wodne',
-      'Platforma',
-      'Sumo',
-      'Narty wodne',
-      'Skok odwagi',
-    ],
-  },
-  {
-    id: 'narciarstwo',
-    title: 'Narciarstwo i snowboard',
+    id: 'wodne',
+    title: 'Podwodny świat i desant',
     intro:
-      'Zimową porą realizujemy szkolenia na stoku - od pierwszych kroków po doskonalenie techniki jazdy klasycznej, carvingowej i skitourowej.',
-    body:
-      'Zapewniamy pełne poczucie bezpieczeństwa oraz praktyczne wskazówki, jak skutecznie podnosić swoje kwalifikacje narciarskie, aby czas na stoku był czystą frajdą.',
+      'Wprowadzamy elementy nurkowania sprzętowego – to pierwszy krok dla przyszłych płetwonurków bojowych czy strażackich. Do tego dochodzą dynamiczne ćwiczenia z użyciem pontonów desantowych i wyprawy kajakami polietylenowymi.',
+  },
+  {
+    id: 'medycyna',
+    title: 'Medycyna i samoobrona',
+    intro:
+      'Realistyczne misje poszukiwawczo-ratownicze pod presją czasu oraz intensywny trening samoobrony oparty na systemach Krav Maga i filozofii „Sztuki Walki bez Walki”.',
   },
 ] as const;
 
-const UNIFORMED_ORGANIZATION = ['Transport', 'Zakwaterowanie na ośrodku', 'Wyżywienie', 'Program', 'Ubezpieczenie'];
+const UNIFORMED_SCHOOL_BENEFITS = [
+  {
+    title: 'Własny transport = tańszy wyjazd!',
+    body:
+      'Posiadamy własny, kultowy autokar w klimacie PRL – Autosan H9-21, który może bezpiecznie dowieźć grupę do 39 osób z Waszej szkoły lub stacji PKP bezpośrednio na miejsce działań (operujemy w promieniu do 100 km od naszej bazy na Jurze). To potężna oszczędność na kosztach transportu dla uczniów i rodziców!',
+  },
+  {
+    title: 'Strefa komfortu dla opiekunów (VIP dla nauczycieli)',
+    body:
+      'Doceniamy Waszą ciężką pracę. Podczas gdy instruktorzy Fundacji prowadzą zajęcia z młodzieżą, opiekunowie mają czas wolny. Aby ułatwić Wam rekreację i poznanie uroków Jury, bezpłatnie udostępniamy samochód osobowy lub busa do swobodnego zwiedzania okolicy lub nowoczesne rowery elektryczne na wycieczki po jurajskich szlakach!',
+  },
+  {
+    title: 'Elastyczność i certyfikacja',
+    body:
+      'Organizujemy obozy wyjazdowe (2, 3, 4, 5-dniowe), ale możemy też przyjechać do Was i zorganizować profesjonalne szkolenie stacjonarne na terenie Waszej szkoły. Każdy uczeń kończący obóz otrzymuje oficjalny, imienny certyfikat – realny atut w przyszłej karierze w strukturach MON czy MSWiA.',
+  },
+] as const;
 
 const UNIFORMED_GALLERY = [
   { src: '/utils/oferta-letnia/jura-military-camp/gallery/militaria-1.png', alt: 'Uczestnik obozu militarnego w kamuflażu i hełmie' },
@@ -446,6 +363,7 @@ const ACCOMMODATION_LESNA_GALLERY = '/utils/oferta-letnia/jura-military-camp/gal
 const ACCOMMODATION_ZLOTY_GALLERY = '/utils/oferta-letnia/zloty-jelen';
 const ACCOMMODATION_GORY_GORZKOWSKIE = '/images/baza-noclegowa/gory-gorzkowskie.png';
 const ACCOMMODATION_NAMIOTY_NS64 = '/images/baza-noclegowa/namioty-ns64.png';
+const ACCOMMODATION_PONIK = '/images/baza-noclegowa/ponik';
 
 const ACCOMMODATION_CARD_HOVER =
   'transition-all duration-300 hover:border-primary/50 hover:bg-white/[0.05] hover:shadow-[0_0_36px_rgba(247,199,59,0.07)]';
@@ -483,6 +401,23 @@ const ACCOMMODATION_VENUE_BLOCKS = [
       { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-2.png`, alt: 'Złoty Jeleń — teren rekreacyjny ośrodka' },
       { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-3.png`, alt: 'Złoty Jeleń — wnętrza i infrastruktura' },
       { src: `${ACCOMMODATION_ZLOTY_GALLERY}/zloty-jelen-4.png`, alt: 'Złoty Jeleń — pokój gościnny z łóżkami, widok na las' },
+    ],
+  },
+  {
+    blockTitle: 'Ośrodek Wypoczynkowy w Poniku',
+    paragraphs: [
+      'Ośrodek położony jest na wydzielonym i ogrodzonym terenie leśnym. Bazę noclegową stanowią 4, 5, 6-osobowe domki letniskowe, które jednorazowo mogą pomieścić do 140 osób. Wszystkie domki posiadają łazienki.',
+      'Na terenie ośrodka znajdują się dwie altany, boiska do gry w piłkę nożną, w siatkówkę i piłkę koszykową, a także akweny wodne i kąpielisko.',
+    ],
+    images: [
+      {
+        src: `${ACCOMMODATION_PONIK}/ponik-1.png`,
+        alt: 'Ośrodek Wypoczynkowy w Poniku — widok z góry na ośrodek, kąpielisko i las',
+      },
+      {
+        src: `${ACCOMMODATION_PONIK}/ponik-2.png`,
+        alt: 'Ośrodek Wypoczynkowy w Poniku — kąpielisko, plaża i altana nad wodą',
+      },
     ],
   },
   {
@@ -525,7 +460,6 @@ export default function OfferSubPage() {
   const isAccommodationPage = page?.slug === 'baza-noclegowa';
   const isServiceBasePage = page?.slug === 'baza-serwisowa';
   const schoolTripHeroSrc = '/images/wycieczki-szkolne/wycieczka-hero.png';
-  const schoolTripDescriptionImageSrc = '/images/wycieczki-szkolne/wycieczka-opis.png';
   const uniformedHeroSrc = '/images/klasy-mundurowe/militaria-4.png';
   const uniformedDescriptionImageSrc = '/images/klasy-mundurowe/militaria-5.png';
   const eventsHeroSrc = '/images/eventy/galeria-grupa.png';
@@ -596,6 +530,7 @@ export default function OfferSubPage() {
                 className="app-photo-scrim"
                 aria-hidden
               />
+              <PhotoBottomScrim />
             </>
           )}
           <div className="max-w-4xl mx-auto px-6">
@@ -615,16 +550,25 @@ export default function OfferSubPage() {
               {page.title}
             </motion.h2>
             {isSchoolTripsPage && (
-              <p className="relative z-10 text-base md:text-lg text-white/85 leading-relaxed max-w-3xl">
-                Organizujemy wycieczki szkolne pełne aktywności, przygody i bezpieczeństwa - od krótkich wyjazdów po kompleksowe programy
-                realizowane od A do Z.
-              </p>
+              <div className="relative z-10 max-w-3xl space-y-3">
+                <p className="text-primary font-bold uppercase tracking-[0.15em] text-xs sm:text-sm">
+                  Jura Krakowsko‑Częstochowska • Śląsk • Edukacja • Integracja • Przygoda
+                </p>
+                <p className="text-base md:text-lg text-white/85 leading-relaxed">
+                  Od ponad 25 lat organizujemy autorskie wycieczki szkolne — zamki, aktywności terenowe i programy szyte na miarę wieku
+                  grupy.
+                </p>
+              </div>
             )}
             {isUniformedClassesPage && (
-              <p className="relative z-10 text-base md:text-lg text-white/85 leading-relaxed max-w-3xl">
-                Programy dla szkół i klas mundurowych łączące szkolenie praktyczne, bezpieczeństwo i aktywny wyjazd z realnym przełożeniem na
-                przyszłą służbę.
-              </p>
+              <div className="relative z-10 max-w-3xl space-y-4">
+                <p className="text-xl md:text-2xl font-extrabold font-display text-white leading-tight">
+                  Ponad standardem. Poza schematem. 25 lat tradycji w szkoleniu elity!
+                </p>
+                <p className="text-base md:text-lg text-white/85 leading-relaxed">
+                  Profesjonalne Obozy Szkoleniowe dla Klas Mundurowych z Fundacją JA YHYMM… Integracja Sport Turystyka Wypoczynek.
+                </p>
+              </div>
             )}
             {isEventsPage && (
               <p className="relative z-10 text-base md:text-lg text-white/85 leading-relaxed max-w-3xl">
@@ -667,7 +611,7 @@ export default function OfferSubPage() {
         </section>
 
         <section className="section-padding bg-dark">
-          <div className={`mx-auto px-6 ${isUniformedClassesPage ? 'max-w-4xl lg:max-w-[74rem]' : 'max-w-4xl'}`}>
+          <div className={`mx-auto px-6 ${isUniformedClassesPage || isSchoolTripsPage ? 'max-w-4xl lg:max-w-[74rem]' : 'max-w-4xl'}`}>
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -675,7 +619,7 @@ export default function OfferSubPage() {
               className="bg-white/5 backdrop-blur-md border-2 border-primary rounded-[2rem] p-8 md:p-12"
             >
               {isSchoolTripsPage ? (
-                <div className="space-y-12 text-white/80 leading-relaxed">
+                <div className="space-y-12">
                   <div>
                     <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Galeria</h3>
                     <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -693,91 +637,8 @@ export default function OfferSubPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-8 border-t border-white/10 pt-8">
-                  <p className="text-lg">
-                    Oferta skierowana jest do szkół, uczelni, dyrektorów i nauczycieli placówek edukacyjnych oraz wszystkich tych, którzy chcą
-                    zorganizować wycieczkę w trakcie roku szkolnego.
-                  </p>
-                  <p>
-                    Zajmujemy się profesjonalną organizacją wycieczek szkolnych o różnorodnych zabarwieniach tematycznych. Możemy zająć się
-                    kompleksową organizacją wycieczki od A do Z, jak również możemy zorganizować tylko część programową i zapewnić jeden z bloków
-                    Państwa wycieczki.
-                  </p>
-
-                  <img
-                    src={schoolTripDescriptionImageSrc}
-                    alt="Uczestnicy wycieczki szkolnej podczas zajęć terenowych"
-                    className="w-full rounded-2xl border border-white/10"
-                    loading="lazy"
-                  />
-
-                  <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Tematyki jakie oferujemy</h3>
-                    <ul className="space-y-3">
-                      {SCHOOL_TRIP_TOPICS.map((topic) => (
-                        <li key={topic} className="pl-5 relative">
-                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                          {topic}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <p>
-                    Szczególną uwagę chcemy zwrócić na fakt, iż wycieczki szkolne nie muszą uczniom kojarzyć się wyłącznie z nudą, zwiedzaniem i
-                    &#34;oklepanymi&#34; miejscami, natomiast nauczycielom z ciągłym uporczywym pilnowaniem młodzieży aby czegoś nie zbroiła. To co mamy
-                    do zaproponowania to pobyt wypełniony programem, opieka nad uczestnikami 24h, ciekawe zajęcia, a wszystko w miłej i sympatycznej
-                    atmosferze. Nauczyciele natomiast nie ponoszą żadnych kosztów związanych z pobytem podczas wycieczki.
-                  </p>
-                  <p>
-                    Wszystkie wyżej wymienione tematyki składają się na programy wycieczek, które tworzymy tak aby dopasować się do Państwa potrzeb.
-                    Idealnym miejscem do realizacji tego typu zajęć jest Jura Krakowsko-Częstochowska, i właśnie tam najchętniej działamy. Poza tym,
-                    że mamy tam stworzoną całą niezbędną infrastrukturę tj. strzelnice, stanowiska linowe, pole biwakowe, 10-osobowe wojskowe namioty
-                    typu NS 64, akweny wodne, pola paintballowe, tor off-roadowy, samochody terenowe itp. Jura to wspaniałe miejsce pod względem
-                    zróżnicowanego uwarunkowania terenowego. Znajdziemy tam zarówno równiny jak i wzgórza, które w dużej mierze pokryte są lasem
-                    (głównie sosnowym).
-                  </p>
-                  <p>
-                    Na rozległym terenie Jury znajdziemy mnóstwo bloków skalnych, ostańców oraz grot i jaskiń, które dodatkowo uatrakcyjniają ten
-                    region Polski, a wszystko to składa się na jakość zajęć, które mamy przyjemność Państwu zaproponować.
-                  </p>
-                  <p>
-                    Jura Krakowsko-Częstochowska ma jeszcze jeden znaczący atut. Chcąc dojechać do nas z miejscowości położonych w południowej i
-                    centralnej Polsce nie powinno to zająć więcej niż 3,5h i mierzyć więcej niż około 200 km, a co za tym idzie koszty dojazdu będą
-                    stosunkowo niskie, co pozwoli aby koszt całego wyjazdu był przystępny.
-                  </p>
-
-                  <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">
-                      Zajmujemy się organizacją takiego wyjazdu w 100%
-                    </h3>
-                    <ul className="space-y-2">
-                      {SCHOOL_TRIP_ORGANIZATION.map((item) => (
-                        <li key={item} className="pl-5 relative">
-                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <p>
-                    Istnieje możliwość zorganizowania tego typu wyjazdu w każdy zakątek Polski, jednak Jura Krakowsko-Częstochowska daje największe
-                    możliwości aby realizować tak wszechstronne i atrakcyjne zajęcia.
-                  </p>
-                  <p className="font-semibold text-white">Organizujemy tego typu wyjazdy o każdej porze roku!</p>
-                  <p className="border-t border-white/10 pt-8">
-                    Liczymy na zainteresowanie z Państwa strony naszą ofertą i zapraszamy do kontaktu.
-                  </p>
-                  <p className="text-white/60 text-sm">
-                    <a href="mailto:biuro@ja-yhymm.pl" className="text-primary hover:underline">
-                      biuro@ja-yhymm.pl
-                    </a>
-                    {' · '}
-                    <a href="tel:794997714" className="text-primary hover:underline">
-                      794 997 714
-                    </a>
-                  </p>
+                  <div className="border-t border-white/10 pt-10">
+                    <SchoolTripsContent />
                   </div>
                 </div>
               ) : isUniformedClassesPage ? (
@@ -801,13 +662,38 @@ export default function OfferSubPage() {
 
                   <div className="space-y-8 border-t border-white/10 pt-8">
                   <p className="text-lg">
-                    Oferta przeznaczona dla szkół oraz klas o profilach mundurowych (policja, wojsko, straż pożarna, ratownictwo itp.).
+                    Tradycyjne marsze to za mało? Twoi uczniowie zasługują na szkolenie XXI wieku. Nie oferujemy zwykłych obozów przetrwania ani
+                    nudnych wykładów o dyscyplinie. Fundacja JA YHYMM… Integracja Sport Turystyka Wypoczynek od ćwierć wieku przenosi szkolenia klas o
+                    profilu wojskowym, policyjnym i ratowniczym na zupełnie nowy, elitarny poziom.
                   </p>
                   <p>
-                    Jesteśmy jedną z nielicznych instytucji, które zajmują się profesjonalną organizacją tego typu wyjazdów dla młodzieży w wieku
-                    szkolnym (gimnazjum, liceum, technikum), jak również dla studentów uczelni wyższych (zarządzanie kryzysowe, ratownictwo itp.).
+                    Łączymy ekstremalną taktykę wojskową, zaawansowane techniki linowe, pełen arsenał strzelecki oraz potężny, własny park maszynowy
+                    i infrastrukturę szkoleniową. Zobacz, jak pod okiem ekspertów rodzi się prawdziwa elita.
                   </p>
-                  <p>Chcemy zaproponować Państwu zorganizowanie aktywnego wyjazdu dla uczniów i studentów Waszej placówki.</p>
+
+                  <div>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">
+                      Nasza baza – Jura Krakowsko-Częstochowska
+                    </h3>
+                    <p className="font-semibold text-white mb-4">Serce szkolenia w najlepszej lokalizacji w Polsce</p>
+                    <p className="mb-4">
+                      Nasze operacje koncentrują się na malowniczej i strategicznie doskonałej Jurze Krakowsko-Częstochowskiej. To region idealnie
+                      skomunikowany z każdym zakątkiem Polski. To właśnie tutaj stworzyliśmy kompleksowe, własne zaplecze logistyczno-szkoleniowe,
+                      dzięki czemu nie jesteśmy zależni od podwykonawców. Do dyspozycji Twojej klasy oddajemy:
+                    </p>
+                    <ul className="space-y-3 mb-4">
+                      {UNIFORMED_BASE_FACILITIES.map((item) => (
+                        <li key={item} className="pl-5 relative">
+                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <p>
+                      Szkolenia przez cały rok! Dzięki stałej współpracy z kilkoma sprawdzonymi ośrodkami wypoczynkowymi na Jurze, organizujemy
+                      profesjonalne obozy i zgrupowania przez 365 dni w roku, niezależnie od warunków atmosferycznych.
+                    </p>
+                  </div>
 
                   <img
                     src={uniformedDescriptionImageSrc}
@@ -816,20 +702,14 @@ export default function OfferSubPage() {
                     loading="lazy"
                   />
 
-                  <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">Tematyki jakimi zajmujemy się</h3>
-                    <ul className="space-y-3">
-                      {UNIFORMED_TOPICS.map((topic) => (
-                        <li key={topic} className="pl-5 relative">
-                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                          {topic}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
                   <div className="border-t border-white/10 pt-8">
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-5">Bloki szkoleniowe</h3>
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">
+                      Co nas wyróżnia i zostawia konkurencję w tyle?
+                    </h3>
+                    <p className="mb-5">
+                      Większość firm oferuje „szkolenia z zielonej taktyki w lesie”. My idziemy o krok dalej. Oferujemy program naszpikowany sprzętem
+                      i specjalizacjami, których nie znajdziesz nigdzie indziej:
+                    </p>
                     <div className="flex flex-wrap gap-2 mb-6">
                       {UNIFORMED_MODULES.map((module) => (
                         <button
@@ -847,94 +727,62 @@ export default function OfferSubPage() {
                       ))}
                     </div>
 
-                    <div className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-7 min-h-[320px]">
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-5 md:p-7 min-h-[200px]">
                       <h4 className="text-white font-semibold text-lg md:text-xl mb-3">{activeUniformedModule.title}</h4>
-                      <p className="mb-4">{activeUniformedModule.intro}</p>
-                      {'body' in activeUniformedModule && activeUniformedModule.body && <p className="mb-4">{activeUniformedModule.body}</p>}
-                      {'items' in activeUniformedModule && activeUniformedModule.items && (
-                        <ul className="space-y-2 mb-4">
-                          {activeUniformedModule.items.map((item) => (
-                            <li key={item} className="pl-5 relative">
-                              <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                      {'blocks' in activeUniformedModule && activeUniformedModule.blocks && (
-                        <div className="space-y-4">
-                          {activeUniformedModule.blocks.map((block) => (
-                            <div key={block.title} className="border-t border-white/10 pt-4 first:border-t-0 first:pt-0">
-                              <h5 className="text-white font-semibold mb-2">{block.title}</h5>
-                              {block.body && <p className="mb-3">{block.body}</p>}
-                              {block.items && (
-                                <ul className="space-y-2">
-                                  {block.items.map((item) => (
-                                    <li key={item} className="pl-5 relative">
-                                      <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                                      {item}
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
+                      <p>{activeUniformedModule.intro}</p>
                     </div>
                   </div>
 
-                  <p>
-                    Wszystkie wyżej wymienione tematyki składają się na programy obozów, które tworzymy tak, aby dopasować się do Państwa potrzeb.
-                  </p>
-                  <p>
-                    Idealnym miejscem do realizacji tego typu zajęć jest Jura Krakowsko-Częstochowska i właśnie tam najchętniej działamy. Mamy tam
-                    stworzoną infrastrukturę: strzelnice, stanowiska linowe, pole biwakowe, wojskowe namioty NS 64, akweny wodne, pola paintballowe,
-                    tor off-roadowy oraz samochody terenowe. Jura to także zróżnicowany teren - równiny, wzgórza i lasy sosnowe.
-                  </p>
-                  <p>
-                    Na rozległym terenie Jury znajdziemy mnóstwo bloków skalnych, ostańców oraz grot i jaskiń, które dodatkowo uatrakcyjniają ten
-                    region Polski i podnoszą jakość zajęć.
-                  </p>
-                  <p>
-                    Jura Krakowsko-Częstochowska ma jeszcze jeden znaczący atut: z miejscowości południowej i centralnej Polski dojazd zwykle nie
-                    przekracza 3,5h i około 200 km, co obniża koszt całego wyjazdu.
-                  </p>
-                  <p>
-                    Szczególną uwagę chcemy zwrócić na fakt, iż wycieczki szkolne nie muszą uczniom kojarzyć się wyłącznie z nudą i „oklepanymi”
-                    miejscami, a nauczycielom z ciągłym pilnowaniem młodzieży. Oferujemy pobyt wypełniony programem, opiekę 24h, ciekawe zajęcia z
-                    praktycznym przełożeniem na przyszłą pracę w służbach mundurowych i przyjazną atmosferę. Nauczyciele nie ponoszą kosztów pobytu.
-                  </p>
-
-                  <div>
-                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base mb-4">
-                      Zajmujemy się organizacją takiego wyjazdu w 100%
+                  <div className="border-t border-white/10 pt-8 space-y-6">
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base">
+                      Dla szkół i nauczycieli – maksymalna redukcja kosztów i święty spokój
                     </h3>
-                    <ul className="space-y-2">
-                      {UNIFORMED_ORGANIZATION.map((item) => (
-                        <li key={item} className="pl-5 relative">
-                          <span className="absolute left-0 top-2 h-2 w-2 rounded-full bg-primary" aria-hidden />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+                    <p>
+                      Zajmujemy się organizacją oraz realizacją tego typu wyjazdów od 25 lat. Doskonale rozumiemy logistyczne wyzwania stojące przed
+                      szkołą. Dlatego przygotowaliśmy rozwiązania, które czynią naszą ofertę bezkonkurencyjną:
+                    </p>
+                    {UNIFORMED_SCHOOL_BENEFITS.map((benefit) => (
+                      <div key={benefit.title}>
+                        <h4 className="text-white font-semibold mb-2">{benefit.title}</h4>
+                        <p>{benefit.body}</p>
+                      </div>
+                    ))}
                   </div>
 
-                  <p>
-                    Istnieje możliwość zorganizowania tego typu wyjazdu w każdy zakątek Polski, jednak Jura Krakowsko-Częstochowska daje największe
-                    możliwości, aby realizować tak wszechstronne i atrakcyjne zajęcia.
-                  </p>
-                  <p className="font-semibold text-white">Organizujemy tego typu wyjazdy o każdej porze roku!</p>
-                  <p className="border-t border-white/10 pt-8">Liczymy na zainteresowanie z Państwa strony naszą ofertą i zapraszamy do kontaktu.</p>
-                  <p className="text-white/60 text-sm">
-                    <a href="mailto:biuro@ja-yhymm.pl" className="text-primary hover:underline">
-                      biuro@ja-yhymm.pl
-                    </a>
-                    {' · '}
-                    <a href="tel:794997714" className="text-primary hover:underline">
-                      794 997 714
-                    </a>
-                  </p>
+                  <div className="border-t border-white/10 pt-8 space-y-6">
+                    <h3 className="text-primary font-bold uppercase tracking-widest text-sm md:text-base">
+                      Zaufaj 25-letniemu doświadczeniu. Stwórzmy razem elitę jutra!
+                    </h3>
+                    <p>
+                      Terminy na nadchodzący sezon kurczą się błyskawicznie, a nasza własna infrastruktura przyciąga najlepsze szkoły z całego kraju.
+                      Nie pozwól, aby Twoją klasę ominęło najbardziej kompleksowe szkolenie mundurowe w Polsce.
+                    </p>
+                    <Link
+                      to="/kontakt"
+                      className="inline-flex items-center gap-2 bg-primary text-dark font-bold uppercase tracking-wider text-xs md:text-sm px-6 py-3 rounded-full hover:bg-white transition-colors"
+                    >
+                      Skontaktuj się z nami – odbierz spersonalizowaną ofertę
+                      <ArrowRight size={16} aria-hidden />
+                    </Link>
+                    <p className="text-white/60 text-sm">
+                      Zadzwoń:{' '}
+                      <a href="tel:794997714" className="text-primary hover:underline">
+                        794 997 714
+                      </a>
+                      {' · '}
+                      Napisz:{' '}
+                      <a href="mailto:biuro@ja-yhymm.pl" className="text-primary hover:underline">
+                        biuro@ja-yhymm.pl
+                      </a>
+                    </p>
+                    <p className="text-white/50 text-sm leading-relaxed">
+                      Fundacja JA YHYMM… Integracja Sport Turystyka Wypoczynek
+                      <br />
+                      Baza Szkoleniowa: Jura Krakowsko-Częstochowska
+                      <br />
+                      Bo prawdziwego rzemiosła uczy się od praktyków z 25-letnim doświadczeniem.
+                    </p>
+                  </div>
                   </div>
                 </div>
               ) : isEventsPage ? (
@@ -1063,6 +911,7 @@ export default function OfferSubPage() {
                             />
                             <div className="absolute inset-0 z-[1] bg-black/15 pointer-events-none" aria-hidden />
                             <div className="app-photo-scrim-card z-[2]" aria-hidden />
+                            <PhotoBottomScrim card />
                             <motion.div className="relative z-10 flex h-full min-h-[188px] flex-col justify-end">
                               <h4 className="text-lg md:text-xl font-bold font-display text-white mb-2 group-hover:text-primary transition-colors">
                                 {tile.title}

@@ -1,4 +1,3 @@
-/** Unified hero height & background framing for obozy/kolonie (lato, zima, detail pages). */
 export const CAMPS_HERO_SECTION =
   'relative min-h-[52vh] md:min-h-[58vh] flex flex-col justify-end overflow-hidden';
 

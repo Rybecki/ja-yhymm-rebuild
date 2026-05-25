@@ -9,11 +9,9 @@ const badgeBg: Record<Surface, string> = {
 };
 
 type OfferGoldenCardProps = {
-  /** Label embedded in the top border (home page golden frame pattern). */
   label: string;
   children: ReactNode;
   surface?: Surface;
-  /** `card` — inner frosted panel; `plain` — content directly inside the golden frame. */
   variant?: 'card' | 'plain';
   className?: string;
   innerClassName?: string;
@@ -22,7 +20,6 @@ type OfferGoldenCardProps = {
 const CARD_HOVER =
   'transition-all duration-300 hover:border-primary/50 hover:bg-white/[0.05] hover:shadow-[0_0_36px_rgba(247,199,59,0.07)]';
 
-/** Content area inside the golden frame (no inner border). */
 export const OFFER_GOLDEN_CARD_INNER =
   'rounded-2xl bg-white/[0.03] px-5 py-6 sm:px-7 sm:py-7 md:px-9 md:py-8';
 

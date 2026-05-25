@@ -5,6 +5,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { GALLERY_CATEGORIES, GALLERY_IMAGES, type GalleryCategory } from '../data/galleryImages';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 
 const GALLERY_HERO_SRC = '/images/galeria/galeria-hero.png';
 
@@ -38,6 +39,7 @@ export default function GalleryPage() {
           />
           <div className="absolute inset-0 z-0 bg-black/25 pointer-events-none" aria-hidden />
           <div className="app-photo-scrim" aria-hidden />
+          <PhotoBottomScrim />
 
           <div className="max-w-6xl mx-auto px-6 relative z-10">
             <nav className="text-sm text-white/70 mb-6">

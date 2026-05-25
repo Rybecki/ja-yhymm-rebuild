@@ -4,10 +4,16 @@ import { motion } from 'motion/react';
 import { X, ChevronDown } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
+import { PhotoBottomScrim } from '../components/PhotoBottomScrim';
 import { GalleryLightbox, type GalleryImageItem } from '../components/GalleryLightbox';
 import { RentalFormSummary } from '../components/RentalFormSummary';
+import { getRentalRegulationText } from '../data/rentalRegulations';
 import { RENTAL_CONTENT_WIDE, RENTAL_GLASS_INNER } from '../constants/rentalPageLayout';
+import { FormRecaptcha, FormSubmitButton, FormSubmitFeedback } from '../components/FormRecaptcha';
+import { PhoneInput } from '../components/PhoneInput';
 import { calculateKayakPricing, formatPaymentForEmail, formatSummaryForEmail } from '../data/rentalFormPricing';
+import { submitRentalForm } from '../lib/rentalFormSubmit';
+import { useRecaptcha } from '../hooks/useRecaptcha';
 
 const KAYAK_IMAGES = ['/images/wypozyczalnia/kajaki/kajak-1.png', '/images/wypozyczalnia/kajaki/kajak-2.png'];
 
@@ -16,76 +22,12 @@ const KAYAK_GALLERY: GalleryImageItem[] = KAYAK_IMAGES.map((src, i) => ({
   alt: `Kajak — zdjęcie ${i + 1}`,
 }));
 
-const REGULATIONS_TEXT = `REGULAMIN WYPOŻYCZALNI KAJAKO-MOBIL
-(Właścicielem marki jest A Bo Co... Sp. z o.o. z siedzibą w Katowicach)
-1. Postanowienia ogólne
-1.1. Wypożyczalnia oferuje wynajem kajaków polietylenowych wraz z osprzętem (wiosła, kamizelki, siedziska dla dzieci).
-1.2. Wypożyczalnia działa w modelu mobilnym, bez stacjonarnej przystani wodnej. Sprzęt dostarczany jest pod wskazany adres lub odbierany przez Klienta z punktu wydań (Jura/Katowice).
-1.3. Sprzęt jest własnością spółki A Bo Co... Sp. z o.o., realizującej cele statutowe Fundacji JA YHYMM...
-
-2. Zasady wynajmu
-2.1. Wypożyczającym może być osoba pełnoletnia, legitymująca się ważnym dokumentem tożsamości.
-2.2. Wypożyczenie następuje po podpisaniu Umowy Najmu oraz wpłaceniu kaucji zwrotnej.
-2.3. Klient ponosi pełną odpowiedzialność za wypożyczony sprzęt od momentu jego odebrania do momentu zwrotu.
-
-3. Bezpieczeństwo
-3.1. Każdy uczestnik spływu ma obowiązek posiadania założonej i zapiętej kamizelki asekuracyjnej podczas przebywania na wodzie.
-3.2. Wypożyczalnia nie organizuje spływów i nie zapewnia ratowników. Klient pływa na własną odpowiedzialność.
-3.3. Zabrania się korzystania ze sprzętu pod wpływem alkoholu lub innych środków odurzających.
-
-4. Odpowiedzialność i opłaty
-4.1. Za zgubienie lub zniszczenie sprzętu Klient odpowiada do pełnej wartości rynkowej szkody.
-4.2. Opłata za zagubienie wiosła: 150 zł, kamizelki: 120 zł, siedziska dla dziecka: 100 zł.
-4.3. Zwrot brudnego sprzętu (zaschnięte błoto, piasek wewnątrz) skutkuje potrąceniem 50 zł z kaucji za czyszczenie.
-
-UMOWA NAJMU NR ........./202X
-Zawarta w dniu .................... pomiędzy:
-A Bo Co... Sp. z o.o., ul. Niwna 9, 40-406 Katowice, NIP: 954 289 00 70, zwaną dalej Wynajmującym,
-a
-Imię i Nazwisko: .....................................................................
-PESEL: ........................................., Nr tel: .......................................
-Adres: ..........................................................................................., zwanym dalej Najemcą.
-
-§1 Przedmiot Umowy
-1. Wynajmujący oddaje do używania Najemcy:
-o Kajak polietylenowy (szt. .....), wiosła (szt. .....), kamizelki (szt. .....), siedzisko dziecięce (szt. .....).
-2. Okres najmu: od dnia .................... godz. .......... do dnia .................... godz. ..........
-
-§2 Finanse
-1. Cena za wynajem wynosi: .................... zł brutto.
-2. Koszt transportu (jeśli dotyczy): .................... zł.
-3. Kaucja zwrotna w wysokości .................... zł została wpłacona gotówką/kartą.
-4. Najemca upoważnia Wynajmującego do potrącenia z kaucji kwot należnych za uszkodzenia sprzętu lub opóźnienie w zwrocie.
-
-§3 Oświadczenia Najemcy
-1. Najemca oświadcza, że zapoznał się z Regulaminem i akceptuje jego warunki.
-2. Najemca potwierdza, że potrafi pływać i bierze na siebie pełną odpowiedzialność za bezpieczeństwo własne oraz osób płynących w wypożyczonym kajaku.
-
-.................................................. ..................................................
-Podpis Wynajmującego Podpis Najemcy
-
-PROTOKÓŁ ZDAWCZO-ODBIORCZY DO UMOWY NR ........./202X
-I. WYDANIE SPRZĘTU (Data: .................... Godz: ..........)
-Element zestawu Ilość Stan techniczny / Uwagi
-Kajak polietylenowy [ ] Nowy/Bdb [ ] Rysy użytkowe [ ] Inne:
-Wiosła [ ] Sprawne [ ] Inne:
-Kamizelki [ ] Suche/Czyste [ ] Inne:
-Dodatkowe siedzisko [ ] Kompletne
-Potwierdzam odbiór sprzętu sprawnego, czystego i bez wad widocznych:
-.................................................. (Podpis Najemcy)
-
-II. ZWROT SPRZĘTU (Data: .................... Godz: ..........)
-1. Stan techniczny przy zwrocie:
-[ ] Bez zastrzeżeń
-[ ] Stwierdzono uszkodzenia (opis): ....................................................................................
-[ ] Sprzęt wymaga czyszczenia (opłata 30 zł)
-2. Rozliczenie kaucji:
-[ ] Zwrócono w całości
-[ ] Potrącono kwotę .................... zł z tytułu: .....................................................................
-.................................................. ..................................................
-Podpis Wynajmującego Podpis Najemcy`;
+const REGULATIONS_TEXT = getRentalRegulationText('kajaki');
 
 export default function RentalKayaksPage() {
+  const recaptcha = useRecaptcha();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState<{ success?: string | null; error?: string | null }>({});
   const [isRegulationsOpen, setIsRegulationsOpen] = useState(false);
   const [photoGallery, setPhotoGallery] = useState<{ images: readonly GalleryImageItem[]; index: number } | null>(null);
   const [formData, setFormData] = useState({
@@ -116,12 +58,12 @@ export default function RentalKayaksPage() {
     return parts.length > 0 ? parts.join(', ') : 'kajaki';
   }, [formData.kayakCount, formData.kayakType]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     localStorage.setItem('kayakRentalForm', JSON.stringify(formData));
 
     const body = [
+      'Formularz: Rezerwacja kajaków (/wypozyczalnia/kajaki)',
+      '',
       'Nowe zapytanie o rezerwacje kajakow:',
       '',
       `Imie i nazwisko: ${formData.fullName}`,
@@ -139,7 +81,14 @@ export default function RentalKayaksPage() {
       formatPaymentForEmail(formData.fullName, equipmentLabel),
     ].join('\n');
 
-    window.location.href = `mailto:biuro@ja-yhymm.pl?subject=${encodeURIComponent('Rezerwacja kajakow')}&body=${encodeURIComponent(body)}`;
+    await submitRentalForm(event, recaptcha, {
+      subject: 'Formularz: Rezerwacja kajaków',
+      body,
+      replyTo: formData.email,
+      phone: formData.phone,
+      setSubmitting: setIsSubmitting,
+      setFeedback: setSubmitFeedback,
+    });
   };
 
   useEffect(() => {
@@ -183,11 +132,7 @@ export default function RentalKayaksPage() {
             aria-hidden
           />
           <div className="app-photo-scrim" aria-hidden />
-          <div
-            className="absolute inset-x-0 bottom-0 h-32 md:h-44 pointer-events-none z-[1]"
-            style={{ background: 'linear-gradient(to top, var(--color-dark) 0%, color-mix(in oklab, var(--color-dark) 55%, transparent) 45%, transparent 100%)' }}
-            aria-hidden
-          />
+          <PhotoBottomScrim />
           <div className={`${RENTAL_CONTENT_WIDE} relative z-10`}>
             <nav className="text-sm text-white/50 mb-6">
               <Link to="/" className="hover:text-primary transition-colors">
@@ -425,12 +370,10 @@ export default function RentalKayaksPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs uppercase tracking-widest text-white/40">Telefon*</label>
-                    <input
-                      type="tel"
+                    <PhoneInput
                       required
                       value={formData.phone}
-                      onChange={(event) => updateFormData('phone', event.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors"
+                      onChange={(value) => updateFormData('phone', value)}
                     />
                   </div>
                 </div>
@@ -551,9 +494,11 @@ export default function RentalKayaksPage() {
                   </button>
                   , który podpiszesz przed wydaniem sprzętu.
                 </p>
-                <button type="submit" className="w-full btn-primary py-4 text-lg">
+                <FormRecaptcha recaptcha={recaptcha} className="pt-2" />
+                <FormSubmitFeedback message={submitFeedback.success} error={submitFeedback.error} />
+                <FormSubmitButton verified={recaptcha.isVerified} verifying={isSubmitting || recaptcha.isVerifying}>
                   Wyślij formularz
-                </button>
+                </FormSubmitButton>
               </form>
             </section>
           </div>

@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { PARENT_ZONE_HERO_IMAGE, PARENT_ZONE_ROUTE } from '../constants/parentZone';
 
-/** CTA do Strefy rodzica na stronach obozów lato/zima — szerokość jak box „O obozie”. */
 export function ParentZoneCampCta() {
   return (
     <aside
